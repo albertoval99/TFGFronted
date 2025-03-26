@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Outlet } from 'react-router'
-import NavBarController from './components/NavBar/NavBarController'
+//import NavBarController from './components/NavBar/NavBarController'
 
 function App() {
   const [usuario,setUsuario]=useState(null)
@@ -11,10 +11,11 @@ function App() {
     get("/usuarios", setUsuario, "Error imprimiendo Usuarios")
   },[])*/
 
-
+//<NavBarController usuario={usuario} setUsuario={setUsuario}></NavBarController>
   return (
     <>
-    <NavBarController usuario={usuario} setUsuario={setUsuario}></NavBarController>
+    
+    
     <Outlet context={{usuario,setUsuario}}></Outlet>
     </>
   )
