@@ -4,7 +4,6 @@ import './App.css'
 import { Outlet } from 'react-router'
 import Aurora from './components/Aurora/Aurora'
 import NavBarSinUser from './components/NavBar/navBarSinUser'
-import SpotlightCard from './components/SpotlightCard/SpotlightCard'
 import { Link } from 'react-router'
 
 function App() {
@@ -61,25 +60,19 @@ function App() {
           
           <div className="flex flex-wrap justify-center gap-16 px-4">
             {services.map((service, index) => (
-              <SpotlightCard 
-                key={index} 
-                className="card-spotlight"
-                spotlightColor={`rgba(${index % 2 === 0 ? '232, 28, 255' : '64, 201, 255'}, 0.25)`}
-              >
-                <div>
-                  <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text">
-                    {service.title}
-                  </h2>
-                  <p>
-                    {service.description}
-                  </p>
-                </div>
+              <div key={index} className="card">
+                <p className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text">
+                  {service.title}
+                </p>
+                <p>
+                  {service.description}
+                </p>
                 <div className="button-container">
                   <Link to={service.link} className="text-white hover:text-purple-400 transition-colors">
                     <button className="button">{service.buttonText}</button>
                   </Link>
                 </div>
-              </SpotlightCard>
+              </div>
             ))}
           </div>
         </div>
