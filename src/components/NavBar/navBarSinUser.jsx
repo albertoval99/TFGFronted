@@ -1,7 +1,8 @@
-
-import { Link } from "react-router"; 
+// src/components/NavBar/navBarSinUser.jsx
+import { Link } from "react-router";
 import { useState } from "react";
 import SideBar from "../Sidebar/Sidebar";
+import menuIcon from "/src/assets/menuIcon.svg"; 
 
 export default function NavBarSinUser() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,16 +19,20 @@ export default function NavBarSinUser() {
           <div className="text-white text-2xl font-bold">
             <Link to="/"><img src="/src/assets/logo.png" alt="Logo" className="logo-image"></img></Link>
           </div>
+
+
           
-          
-          <button className="menu-button" onClick={toggleSidebar}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-white">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-          </button>
+          <button className="menu-button bg-white rounded-lg p-2" onClick={toggleSidebar}>
+      <img 
+        src={menuIcon} 
+        alt="Menu" 
+        className="w-10 h-10" 
+        style={{ filter: "brightness(0)" }} // Esto hace que el icono sea negro
+      />
+    </button>
         </div>
       </nav>
-      
+
       <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       {sidebarOpen && <div className="sidebar-overlay active" onClick={toggleSidebar}></div>}
     </>

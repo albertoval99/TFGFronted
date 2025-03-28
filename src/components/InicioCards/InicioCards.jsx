@@ -36,7 +36,7 @@ export default function InicioCards(){
             Revoluciona el Mundo del Fútbol
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            FootballZone es la plataforma digital diseñada para entrenadores, árbitros, jugadores y administradores que buscan llevar su experiencia futbolística al siguiente nivel. Gestiona equipos, organiza partidos, consulta estadísticas en tiempo real y mantén todo bajo control desde un solo lugar. Con herramientas innovadoras y fáciles de usar, transformamos la manera en que vives y gestionas el fútbol. ¡Únete a la comunidad que está cambiando el juego!
+            FootballZone es la plataforma digital diseñada para los que buscan llevar su experiencia futbolística al siguiente nivel. Gestiona equipos, organiza partidos, consulta estadísticas en tiempo real y mantén todo bajo control desde un solo lugar. Con herramientas innovadoras y fáciles de usar, transformamos la manera en que vives y gestionas el fútbol. ¡Únete a la comunidad que está cambiando el juego!
             </p>
           </div>
           
