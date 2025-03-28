@@ -117,72 +117,32 @@
   .button:active::before {
     scale: 0.7;
   }
-  
-  /* Añade esto a tu App.css */
-.card {
-  position: relative;
-  width: 250px;  /* Aumentado de 190px */
-  height: 320px; /* Aumentado de 254px */
-  background-color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  padding: 20px;  /* Aumentado de 12px */
-  gap: 15px;      /* Aumentado de 12px */
-  border-radius: 8px;
+
+
+.menu-button {
+  background: none;
+  border: none;
   cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  left: -5px;
-  margin: auto;
-  width: 260px;  /* Aumentado de 200px */
-  height: 330px; /* Aumentado de 264px */
-  border-radius: 10px;
-  background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
-  z-index: -10;
-  pointer-events: none;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.card::after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
-  transform: translate3d(0, 0, 0) scale(0.95);
-  filter: blur(20px);
+/* Responsive */
+@media (max-width: 768px) {
+  .button {
+    width: 100px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  
+  .button::before {
+    width: 108px;
+    height: 43px;
+  }
 }
 
-.heading {
-  font-size: 24px;  /* Aumentado de 20px */
-  text-transform: capitalize;
-  font-weight: 700;
-}
-
-.card p:not(.heading) {
-  font-size: 16px;  /* Aumentado de 14px */
-}
-
-.card p:last-child {
-  color: #e81cff;
-  font-weight: 600;
-}
-
-.card:hover::after {
-  filter: blur(30px);
-}
-
-.card:hover::before {
-  transform: rotate(-90deg) scaleX(1.34) scaleY(0.77);
-}
-
-.button-container {
-  margin-top: 15px;
-  display: flex;
-  justify-content: center;
-}
