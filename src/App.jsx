@@ -1,12 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Outlet } from 'react-router'
 import Aurora from './components/Aurora/Aurora'
 import NavBarSinUser from './components/NavBar/navBarSinUser'
-import InicioCards from './components/InicioCards/InicioCards'
+import { userService } from './services/usuarios.service'
 
 function App() {
   const [usuario, setUsuario] = useState(null)
+  
+  useEffect(() => {
+    async function fetchUsuarios() {
+      const response = await userService.getUsuarios();
+      if (response.status === 200) {
+        // Procesar la lista de usuarios: response.usuarios
+      } else {
+        console.error(response.message);
+      }
+    }
+    fetchUsuarios();
+  }, []);
+  
   
   return (
     <div className="app-container" style={{ backgroundColor: 'black' }}>
@@ -20,7 +33,6 @@ function App() {
       </div>
     <NavBarSinUser />
       <div className="content-container">
-        <InicioCards />
         <Outlet context={{ usuario, setUsuario }}></Outlet>
       </div>
     </div>

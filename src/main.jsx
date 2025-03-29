@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import Login from './components/Login/Login.jsx';
+import InicioCards from './components/InicioCards/InicioCards.jsx';
 
 
 const router = createBrowserRouter([
@@ -12,7 +14,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-       // element: <Inicio />,
+        element: <InicioCards />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       }
     ],
   },

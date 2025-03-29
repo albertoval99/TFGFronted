@@ -1,6 +1,7 @@
 
-import { Link } from "react-router"; // Corregido
+import { Link } from "react-router"; 
 import "./SideBar.css";
+import loginIcon from "/src/assets/loginIcon.svg";
 
 export default function SideBar({ isOpen, toggleSidebar }) {
   return (
@@ -10,24 +11,11 @@ export default function SideBar({ isOpen, toggleSidebar }) {
       </div>
       
       <div className="sidebar-menu">
-        <Link to="/" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">🏋️</div>
-          <span>Entrenadores</span>
-        </Link>
-        
-        <Link to="/servicios" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">🥇</div>
-          <span>Árbitros</span>
-        </Link>
-        
-        <Link to="/contacto" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">⚽</div>
-          <span>Jugadores</span>
-        </Link>
-        
         <Link to="/login" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">👑</div>
-          <span>Administrador</span>
+          <div className="sidebar-icon">
+          <img src={loginIcon} alt="Login" className="w-6 h-6" />
+          </div>
+          <span>Ir al inicio de sesion</span>
         </Link>
       </div>
     </div>
