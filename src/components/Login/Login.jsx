@@ -15,16 +15,23 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         if (!usuario.rol) return setError("Por favor, seleccione un rol");
         if (!userService.validarEmail(usuario.email)) return setError("Email no válido");
         if (!userService.validarPassword(usuario.password)) return setError("Contraseña inválida");
-
+    
         try {
             const response = await userService.login(usuario);
             if (response.status === 200) {
                 const user = userService.getUser();
-
-                switch (user?.rol) {
+    
+    
+                // Verifica que el usuario tenga un rol
+                if (!user?.user?.rol) {
+                    setError("El rol del usuario es incorrecto o no está presente.");
+                    return;
+                }
+                switch (user?.user?.rol){
                     case "administrador":
                         navigate("/admin");
                         break;
@@ -38,7 +45,7 @@ export default function Login() {
                         navigate("/jugador");
                         break;
                     default:
-                        setError("ERROR,rol incorrecto");
+                        setError("ERROR, rol incorrecto");
                         return;
                 }
             } else {

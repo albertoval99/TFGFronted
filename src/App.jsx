@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import Aurora from './components/Aurora/Aurora';
 import NavBarSinUser from './components/NavBar/navBarSinUser';
 import { userService } from './services/usuarios.service';
@@ -8,17 +8,14 @@ import { userService } from './services/usuarios.service';
 function App() {
   const [usuario, setUsuario] = useState(null);
   
+  const location = useLocation();  // Detecta cambios en la ruta actual
+
   useEffect(() => {
-    async function fetchUsuarios() {
-      const response = await userService.getUsuarios();
-      if (response.status === 200) {
-        console.log(response.usuarios); 
-      } else {
-        console.error(response.message); 
-      }
+    const user = userService.getUser();
+    if (user) {
+      setUsuario(user.user);  // Establece el usuario en el estado global
     }
-    fetchUsuarios();
-  }, []);
+  }, [location]);  // Cuando cambie la ruta, vuelve a verificar el usuario
 
   return (
     <div className="app-container" style={{ backgroundColor: 'black' }}>

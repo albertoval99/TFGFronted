@@ -1,10 +1,21 @@
 import { Link } from "react-router";
-import { useState } from "react";
-import SideBar from "../Sidebar/Sidebar";
+import { useState, useEffect } from "react";
+import { userService } from "/src/services/usuarios.service";  // Asegúrate de importar tu servicio
+import SideBar from "../Sidebar/Sidebar";  // Asegúrate de que tienes el componente SideBar
+import SideBarAdmin from "../Sidebar/SidebarAdmin"; // Si tienes un SideBarAdmin
 import menuIcon from "/src/assets/menuIcon.svg";
 
 export default function NavBarSinUser() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [usuario, setUsuario] = useState(null);
+
+  // Obtener el usuario desde el token al montar el componente
+  useEffect(() => {
+    const user = userService.getUser();  // Obtén el usuario decodificado del token
+    if (user) {
+      setUsuario(user.user);  // Guarda el usuario en el estado
+    }
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -28,7 +39,13 @@ export default function NavBarSinUser() {
         </div>
       </nav>
 
-      <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      {/* Aquí decidimos qué sidebar mostrar en función del rol */}
+      {sidebarOpen && (
+        usuario && usuario.rol === "administrador" ? 
+          <SideBarAdmin isOpen={sidebarOpen} toggleSidebar={toggleSidebar} /> : 
+          <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      )}
+
       {sidebarOpen && <div className="sidebar-overlay active" onClick={toggleSidebar}></div>}
     </>
   );
