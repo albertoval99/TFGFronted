@@ -202,6 +202,6 @@ export default function Aurora(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
- // En Aurora.jsx, modifica la línea del return
+
 return <div ref={ctnDom} className="w-full h-screen" />;
 }

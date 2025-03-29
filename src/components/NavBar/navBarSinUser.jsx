@@ -1,15 +1,13 @@
-// src/components/NavBar/navBarSinUser.jsx
 import { Link } from "react-router";
 import { useState } from "react";
 import SideBar from "../Sidebar/Sidebar";
-import menuIcon from "/src/assets/menuIcon.svg"; 
+import menuIcon from "/src/assets/menuIcon.svg";
 
 export default function NavBarSinUser() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-    console.log("Sidebar toggled:", !sidebarOpen);
   };
 
   return (
@@ -20,16 +18,13 @@ export default function NavBarSinUser() {
             <Link to="/"><img src="/src/assets/logo.png" alt="Logo" className="logo-image"></img></Link>
           </div>
 
-
-          
           <button className="menu-button bg-white rounded-lg p-2" onClick={toggleSidebar}>
-      <img 
-        src={menuIcon} 
-        alt="Menu" 
-        className="w-10 h-10" 
-        style={{ filter: "brightness(0)" }} // Esto hace que el icono sea negro
-      />
-    </button>
+            <img
+              src={menuIcon}
+              alt="Menu"
+              className="w-10 h-10"
+            />
+          </button>
         </div>
       </nav>
 
