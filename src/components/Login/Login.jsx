@@ -5,73 +5,30 @@ import "./login.css";
 
 export default function Login() {
     const navigate = useNavigate();
-    const [usuario, setUsuario] = useState({
-        email: "",
-        password: "",
-        userType: ""
-    });
+    const [usuario, setUsuario] = useState({ email: "", password: "", rol: "" });
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUsuario((prev) => ({
-            ...prev,
-            [name]: value
-        }));
+        setUsuario({ ...usuario, [e.target.name]: e.target.value });
         setError("");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
-
-        if (!usuario.userType) {
-            setError("Por favor, seleccione un rol");
-            setLoading(false);
-            return;
-        }
-
-        if (!userService.validarEmail(usuario.email)) {
-            setError("El formato del email no es válido");
-            setLoading(false);
-            return;
-        }
-
-        if (!userService.validarPassword(usuario.password)) {
-            setError("La contraseña debe tener al menos 8 caracteres");
-            setLoading(false);
-            return;
-        }
+        if (!usuario.rol) return setError("Por favor, seleccione un rol");
+        if (!userService.validarEmail(usuario.email)) return setError("Email no válido");
+        if (!userService.validarPassword(usuario.password)) return setError("Contraseña inválida");
 
         try {
             const response = await userService.login(usuario);
             if (response.status === 200) {
                 const user = userService.getUser();
-                switch (user?.rol) {
-                    case "administrador":
-                        navigate("/admin");
-                        break;
-                    case "entrenador":
-                        navigate("/entrenador");
-                        break;
-                    case "arbitro":
-                        navigate("/arbitro");
-                        break;
-                    case "jugador":
-                        navigate("/dashboard");
-                        break;
-                    default:
-                        navigate("/dashboard");
-                }
+                navigate(user?.rol === "administrador" ? "/admin" : user?.rol === "entrenador" ? "/entrenador" : user?.rol === "arbitro" ? "/arbitro" : "/dashboard");
             } else {
                 setError(response.message || "Error al iniciar sesión");
             }
-        } catch (err) {
-            setError("Error de conexión con el servidor");
-            console.log(err)
-        } finally {
-            setLoading(false);
+        } catch {
+            setError("Error de conexión");
         }
     };
 
@@ -114,23 +71,22 @@ export default function Login() {
 
                         <div>
                             <select
-                                name="userType"
-                                value={usuario.userType}
+                                name="rol"
+                                value={usuario.rol}
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             >
                                 <option value="">Seleccione un rol</option>
-                                <option value="Administrador">Administrador</option>
-                                <option value="Entrenador">Entrenador</option>
-                                <option value="Arbitro">Arbitro</option>
-                                <option value="Jugador">Jugador</option>
+                                <option value="administrador">Administrador</option>
+                                <option value="entrenador">Entrenador</option>
+                                <option value="arbitro">Arbitro</option>
+                                <option value="jugador">Jugador</option>
                             </select>
                         </div>
 
                         <div className="button-container">
                             <button
                                 type="submit"
-                                disabled={loading}
                                 className="relative group w-full"
                             >
                                 <div className="relative group">
@@ -139,7 +95,7 @@ export default function Login() {
                                         <span className="relative z-10 block px-6 py-3 rounded-2xl bg-neutral-950">
                                             <div className="relative z-10 flex items-center space-x-3">
                                                 <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#CE32FD]">
-                                                    {loading ? "Cargando..." : "Entrar"}
+                                                    Entrar
                                                 </span>
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -161,4 +117,5 @@ export default function Login() {
             </div>
         </div>
     );
+
 }
