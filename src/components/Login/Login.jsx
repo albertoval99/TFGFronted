@@ -76,11 +76,11 @@ export default function Login() {
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             >
-                                <option value="">Seleccione un rol</option>
-                                <option value="administrador">Administrador</option>
+                                <option value="jugador">Jugador</option>
                                 <option value="entrenador">Entrenador</option>
                                 <option value="arbitro">Arbitro</option>
-                                <option value="jugador">Jugador</option>
+                                <option value="administrador">Administrador</option>
+                                
                             </select>
                         </div>
 
