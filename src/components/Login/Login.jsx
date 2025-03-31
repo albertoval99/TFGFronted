@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import { userService } from "../../services/usuarios.service";
 
 
 export default function Login() {
     const navigate = useNavigate();
-    const [usuario, setUsuario] = useState({ email: "", password: "", rol: "" });
+    const [usuario, setLocalUsuario] = useState({ email: "", password: "", rol: "" });
     const [error, setError] = useState("");
+    const {setUsuario}=useOutletContext();
+    //QUITAR GETUSER
 
     const handleChange = (e) => {
-        setUsuario({ ...usuario, [e.target.name]: e.target.value });
+        setLocalUsuario({ ...usuario, [e.target.name]: e.target.value });
         setError("");
     };
 
@@ -24,14 +26,19 @@ export default function Login() {
             const response = await userService.login(usuario);
             if (response.status === 200) {
                 const user = userService.getUser();
+                console.log("Usuario después de iniciar sesión:", user);
     
     
                 // Verifica que el usuario tenga un rol
-                if (!user?.user?.rol) {
+                if (!user?.rol) {
                     setError("El rol del usuario es incorrecto o no está presente.");
                     return;
                 }
-                switch (user?.user?.rol){
+
+                setUsuario(user);
+               
+
+                switch (user.rol){
                     case "administrador":
                         navigate("/admin");
                         break;

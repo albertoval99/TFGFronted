@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Outlet, useLocation } from 'react-router';
+import { Outlet } from 'react-router';
 import Aurora from './components/Aurora/Aurora';
 import NavBarSinUser from './components/NavBar/navBarSinUser';
 import { userService } from './services/usuarios.service';
@@ -8,14 +8,15 @@ import { userService } from './services/usuarios.service';
 function App() {
   const [usuario, setUsuario] = useState(null);
   
-  const location = useLocation();  // Detecta cambios en la ruta actual
+
 
   useEffect(() => {
-    const user = userService.getUser();
+    const user = userService.getUser(); // Solo se ejecuta en la carga inicial
     if (user) {
-      setUsuario(user.user);  // Establece el usuario en el estado global
+      setUsuario(user);
     }
-  }, [location]);  // Cuando cambie la ruta, vuelve a verificar el usuario
+  }, []);
+  
 
   return (
     <div className="app-container" style={{ backgroundColor: 'black' }}>

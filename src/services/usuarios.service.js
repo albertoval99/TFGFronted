@@ -18,8 +18,8 @@ export const userService = {
             const data = await response.json();
     
             if (response.ok) {
-                // Guardamos solo el token en sessionStorage
                 sessionStorage.setItem("token", data.token);
+                console.log("Token guardado en sessionStorage:", sessionStorage.getItem("token")); 
                 return { status: 200 };
             }
             return { status: response.status, message: data.message };
@@ -32,19 +32,24 @@ export const userService = {
     // Función para obtener los datos del usuario directamente del token
     getUser: () => {
         const token = sessionStorage.getItem("token");
-        if (token) {
-            try {
-                // Decodificamos el token
-                const decoded = jwt_decode(token);
-                console.log("Token decodificado:", decoded); // Verifica la salida del token decodificado
-                return decoded;  // Retorna el contenido del token (usuario)
-            } catch (error) {
-                console.error("Error al decodificar el token", error);
-                return null;
-            }
+        console.log("Intentando recuperar el token:", token); // 🔥 Verifica si se obtiene algo
+
+        if (!token) {
+            console.warn("⚠️ No hay token en sessionStorage");
+            return null;
         }
-        return null;
+
+        try {
+            const decoded = jwt_decode(token);
+            console.log("Usuario decodificado:", decoded); // 🔥 Ve qué datos trae realmente el token
+            return decoded;
+        } catch (error) {
+            console.error("❌ Error al decodificar el token:", error);
+            return null;
+        }
     },
+
+
 
     getUsuarios: async () => {
         try {
