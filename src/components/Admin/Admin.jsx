@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router";
 
 export default function Admin() {
-    const { usuario, setUsuario } = useOutletContext();
+    const { usuario } = useOutletContext();
 
     return (
         <>

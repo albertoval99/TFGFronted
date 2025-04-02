@@ -4,7 +4,7 @@ import loginIcon from "/src/assets/loginIcon.svg";
 import homeIcon from "/src/assets/home.svg";
 import { userService } from "../../services/usuarios.service";
 
-export default function SideBarAdmin({ isOpen, toggleSidebar, usuario, setUsuario }) {
+export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
 
   const navigate = useNavigate();
 
