@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { Outlet } from 'react-router';
 import Aurora from './components/Aurora/Aurora';
-import NavBarSinUser from './components/NavBar/navBarSinUser';
 import { userService } from './services/usuarios.service';
+import NavBar from './components/NavBar/navBar';
 
 function App() {
   const [usuario, setUsuario] = useState(null);
   
-
-
   useEffect(() => {
-    const user = userService.getUser(); // Solo se ejecuta en la carga inicial
-    if (user) {
-      setUsuario(user);
+    const decodedToken = userService.getUser(); 
+    if (decodedToken) {
+      setUsuario(decodedToken.user); 
     }
   }, []);
+  
   
 
   return (
@@ -28,7 +27,7 @@ function App() {
           speed={1}
         />
       </div>
-      <NavBarSinUser />
+      <NavBar usuario={usuario} setUsuario={setUsuario} />
       <div className="content-container">
         <Outlet context={{ usuario, setUsuario }}></Outlet>
       </div>

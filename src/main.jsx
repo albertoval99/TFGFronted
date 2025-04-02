@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import Login from './components/Login/Login.jsx';
 import InicioCards from './components/InicioCards/InicioCards.jsx';
 import Admin from './components/Admin/Admin.jsx';
+import Jugador from './components/Jugador/Jugador.jsx';
+import Arbitro from './components/Arbitro/Arbitro.jsx';
+import Entrenador from './components/Entrenador/Entrenador.jsx';
 
 
 const router = createBrowserRouter([
@@ -24,6 +27,18 @@ const router = createBrowserRouter([
       {
         path:"/admin",
         element:<Admin></Admin>
+      },
+      {
+        path:"/jugador",
+        element:<Jugador></Jugador>
+      },
+      {
+        path:"/arbitro",
+        element:<Arbitro></Arbitro>
+      },
+      {
+        path:"/entrenador",
+        element:<Entrenador></Entrenador>
       }
     ],
   },

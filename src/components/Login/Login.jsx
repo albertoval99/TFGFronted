@@ -5,40 +5,30 @@ import { userService } from "../../services/usuarios.service";
 
 export default function Login() {
     const navigate = useNavigate();
-    const [usuario, setLocalUsuario] = useState({ email: "", password: "", rol: "" });
+    const [formData, setFormData] = useState({ email: "", password: "", rol: "" });
     const [error, setError] = useState("");
-    const {setUsuario}=useOutletContext();
-    //QUITAR GETUSER
+   const {setUsuario}=useOutletContext();
+   
 
     const handleChange = (e) => {
-        setLocalUsuario({ ...usuario, [e.target.name]: e.target.value });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
         setError("");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
     
-        if (!usuario.rol) return setError("Por favor, seleccione un rol");
-        if (!userService.validarEmail(usuario.email)) return setError("Email no válido");
-        if (!userService.validarPassword(usuario.password)) return setError("Contraseña inválida");
+        if (!formData.rol) return setError("Por favor, seleccione un rol");
+      //  if (!userService.validarEmail(formData.email)) return setError("Email no válido");
+      //  if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
     
         try {
-            const response = await userService.login(usuario);
+            const response = await userService.login(formData);
             if (response.status === 200) {
-                const user = userService.getUser();
-                console.log("Usuario después de iniciar sesión:", user);
-    
-    
-                // Verifica que el usuario tenga un rol
-                if (!user?.rol) {
-                    setError("El rol del usuario es incorrecto o no está presente.");
-                    return;
-                }
 
-                setUsuario(user);
+                setUsuario(formData);
                
-
-                switch (user.rol){
+                switch (formData.rol){
                     case "administrador":
                         navigate("/admin");
                         break;
@@ -125,7 +115,7 @@ export default function Login() {
                             <input
                                 type="email"
                                 name="email"
-                                value={usuario.email}
+                                value={formData.email}
                                 onChange={handleChange}
                                 placeholder="Email"
                                 className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
@@ -136,7 +126,7 @@ export default function Login() {
                             <input
                                 type="password"
                                 name="password"
-                                value={usuario.password}
+                                value={formData.password}
                                 onChange={handleChange}
                                 placeholder="Contraseña"
                                 className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
@@ -146,7 +136,7 @@ export default function Login() {
                         <div>
                             <select
                                 name="rol"
-                                value={usuario.rol}
+                                value={formData.rol}
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             >

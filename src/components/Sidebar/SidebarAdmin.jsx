@@ -1,9 +1,20 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import "./SideBar.css";
 import loginIcon from "/src/assets/loginIcon.svg";
 import homeIcon from "/src/assets/home.svg";
+import { userService } from "../../services/usuarios.service";
 
-export default function SideBarAdmin({ isOpen, toggleSidebar }) {
+export default function SideBarAdmin({ isOpen, toggleSidebar, usuario, setUsuario }) {
+
+  const navigate = useNavigate();
+
+
+  const handleLogout = () => {
+    userService.logout();
+    setUsuario(null);
+    navigate("/");
+  };
+
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-header">
@@ -29,6 +40,13 @@ export default function SideBarAdmin({ isOpen, toggleSidebar }) {
           </div>
           <span>SOY ADMIN</span>
         </Link>
+        <button onClick={handleLogout}>
+          <Link className="sidebar-item" onClick={toggleSidebar}>
+            <div className="sidebar-icon">
+              <img src={loginIcon} alt="Logout" className="w-6 h-6" />
+            </div>
+            <span>LogOut</span>
+          </Link></button>
 
       </div>
     </div>
