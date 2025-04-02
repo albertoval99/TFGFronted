@@ -32,7 +32,6 @@ export const userService = {
             console.warn("⚠️ No hay token en sessionStorage");
             return null;
         }
-
         try {
             const decoded = jwt_decode(token);
             return decoded;
@@ -52,7 +51,6 @@ export const userService = {
                     "Authorization": `Bearer ${sessionStorage.getItem("token")}`,  // Usamos el token para autorización
                 }
             });
-
             const data = await response.json();
             if (response.ok) {
                 return { status: 200, usuarios: data.usuarios };
