@@ -40,6 +40,18 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
           </div>
           <span>SOY ADMIN</span>
         </Link>
+        <Link to="/registrarArbitro" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={loginIcon} alt="Login" className="w-6 h-6" />
+          </div>
+          <span>Registrar Arbitro</span>
+        </Link>
+        <Link to="/registrarEntrenador" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={loginIcon} alt="Login" className="w-6 h-6" />
+          </div>
+          <span>Registrar Entrenador</span>
+        </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">

@@ -2,49 +2,50 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { userService } from "../../services/usuarios.service";
 
-
 export default function Login() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "", rol: "" });
     const [error, setError] = useState("");
-   const {setUsuario}=useOutletContext();
-   
+    const [success, setSuccess] = useState("");
+    const { setUsuario } = useOutletContext();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setError("");
+        setSuccess("");
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!formData.rol) return setError("Por favor, seleccione un rol");
-      //  if (!userService.validarEmail(formData.email)) return setError("Email no válido");
-      //  if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
-    
+        // if (!userService.validarEmail(formData.email)) return setError("Email no válido");
+        // if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
+
         try {
             const response = await userService.login(formData);
             if (response.status === 200) {
-
                 setUsuario(formData);
-               
-                switch (formData.rol){
-                    case "administrador":
-                        navigate("/admin");
-                        break;
-                    case "entrenador":
-                        navigate("/entrenador");
-                        break;
-                    case "arbitro":
-                        navigate("/arbitro");
-                        break;
-                    case "jugador":
-                        navigate("/jugador");
-                        break;
-                    default:
-                        setError("ERROR, rol incorrecto");
-                        return;
-                }
+                setSuccess("Inicio de sesión exito.\nRedirigiendo al inicio...");
+                setTimeout(() => {
+                    switch (formData.rol) {
+                        case "administrador":
+                            navigate("/admin");
+                            break;
+                        case "entrenador":
+                            navigate("/entrenador");
+                            break;
+                        case "arbitro":
+                            navigate("/arbitro");
+                            break;
+                        case "jugador":
+                            navigate("/jugador");
+                            break;
+                        default:
+                            setError("ERROR, rol incorrecto");
+                            break;
+                    }
+                }, 2000);
             } else {
                 setError(response.message || "Error al iniciar sesión");
             }
@@ -55,34 +56,70 @@ export default function Login() {
 
     return (
         <div className="flex items-center justify-center w-full h-full">
-            {/* Contenedor de error */}
-            {error && (
+            {/* Contenedor de mensajes (error o éxito) */}
+            {(error || success) && (
                 <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
-                    <div className="error-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
+                    <div
+                        className={`cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg px-[10px] ${error ? "bg-[#232531]" : "bg-[#232531]"
+                            }`}
+                    >
                         <div className="flex items-center flex-1">
-                            <div className="text-[#d65563] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                                    ></path>
-                                </svg>
+                            <div
+                                className={`bg-white/5 backdrop-blur-xl p-1 rounded-lg ${error ? "text-[#d65563]" : "text-green-500"
+                                    }`}
+                            >
+                                {error ? (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-5 h-5"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
+                                        ></path>
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-5 h-5"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M4.5 12.75l6 6 9-13.5"
+                                        ></path>
+                                    </svg>
+                                )}
                             </div>
+                            {/**Para poder hacer salto de linea con el /n */}
                             <div className="text-center ml-2.5">
-                                <p className="text-white">{error}</p>
+                                <p className="text-white">
+                                    {(error || success)
+                                        .split("\n")
+                                        .map((line, index) => (
+                                            <span key={index}>
+                                                {line}
+                                                <br />
+                                            </span>
+                                        ))}
+                                </p>
                             </div>
                         </div>
                         <button
                             className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear"
-                            onClick={() => setError('')}
+                            onClick={() => {
+                                setError("");
+                                setSuccess("");
+                            }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +180,7 @@ export default function Login() {
                                 <option value="">Selecciona tu rol</option>
                                 <option value="jugador">Jugador</option>
                                 <option value="entrenador">Entrenador</option>
-                                <option value="arbitro">Arbitro</option>
+                                <option value="arbitro">Árbitro</option>
                                 <option value="administrador">Administrador</option>
                             </select>
                         </div>
@@ -176,9 +213,5 @@ export default function Login() {
                 </div>
             </div>
         </div>
-
-
-
     );
-
 }
