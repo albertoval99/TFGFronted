@@ -13,7 +13,7 @@ export default function RegistroEntrenador() {
         password: "",
         repetirPassword: "",
         telefono: "",
-        equipo: ""
+        id_equipo: ""
     });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -48,7 +48,7 @@ export default function RegistroEntrenador() {
             !formData.password ||
             !formData.repetirPassword ||
             !formData.telefono ||
-            !formData.equipo
+            !formData.id_equipo
         ) {
             setError("Por favor, rellena todos los campos.");
             return;
@@ -221,8 +221,8 @@ export default function RegistroEntrenador() {
                         {/* Select para elegir equipo */}
                         <div>
                             <select
-                                name="equipo"
-                                value={formData.equipo}
+                                name="id_equipo"
+                                value={formData.id_equipo}
                                 onChange={handlerOnChange}
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             >
