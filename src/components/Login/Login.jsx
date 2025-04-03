@@ -9,24 +9,27 @@ export default function Login() {
     const [success, setSuccess] = useState("");
     const { setUsuario } = useOutletContext();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        setError("");
-        setSuccess("");
-    };
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!formData.rol) return setError("Por favor, seleccione un rol");
-        // if (!userService.validarEmail(formData.email)) return setError("Email no válido");
-        // if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
+       // if (!userService.validarEmail(formData.email)) return setError("Email no válido");
+       // if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
 
         try {
             const response = await userService.login(formData);
             if (response.status === 200) {
                 setUsuario(formData);
-                setSuccess("Inicio de sesión exito.\nRedirigiendo al inicio...");
+                setError(""); 
+                setSuccess(response.message || "Inicio de sesión exitoso.\nRedirigiendo al inicio...");
                 setTimeout(() => {
                     switch (formData.rol) {
                         case "administrador":
@@ -155,7 +158,7 @@ export default function Login() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="Email"
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -166,7 +169,7 @@ export default function Login() {
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder="Contraseña"
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -175,7 +178,7 @@ export default function Login() {
                                 name="rol"
                                 value={formData.rol}
                                 onChange={handleChange}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             >
                                 <option value="">Selecciona tu rol</option>
                                 <option value="jugador">Jugador</option>

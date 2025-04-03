@@ -1,35 +1,82 @@
 import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router";
+import { useNavigate } from "react-router";
+import { userService } from "../../services/usuarios.service";
 
 export default function RegistroArbitro() {
-
     const navigate = useNavigate();
-    const [formData, setFormData] = useState(
-        {
-            nombre: "",
-            apellidos: "",
-            email: "", password: "",
-            repetirPassword: "",
-            telefono: ""
-        });
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-    const { setUsuario } = useOutletContext();
+    const [formData, setFormData] = useState({
+        nombre: "",
+        apellidos: "",
+        email: "",
+        password: "",
+        repetirPassword: "",
+        telefono: ""
+    });
+    const [error, setError] = useState(""); 
+    const [success, setSuccess] = useState(""); 
 
-    const handlerOnChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        setError("");
-        setSuccess("");
-    };
+    function handlerOnChange(e) {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-    }
+        if (!formData.nombre || !formData.apellidos || !formData.email || !formData.password || !formData.repetirPassword || !formData.telefono) {
+            setError("Por favor, rellena todos los campos.");
+            return;
+        }
+
+        if (formData.password !== formData.repetirPassword) {
+            setError("Las contraseñas no coinciden");
+            return;
+        }
+
+        if (!userService.validarEmail(formData.email)) {
+            setError("El email no es válido");
+            return;
+        }
+
+        if (!userService.validarPassword(formData.password)) {
+            setError("La contraseña debe tener al menos 8 caracteres");
+            return;
+        }
+
+        try {
+            const result = await userService.registroArbitro(formData);
+
+            if (result.status === 201) {
+                setError("");
+                setSuccess(result.message|| "El arbitro ha sido registrado con éxito.Rediriegiendo al inicio...");
+
+                setTimeout(() => {
+                    navigate("/admin");
+                }, 2000);
+
+                setFormData({
+                    nombre: "",
+                    apellidos: "",
+                    email: "",
+                    password: "",
+                    repetirPassword: "",
+                    telefono: ""
+                });
+            } else {
+                setError(result.message);
+            }
+        } catch (error) {
+            setError("Error de conexión. Intenta de nuevo más tarde.");
+            console.log("Error de conexión. Intenta de nuevo más tarde.", error);
+        }
+    };
 
     return (
         <div className="flex items-center justify-center w-full h-full">
-            {/* Contenedor de mensajes (error o éxito) en la misma posición */}
+            {/* Contenedor de mensajes (error o éxito) */}
             {(error || success) && (
                 <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
                     <div
@@ -89,8 +136,8 @@ export default function RegistroArbitro() {
                         <button
                             className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear"
                             onClick={() => {
-                                setError("");
-                                setSuccess("");
+                                setError(""); 
+                                setSuccess(""); 
                             }}
                         >
                             <svg
@@ -115,9 +162,12 @@ export default function RegistroArbitro() {
             {/* Tarjeta de registro para árbitros */}
             <div className="card relative bg-black p-8" style={{ width: "500px", height: "550px" }}>
                 <div className="card-content flex flex-col gap-6">
-                    <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text text-center text-2xl font-bold">
-                        Registro para Árbitros
+                    <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text text-center text-2xl font-bold leading-[1.2] pb-2 overflow-visible">
+                        Registro de Árbitros
                     </h2>
+
+
+
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
@@ -125,9 +175,9 @@ export default function RegistroArbitro() {
                                 type="text"
                                 name="nombre"
                                 placeholder="Nombre"
-                                onChange={handlerOnChange}
                                 value={formData.nombre}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                onChange={handlerOnChange}
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -138,7 +188,7 @@ export default function RegistroArbitro() {
                                 placeholder="Apellidos"
                                 value={formData.apellidos}
                                 onChange={handlerOnChange}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -147,9 +197,9 @@ export default function RegistroArbitro() {
                                 type="email"
                                 name="email"
                                 placeholder="Email"
-                                onChange={handlerOnChange}
                                 value={formData.email}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                onChange={handlerOnChange}
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -158,9 +208,9 @@ export default function RegistroArbitro() {
                                 type="password"
                                 name="password"
                                 placeholder="Password"
-                                onChange={handlerOnChange}
                                 value={formData.password}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                onChange={handlerOnChange}
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -169,9 +219,9 @@ export default function RegistroArbitro() {
                                 type="password"
                                 name="repetirPassword"
                                 placeholder="Repetir Password"
-                                onChange={handlerOnChange}
                                 value={formData.repetirPassword}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                onChange={handlerOnChange}
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -180,9 +230,9 @@ export default function RegistroArbitro() {
                                 type="text"
                                 name="telefono"
                                 placeholder="Teléfono"
-                                onChange={handlerOnChange}
                                 value={formData.telefono}
-                                className="w-full px-4 py-3 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
+                                onChange={handlerOnChange}
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
 
@@ -215,5 +265,4 @@ export default function RegistroArbitro() {
             </div>
         </div>
     );
-
 }

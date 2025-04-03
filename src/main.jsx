@@ -9,8 +9,9 @@ import Admin from './components/Admin/Admin.jsx';
 import Jugador from './components/Jugador/Jugador.jsx';
 import Arbitro from './components/Arbitro/Arbitro.jsx';
 import Entrenador from './components/Entrenador/Entrenador.jsx';
-import RegistroEntrenador from './components/Admin/RegistroEntrenador.jsx';
 import RegistroArbitro from './components/Admin/RegistroArbitro.jsx';
+import RegistroEntrenador from './components/Admin/RegistroEntrenador.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -43,12 +44,12 @@ const router = createBrowserRouter([
         element:<Entrenador></Entrenador>
       },
       {
-        path:"/registrarEntrenador",
-        element:<RegistroEntrenador></RegistroEntrenador>
+        path:"/registroArbitro",
+        element:<RegistroArbitro></RegistroArbitro>
       },
       {
-        path:"/registrarArbitro",
-        element:<RegistroArbitro></RegistroArbitro>
+        path:"/registroEntrenador",
+        element:<RegistroEntrenador></RegistroEntrenador>
       }
     ],
   },
