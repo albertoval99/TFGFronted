@@ -24,4 +24,21 @@ export const equipoService = {
             throw error;
         }
     },
+
+    getEquipoById: async (id_equipo) => {
+        try {
+            const respuesta = await fetch(`${API_URL}/${id_equipo}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!respuesta.ok) {
+                throw new Error("No se pudo obtener la información del equipo");
+            }
+            return await respuesta.json();
+        } catch (error) {
+            console.error("Error al obtener info del equipo:", error);
+            return null;
+        }
+    }
+    
 }

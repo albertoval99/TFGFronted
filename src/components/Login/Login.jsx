@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { userService } from "../../services/usuarios.service";
 
+
 export default function Login() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "", rol: "" });
@@ -19,17 +20,14 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!formData.rol) return setError("Por favor, seleccione un rol");
-       // if (!userService.validarEmail(formData.email)) return setError("Email no válido");
-       // if (!userService.validarPassword(formData.password)) return setError("Contraseña inválida");
 
         try {
             const response = await userService.login(formData);
             if (response.status === 200) {
-                setUsuario(formData);
-                setError(""); 
-                setSuccess(response.message || "Inicio de sesión exitoso.\nRedirigiendo al inicio...");
+                setUsuario(response.usuario);
+                setError("");
+                setSuccess(response.message);
                 setTimeout(() => {
                     switch (formData.rol) {
                         case "administrador":
@@ -56,7 +54,6 @@ export default function Login() {
             setError("Error de conexión");
         }
     };
-
     return (
         <div className="flex items-center justify-center w-full h-full">
             {/* Contenedor de mensajes (error o éxito) */}
@@ -103,10 +100,9 @@ export default function Login() {
                                     </svg>
                                 )}
                             </div>
-                            {/**Para poder hacer salto de linea con el /n */}
-                            <div className="text-center ml-2.5">
+                            <div className="text-center ml-3">
                                 <p className="text-white">
-                                    {(error || success)
+                                    {String(error || success)
                                         .split("\n")
                                         .map((line, index) => (
                                             <span key={index}>
@@ -116,6 +112,9 @@ export default function Login() {
                                         ))}
                                 </p>
                             </div>
+
+
+
                         </div>
                         <button
                             className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear"

@@ -40,6 +40,12 @@ export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario })
           </div>
           <span>SOY Entrenador</span>
         </Link>
+        <Link to="/registroJugador" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={loginIcon} alt="Login" className="w-6 h-6" />
+          </div>
+          <span>Registrar Jugador</span>
+        </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">

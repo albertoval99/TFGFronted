@@ -11,6 +11,7 @@ import Arbitro from './components/Arbitro/Arbitro.jsx';
 import Entrenador from './components/Entrenador/Entrenador.jsx';
 import RegistroArbitro from './components/Admin/RegistroArbitro.jsx';
 import RegistroEntrenador from './components/Admin/RegistroEntrenador.jsx';
+import RegistroJugador from './components/Entrenador/RegistroJugador.jsx';
 
 
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path:"/registroEntrenador",
         element:<RegistroEntrenador></RegistroEntrenador>
+      },
+      {
+        path:"/registroJugador",
+        element:<RegistroJugador></RegistroJugador>
       }
     ],
   },

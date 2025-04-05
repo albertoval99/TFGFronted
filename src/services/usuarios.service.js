@@ -5,66 +5,65 @@ const API_URL = `${URL}/usuarios`;
 export const userService = {
     login: async (credenciales) => {
         try {
-            const respuesta = await fetch(`${API_URL}/login`, {
-                method: "POST",
+          const respuesta = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(credenciales),
+          });
+          const datos = await respuesta.json();
+          
+          if (respuesta.ok) {
+            const token = datos.token;
+            sessionStorage.setItem("token", token);
+            const decodificado = jwt_decode(token);
+            const { id_usuario, email, rol } = decodificado.user;
+            let usuario = { id_usuario, email, rol };
+            
+            if (rol === "entrenador") {
+              const respuestaEntrenador = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
+                method: "GET",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(credenciales),
-            });
-
-            const datos = await respuesta.json();
-
-            if (respuesta.ok) {
-                // Guardamos el token en sessionStorage
-                const token = datos.token;
-                sessionStorage.setItem("token", token);
-
-                // Decodificamos el token para obtener el email del usuario y el id_usuario
-                const decodificado = jwt_decode(token);
-                const emailUsuario = decodificado.user.email;
-                const idUsuario = decodificado.user.id_usuario;  // Verifica si se está obteniendo el id_usuario
-
-                console.log("Email del usuario:", emailUsuario);
-                console.log("ID del usuario:", idUsuario); // Verifica si está presente
-
-                // Obtenemos los datos completos del usuario mediante una petición extra
-                const respuestaUsuario = await fetch(`${API_URL}/${idUsuario}`, {
-                    headers: {
-                        method: "GET",
-                        "Content-Type": "application/json"
-                    },
-                });
-                const datosUsuario = await respuestaUsuario.json();
-
-                if (respuestaUsuario.ok) {
-                    // Guardamos los datos completos del usuario en sessionStorage
-                    sessionStorage.setItem("usuario", JSON.stringify(datosUsuario));
-                    return { estado: 200, usuario: datosUsuario };
-                }
-                return { estado: respuestaUsuario.status, mensaje: datosUsuario.mensaje };
+              });
+              const datosEntrenador = await respuestaEntrenador.json();
+              if (respuestaEntrenador.ok) {
+                usuario = { ...usuario, ...datosEntrenador };
+              } else {
+                return { status: respuestaEntrenador.status, message: datosEntrenador.message };
+              }
             }
-            return { estado: respuesta.status, mensaje: datos.mensaje };
+            
+            sessionStorage.setItem("usuario", JSON.stringify(usuario));
+            return {
+              status: 200,
+              usuario,
+              message: "Inicio de sesión exitoso.\nRedirigiendo al inicio...",
+            };
+          }
+          
+          return { status: respuesta.status, message: datos.message };
         } catch (error) {
-            return { estado: 500, mensaje: "Error de conexión", error };
+          console.error("❌ Error durante el login:", error);
+          return { status: 500, message: "Error de conexión", error };
         }
-    },
+      },
+    
 
 
     // Función para obtener los datos del usuario directamente del token
     getUser: () => {
         const token = sessionStorage.getItem("token");
-        const user = sessionStorage.getItem("usuario");
-
-        if (!token || !user) {
+        if (!token) {
             console.warn("⚠️ No hay usuario o token en sessionStorage");
             return null;
         }
-
-        return {
-            token,
-            usuario: JSON.parse(user),
-        };
+        try {
+            const decoded = jwt_decode(token);
+            return decoded.user;
+        } catch (error) {
+            console.error("Error al decodificar el token:", error);
+            return null;
+        }
     },
-
 
 
     getUsuarios: async () => {
@@ -173,6 +172,23 @@ export const userService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+
+    // Función para obtener los datos del entrenador(equipo,id entrenador x el id del ususario)
+    getEntrenadorInfo: async (id_usuario) => {
+        try {
+            const respuesta = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+            if (!respuesta.ok) {
+                throw new Error("No se pudo obtener la información del entrenador");
+            }
+            return await respuesta.json();
+        } catch (error) {
+            console.error("Error al obtener info de entrenador:", error);
+            return null;
+        }
+    }
 
 
 
