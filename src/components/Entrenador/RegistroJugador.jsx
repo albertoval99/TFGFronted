@@ -15,7 +15,7 @@ export default function RegistroJugador() {
         id_equipo: "",
         posicion: "",
         activo: true,
-        dorsal: ""
+        numero_camiseta: ""
     });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -34,7 +34,7 @@ export default function RegistroJugador() {
             const fetchEquipo = async () => {
                 try {
                     const result = await equipoService.getEquipoById(entrenador.id_equipo);
-                    console.log("Resultado de getEquipoById:", result);
+                    
 
                     if (result?.equipo?.nombre_equipo) {
                         setNombreEquipo(result.equipo.nombre_equipo);
@@ -68,9 +68,8 @@ export default function RegistroJugador() {
             !formData.password ||
             !formData.repetirPassword ||
             !formData.telefono ||
-            !formData.id_equipo ||
             !formData.posicion ||
-            !formData.dorsal
+            !formData.numero_camiseta
         ) {
             setError("Por favor, rellena todos los campos.");
             return;
@@ -99,7 +98,7 @@ export default function RegistroJugador() {
                 setSuccess(result.message || "El jugador ha sido registrado con éxito. Redirigiendo al inicio...");
 
                 setTimeout(() => {
-                    navigate("/admin");
+                    navigate("/entrenador");
                 }, 2000);
 
                 setFormData({
@@ -112,7 +111,7 @@ export default function RegistroJugador() {
                     id_equipo: "",
                     posicion: "",
                     activo: false,
-                    dorsal: ""
+                    numero_camiseta: ""
                 });
             } else {
                 setError(result.message);
@@ -229,6 +228,16 @@ export default function RegistroJugador() {
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             />
                         </div>
+                        <div>
+                            <input
+                                type="text"
+                                name="nombre_equipo_display"
+                                placeholder={nombreEquipo}
+                                value={nombreEquipo}
+                                disabled
+                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg text-white text-sm"
+                            />
+                        </div>
 
                         <div>
                             <input
@@ -240,19 +249,7 @@ export default function RegistroJugador() {
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             />
                         </div>
-                        <div>
-                            <input
-                                type="text"
-                                name="nombre_equipo"
-                                placeholder={nombreEquipo}
-                                value={nombreEquipo}
-                                disabled
-
-                            />
-
-
-                        </div>
-
+                        
 
                         <div>
                             <input
@@ -268,9 +265,9 @@ export default function RegistroJugador() {
                         <div>
                             <input
                                 type="text"
-                                name="dorsal"
+                                name="numero_camiseta"
                                 placeholder="Dorsal"
-                                value={formData.dorsal}
+                                value={formData.numero_camiseta}
                                 onChange={handlerOnChange}
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             />

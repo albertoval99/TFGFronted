@@ -145,7 +145,7 @@ export const userService = {
             if (response.ok) {
                 return { status: 201, message: "El entrenador ha sido creado con éxito" };
             } else {
-                return { status: response.status, message: data.message || "Error al crear el árbitro" };
+                return { status: response.status, message: data.message || "Error al crear el entrenador" };
             }
         } catch (error) {
             console.error("❌ Error en la conexión:", error);
@@ -188,11 +188,35 @@ export const userService = {
             console.error("Error al obtener info de entrenador:", error);
             return null;
         }
-    }
+    },
 
+    registroJugador: async (jugador) => {
+        const user = userService.getUser();
 
+        if (!user) {
+            return { status: 401, message: "No autorizado, no se ha encontrado token" };
+        }
 
+        try {
+            const response = await fetch(`${API_URL}/registroJugador`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(jugador),
+            });
 
+            const data = await response.json();
 
-
+            if (response.ok) {
+                return { status: 201, message: "El jugador ha sido creado con éxito" };
+            } else {
+                return { status: response.status, message: data.message || "Error al crear el jugador" };
+            }
+        } catch (error) {
+            console.error("❌ Error en la conexión:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
 };
