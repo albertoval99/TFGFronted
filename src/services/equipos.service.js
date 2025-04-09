@@ -1,4 +1,3 @@
-
 import { URL } from "./constantes";
 const API_URL = `${URL}/equipos`;
 
@@ -27,18 +26,29 @@ export const equipoService = {
 
     getEquipoById: async (id_equipo) => {
         try {
-            const respuesta = await fetch(`${API_URL}/${id_equipo}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            });
-            if (!respuesta.ok) {
-                throw new Error("No se pudo obtener la información del equipo");
-            }
-            return await respuesta.json();
+          console.log("Buscando equipo con ID:", id_equipo);
+          const token = sessionStorage.getItem("token");
+          const respuesta = await fetch(`${API_URL}/${id_equipo}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
+          });
+      
+          const data = await respuesta.json();
+      
+          if (!respuesta.ok) {
+            console.warn("Respuesta no OK:", respuesta.status, data);
+            return { status: respuesta.status, message: data.message || "Error al obtener el equipo" };
+          }
+      
+          return { status: 200, equipo: data };
         } catch (error) {
-            console.error("Error al obtener info del equipo:", error);
-            return null;
+          console.error("Error al obtener info del equipo:", error);
+          return { status: 500, message: "Error de conexión", error };
         }
-    }
+      },
+      
     
 }

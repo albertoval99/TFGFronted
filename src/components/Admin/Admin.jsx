@@ -5,8 +5,9 @@ export default function Admin() {
 
     return (
         <>
-            <h1>Adminr: {usuario?.email}</h1>
-            <h2>gggggg</h2>
+            <h1>Admin: {usuario.email}</h1>
+            <h2>Nombre: {usuario.nombre}</h2>
+            <h2>Apellidos: {usuario.apellidos}</h2>
         </>
     );
 }

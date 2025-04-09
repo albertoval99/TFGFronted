@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router";
 import "./SideBar.css";
-import loginIcon from "/src/assets/loginIcon.svg";
 import homeIcon from "/src/assets/home.svg";
+import logOut from "/src/assets/logout.svg";
+import addUser from "/src/assets/addUser.svg";
 import { userService } from "../../services/usuarios.service";
 
 export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
@@ -22,42 +23,30 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
       </div>
 
       <div className="sidebar-menu">
-        <Link to="/" className="sidebar-item" onClick={toggleSidebar}>
+        <Link to="/admin" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
             <img src={homeIcon} alt="Login" className="w-6 h-6" />
           </div>
-          <span>Ir al inicio</span>
-        </Link>
-        <Link to="/login" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">
-            <img src={loginIcon} alt="Login" className="w-6 h-6" />
-          </div>
-          <span>Ir al inicio de sesion</span>
-        </Link>
-        <Link to="/login" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">
-            <img src={loginIcon} alt="Login" className="w-6 h-6" />
-          </div>
-          <span>SOY ADMIN</span>
+          <span>Inicio</span>
         </Link>
         <Link to="/registroArbitro" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={loginIcon} alt="Login" className="w-6 h-6" />
+            <img src={addUser} alt="Login" className="w-6 h-6" />
           </div>
-          <span>Registrar Arbitro</span>
+          <span>Registrar Árbitro</span>
         </Link>
         <Link to="/registroEntrenador" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={loginIcon} alt="Login" className="w-6 h-6" />
+            <img src={addUser} alt="Login" className="w-6 h-6" />
           </div>
           <span>Registrar Entrenador</span>
         </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">
-              <img src={loginIcon} alt="Logout" className="w-6 h-6" />
+              <img src={logOut} alt="Logout" className="w-6 h-6" />
             </div>
-            <span>LogOut</span>
+            <span>Cerrar Sesión</span>
           </Link></button>
 
       </div>

@@ -56,7 +56,6 @@ export default function Login() {
     };
     return (
         <div className="flex items-center justify-center w-full h-full">
-            {/* Contenedor de mensajes (error o éxito) */}
             {(error || success) && (
                 <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
                     <div

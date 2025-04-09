@@ -1,5 +1,6 @@
 import jwt_decode from 'jwt-decode'
 import { URL } from "./constantes";
+import { equipoService } from './equipos.service';
 const API_URL = `${URL}/usuarios`;
 
 export const userService = {
@@ -10,43 +11,89 @@ export const userService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(credenciales),
           });
+      
           const datos = await respuesta.json();
-          
+      
           if (respuesta.ok) {
             const token = datos.token;
             sessionStorage.setItem("token", token);
             const decodificado = jwt_decode(token);
             const { id_usuario, email, rol } = decodificado.user;
-            let usuario = { id_usuario, email, rol };
-            
+      
+            // 🔹 Obtenemos los datos generales del usuario por email
+            const respuestaUsuario = await fetch(`${API_URL}/${email}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+            });
+      
+            const datosUsuario = await respuestaUsuario.json();
+      
+            if (!respuestaUsuario.ok) {
+              return { status: respuestaUsuario.status, message: datosUsuario.message };
+            }
+            let usuario = {
+              id_usuario,
+              email,
+              rol,
+              ...datosUsuario, // nombre, apellidos, etc.
+            };
+      
+            // 🔹 Si es entrenador, obtenemos también sus datos específicos
             if (rol === "entrenador") {
               const respuestaEntrenador = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
                 method: "GET",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`,
+                },
               });
+      
               const datosEntrenador = await respuestaEntrenador.json();
+      
               if (respuestaEntrenador.ok) {
                 usuario = { ...usuario, ...datosEntrenador };
+      
+                // 🔹 Si el entrenador tiene equipo, lo traemos también
+                const { id_equipo } = datosEntrenador;
+                if (id_equipo) {
+                    const resultadoEquipo = await equipoService.getEquipoById(id_equipo);
+
+                    if (resultadoEquipo.status === 200) {
+                      usuario = { ...usuario, equipo: resultadoEquipo.equipo };
+                    } else {
+                      console.warn("⚠️ No se pudo obtener el equipo:", resultadoEquipo.message);
+                    }
+                }
               } else {
-                return { status: respuestaEntrenador.status, message: datosEntrenador.message };
+                return {
+                  status: respuestaEntrenador.status,
+                  message: datosEntrenador.message,
+                };
               }
             }
-            
+      
             sessionStorage.setItem("usuario", JSON.stringify(usuario));
+      
             return {
               status: 200,
               usuario,
               message: "Inicio de sesión exitoso.\nRedirigiendo al inicio...",
             };
           }
-          
+      
           return { status: respuesta.status, message: datos.message };
         } catch (error) {
           console.error("❌ Error durante el login:", error);
           return { status: 500, message: "Error de conexión", error };
         }
       },
-    
+      
+
+
+
 
 
     // Función para obtener los datos del usuario directamente del token
@@ -64,6 +111,7 @@ export const userService = {
             return null;
         }
     },
+
 
 
     getUsuarios: async () => {
@@ -163,6 +211,7 @@ export const userService = {
             });
 
             const data = await response.json();
+            console.log("Datos recibidos en getUserByEmail:", data); // Verifica aquí lo que trae la API
             if (response.ok) {
                 return { status: 200, usuario: data };
             } else {
@@ -172,6 +221,8 @@ export const userService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+
+
 
     // Función para obtener los datos del entrenador(equipo,id entrenador x el id del ususario)
     getEntrenadorInfo: async (id_usuario) => {
