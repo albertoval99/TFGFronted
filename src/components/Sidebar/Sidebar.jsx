@@ -16,13 +16,13 @@ export default function SideBar({ isOpen, toggleSidebar }) {
           <div className="sidebar-icon">
             <img src={homeIcon} alt="Login" className="w-6 h-6" />
           </div>
-          <span>Ir al inicio</span>
+          <span>Inicio</span>
         </Link>
         <Link to="/login" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
             <img src={loginIcon} alt="Login" className="w-6 h-6" />
           </div>
-          <span>Ir al inicio de sesion</span>
+          <span>Entrar</span>
         </Link>
 
       </div>

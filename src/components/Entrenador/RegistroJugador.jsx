@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { userService } from "../../services/usuarios.service";
-import { equipoService } from "../../services/equipos.service";
 
 export default function RegistroJugador() {
     const navigate = useNavigate();
@@ -11,8 +10,7 @@ export default function RegistroJugador() {
         email: "",
         password: "",
         repetirPassword: "",
-        telefono: "",
-        id_equipo: "",
+        id_equipo: "", 
         posicion: "",
         activo: true,
         numero_camiseta: ""
@@ -20,9 +18,7 @@ export default function RegistroJugador() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    const [nombreEquipo, setNombreEquipo] = useState("");
-
-
+    // Obtener id_equipo del usuario en sesión
     useEffect(() => {
         const entrenador = JSON.parse(sessionStorage.getItem("usuario"));
         if (entrenador?.id_equipo) {
@@ -30,25 +26,8 @@ export default function RegistroJugador() {
                 ...prev,
                 id_equipo: entrenador.id_equipo
             }));
-
-            const fetchEquipo = async () => {
-                try {
-                    const result = await equipoService.getEquipoById(entrenador.id_equipo);
-                    
-
-                    if (result?.equipo?.nombre_equipo) {
-                        setNombreEquipo(result.equipo.nombre_equipo);
-                    }
-                } catch (error) {
-                    console.error("Error al obtener el nombre del equipo:", error);
-                }
-            };
-
-            fetchEquipo();
         }
     }, []);
-
-
 
     function handlerOnChange(e) {
         const { name, value, type, checked } = e.target;
@@ -67,7 +46,6 @@ export default function RegistroJugador() {
             !formData.email ||
             !formData.password ||
             !formData.repetirPassword ||
-            !formData.telefono ||
             !formData.posicion ||
             !formData.numero_camiseta
         ) {
@@ -107,7 +85,6 @@ export default function RegistroJugador() {
                     email: "",
                     password: "",
                     repetirPassword: "",
-                    telefono: "",
                     id_equipo: "",
                     posicion: "",
                     activo: false,
@@ -228,28 +205,13 @@ export default function RegistroJugador() {
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             />
                         </div>
-                        <div>
-                            <input
-                                type="text"
-                                name="nombre_equipo_display"
-                                placeholder={nombreEquipo}
-                                value={nombreEquipo}
-                                disabled
-                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg text-white text-sm"
-                            />
-                        </div>
 
-                        <div>
-                            <input
-                                type="text"
-                                name="telefono"
-                                placeholder="Teléfono"
-                                value={formData.telefono}
-                                onChange={handlerOnChange}
-                                className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
-                            />
-                        </div>
                         
+                        <input
+                            type="hidden"
+                            name="id_equipo"
+                            value={formData.id_equipo}
+                        />
 
                         <div>
                             <input
