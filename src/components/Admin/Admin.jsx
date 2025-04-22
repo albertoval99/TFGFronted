@@ -7,7 +7,7 @@ export default function Admin() {
     const options = [
         { label: "Registrar Árbitro", route: "/registroArbitro" },
         { label: "Registrar Entrenador", route: "/registroEntrenador" },
-        { label: "Registrar Liga", route: "/admin/registrar-liga" },
+        { label: "Registrar Liga", route: "/registroLiga" },
         { label: "Registrar Equipo", route: "/admin/registrar-equipo" },
         { label: "Registrar Partidos", route: "/admin/registrar-partidos" },
     ];

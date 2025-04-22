@@ -3,6 +3,7 @@ import "./SideBar.css";
 import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
 import addUser from "/src/assets/addUser.svg";
+import ligaIcon from "/src/assets/ligaIcon.svg";
 import { userService } from "../../services/usuarios.service";
 
 export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
@@ -25,21 +26,27 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
       <div className="sidebar-menu">
         <Link to="/admin" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={homeIcon} alt="Login" className="w-6 h-6" />
+            <img src={homeIcon} alt="Inicio" className="w-6 h-6" />
           </div>
           <span>Inicio</span>
         </Link>
         <Link to="/registroArbitro" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={addUser} alt="Login" className="w-6 h-6" />
+            <img src={addUser} alt="Registrar Árbitro" className="w-6 h-6" />
           </div>
           <span>Registrar Árbitro</span>
         </Link>
         <Link to="/registroEntrenador" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={addUser} alt="Login" className="w-6 h-6" />
+            <img src={addUser} alt="Registrar Entrenador" className="w-6 h-6" />
           </div>
           <span>Registrar Entrenador</span>
+        </Link>
+        <Link to="/registroLiga" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={ligaIcon} alt="Registrar Liga" className="w-6 h-6" />
+          </div>
+          <span>Registrar Liga</span>
         </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
