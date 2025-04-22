@@ -4,6 +4,7 @@ import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
 import addUser from "/src/assets/addUser.svg";
 import ligaIcon from "/src/assets/ligaIcon.svg";
+import teamIcon from "/src/assets/teamIcon.svg";
 import { userService } from "../../services/usuarios.service";
 
 export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
@@ -47,6 +48,12 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
             <img src={ligaIcon} alt="Registrar Liga" className="w-6 h-6" />
           </div>
           <span>Registrar Liga</span>
+        </Link>
+        <Link to="/registroEquipo" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={teamIcon} alt="Registrar Equipo" className="w-6 h-6" />
+          </div>
+          <span>Registrar Equipo</span>
         </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>

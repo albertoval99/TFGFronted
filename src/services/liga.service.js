@@ -33,4 +33,23 @@ export const ligaService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+    getLigas: async () => {
+        try {
+            const response = await fetch(`${API_URL}/getLigas`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return data;
+            } else {
+                throw new Error(data.message || "Error al obtener ligas");
+            }
+        } catch (error) {
+            console.error("Error al obtener ligas:", error);
+            throw error;
+        }
+    },
 };
