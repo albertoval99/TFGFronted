@@ -1,12 +1,38 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: black;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
 .app-container {
-    min-height: 100vh;
-    width: 100%;
-    position: relative;
-    background-color: black;
-  }
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  flex: 1 1 auto;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: 0 20px;
+  color: white;
+}
   
   .aurora-background {
     position: fixed;
@@ -16,24 +42,7 @@
     height: 100vh;
     z-index: 0;
   }
-  
-  .content-container {
-    position: relative;
-    z-index: 1;
-    padding: 20px;
-    color: white; 
-    min-height: 100vh;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
- 
-  .content-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+
 
 
 .logo-container {
@@ -59,6 +68,9 @@
     
     .logo-image {
       max-height: 70px; 
+    }
+    .content-container {
+      padding: 0 6px;
     }
   }
 
