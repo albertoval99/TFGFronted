@@ -20,7 +20,6 @@ export const userService = {
             const decodificado = jwt_decode(token);
             const { id_usuario, email, rol } = decodificado.user;
       
-            // 🔹 Obtenemos los datos generales del usuario por email
             const respuestaUsuario = await fetch(`${API_URL}/${email}`, {
               method: "GET",
               headers: {

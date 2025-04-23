@@ -60,8 +60,7 @@ export default function Entrenador() {
                                     <span className="text-red-500">{error}</span>
                                 ) : ligaInfo ? (
                                     <>
-                                        <span>{ligaInfo.nombre_liga}</span>
-                                        <span>{ligaInfo.categoria} - Grupo {ligaInfo.grupo}</span>
+                                        <span>{ligaInfo.nombre_liga}{ligaInfo.categoria} - {ligaInfo.grupo}</span>
                                     </>
                                 ) : (
                                     <span>Cargando información de la liga...</span>
