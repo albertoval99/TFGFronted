@@ -33,6 +33,7 @@ export const ligaService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+
     getLigas: async () => {
         try {
             const response = await fetch(`${API_URL}/getLigas`, {
@@ -50,6 +51,37 @@ export const ligaService = {
         } catch (error) {
             console.error("Error al obtener ligas:", error);
             throw error;
+        }
+    },
+
+    getLigaById: async (id_liga) => {
+        try {
+            const token = sessionStorage.getItem("token");
+            const respuesta = await fetch(`${API_URL}/${id_liga}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const data = await respuesta.json();
+
+            if (!respuesta.ok) {
+                return {
+                    status: respuesta.status,
+                    message: data.message || "Error al obtener la liga"
+                };
+            }
+
+            return { status: 200, liga: data };
+        } catch (error) {
+            console.error("Error al obtener info de la liga:", error);
+            return {
+                status: 500,
+                message: "Error de conexión",
+                error
+            };
         }
     },
 };

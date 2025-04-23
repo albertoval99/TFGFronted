@@ -26,7 +26,6 @@ export const equipoService = {
 
   getEquipoById: async (id_equipo) => {
     try {
-      console.log("Buscando equipo con ID:", id_equipo);
       const token = sessionStorage.getItem("token");
       const respuesta = await fetch(`${API_URL}/${id_equipo}`, {
         method: "GET",
@@ -39,7 +38,6 @@ export const equipoService = {
       const data = await respuesta.json();
 
       if (!respuesta.ok) {
-        console.warn("Respuesta no OK:", respuesta.status, data);
         return { status: respuesta.status, message: data.message || "Error al obtener el equipo" };
       }
 
