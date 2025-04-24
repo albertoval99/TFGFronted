@@ -6,5 +6,6 @@ const URL = "http://192.168.20.134:3001/api";
  * IP para ver front: http://192.168.206.157:8080/
  * Hacer el npm run build en esta terminal wsl
  * PARA npm run dev del back  en el cmd de windows:C:\Users\alber\Desktop\TFGBackend>npm run dev
- */
+ HE CREADO EL FICHERO deploy.sh para que con  ./deploy.sh se vaya actualizando
+*/
 export { URL };
