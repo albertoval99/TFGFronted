@@ -6,6 +6,7 @@ import menuIcon from "/src/assets/menuIcon.svg";
 import SideBarEntrenador from "../Sidebar/SideBarEntrenador";
 import SideBarArbitro from "../Sidebar/SideBarArbitro";
 import SideBarJugador from "../Sidebar/SideBarJugador";
+import logo from "/src/assets/logo.png"
 
 export default function NavBar({ usuario, setUsuario }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function NavBar({ usuario, setUsuario }) {
         <div className="flex justify-between items-center w-full px-4 md:px-8">
           <div className="text-white text-2xl font-bold">
             <Link to="/">
-              <img src="/src/assets/logo.png" alt="Logo" className="logo-image" />
+              <img src={logo} alt="Logo" className="logo-image" />
             </Link>
           </div>
 
