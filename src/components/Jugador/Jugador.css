@@ -1,0 +1,32 @@
+.jugador-container {
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 0 40px 0 #a855f7, 0 0 0 1px #40c9ff;
+}
+
+.nombre-gradiente {
+  background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.boton-opcion {
+  min-height: 48px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.boton-opcion:hover {
+  transform: scale(1.05);
+  border-color: #e81cff;
+}
+
+.boton-icono {
+  width: 1.5rem; /* 24px */
+  height: 1.5rem;
+  color: #40c9ff;
+  transition: color 0.2s;
+}
+
+.boton-opcion:hover .boton-icono {
+  color: #e81cff;
+}

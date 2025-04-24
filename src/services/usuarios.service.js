@@ -6,90 +6,118 @@ const API_URL = `${URL}/usuarios`;
 export const userService = {
     login: async (credenciales) => {
         try {
-          const respuesta = await fetch(`${API_URL}/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(credenciales),
-          });
-      
-          const datos = await respuesta.json();
-      
-          if (respuesta.ok) {
+            const respuesta = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(credenciales),
+            });
+
+            const datos = await respuesta.json();
+
+            if (!respuesta.ok) {
+                return { status: respuesta.status, message: datos.message };
+            }
+
             const token = datos.token;
             sessionStorage.setItem("token", token);
+
             const decodificado = jwt_decode(token);
             const { id_usuario, email, rol } = decodificado.user;
-      
-            const respuestaUsuario = await fetch(`${API_URL}/${email}`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-              },
-            });
-      
-            const datosUsuario = await respuestaUsuario.json();
-      
-            if (!respuestaUsuario.ok) {
-              return { status: respuestaUsuario.status, message: datosUsuario.message };
-            }
-            let usuario = {
-              id_usuario,
-              email,
-              rol,
-              ...datosUsuario, // nombre, apellidos, etc.
-            };
-      
-            // 🔹 Si es entrenador, obtenemos también sus datos específicos
-            if (rol === "entrenador") {
-              const respuestaEntrenador = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  "Authorization": `Bearer ${token}`,
-                },
-              });
-      
-              const datosEntrenador = await respuestaEntrenador.json();
-      
-              if (respuestaEntrenador.ok) {
-                usuario = { ...usuario, ...datosEntrenador };
-      
-                // 🔹 Si el entrenador tiene equipo, lo traemos también
-                const { id_equipo } = datosEntrenador;
-                if (id_equipo) {
-                    const resultadoEquipo = await equipoService.getEquipoById(id_equipo);
 
-                    if (resultadoEquipo.status === 200) {
-                      usuario = { ...usuario, equipo: resultadoEquipo.equipo };
-                    } else {
-                      console.warn("⚠️ No se pudo obtener el equipo:", resultadoEquipo.message);
-                    }
-                }
-              } else {
-                return {
-                  status: respuestaEntrenador.status,
-                  message: datosEntrenador.message,
-                };
-              }
+            // Obtener datos básicos del usuario
+            const datosUsuario = await userService.getUserByEmail(email, token);
+            if (!datosUsuario) {
+                return { status: 404, message: "Usuario no encontrado" };
             }
-      
-            sessionStorage.setItem("usuario", JSON.stringify(usuario));
-      
-            return {
-              status: 200,
-              usuario,
-              message: "Inicio de sesión exitoso.\nRedirigiendo al inicio...",
+
+            // Obtener datos específicos según rol
+            let datosRol = null;
+            if (rol === "entrenador") {
+                datosRol = await userService.getEntrenadorInfo(id_usuario, token);
+            } else if (rol === "jugador") {
+                datosRol = await userService.getJugadorInfo(id_usuario, token);
+            }
+
+            // Construir objeto usuario combinando datos
+            let usuario = {
+                id_usuario,
+                email,
+                rol,
+                ...datosUsuario,
+                ...datosRol,
             };
-          }
-      
-          return { status: respuesta.status, message: datos.message };
+
+            // Obtener equipo si existe
+            const id_equipo = datosRol?.id_equipo || datosUsuario?.id_equipo;
+            if (id_equipo) {
+                const resultadoEquipo = await equipoService.getEquipoById(id_equipo);
+                if (resultadoEquipo.status === 200) {
+                    usuario.equipo = resultadoEquipo.equipo;
+                } else {
+                    console.warn("⚠️ No se pudo obtener el equipo:", resultadoEquipo.message);
+                }
+            }
+
+            sessionStorage.setItem("usuario", JSON.stringify(usuario));
+
+            return {
+                status: 200,
+                usuario,
+                message: "Inicio de sesión exitoso.\nRedirigiendo al inicio...",
+            };
         } catch (error) {
-          console.error("❌ Error durante el login:", error);
-          return { status: 500, message: "Error de conexión", error };
+            console.error("❌ Error durante el login:", error);
+            return { status: 500, message: "Error de conexión", error };
         }
-      },
-      
+    },
+
+    getUserByEmail: async (email, token) => {
+        try {
+            const response = await fetch(`${API_URL}/${email}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) return null;
+
+            const data = await response.json();
+            return data; // Devuelve directamente el usuario
+        } catch {
+            return null;
+        }
+    },
+
+    getEntrenadorInfo: async (id_usuario, token) => {
+        try {
+            const response = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) return null;
+            return await response.json();
+        } catch {
+            return null;
+        }
+    },
+
+    getJugadorInfo: async (id_usuario, token) => {
+        try {
+            const response = await fetch(`${API_URL}/jugador/${id_usuario}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) return null;
+            return await response.json();
+        } catch {
+            return null;
+        }
+    },
 
 
 
@@ -197,46 +225,6 @@ export const userService = {
         } catch (error) {
             console.error("❌ Error en la conexión:", error);
             return { status: 500, message: "Error de conexión", error };
-        }
-    },
-
-    getUserByEmail: async (email) => {
-        try {
-            const response = await fetch(`${API_URL}/${email}`, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`
-                }
-            });
-
-            const data = await response.json();
-            console.log("Datos recibidos en getUserByEmail:", data); // Verifica aquí lo que trae la API
-            if (response.ok) {
-                return { status: 200, usuario: data };
-            } else {
-                return { status: response.status, message: data.message };
-            }
-        } catch (error) {
-            return { status: 500, message: "Error de conexión", error };
-        }
-    },
-
-
-
-    // Función para obtener los datos del entrenador(equipo,id entrenador x el id del ususario)
-    getEntrenadorInfo: async (id_usuario) => {
-        try {
-            const respuesta = await fetch(`${API_URL}/entrenador/${id_usuario}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-            });
-            if (!respuesta.ok) {
-                throw new Error("No se pudo obtener la información del entrenador");
-            }
-            return await respuesta.json();
-        } catch (error) {
-            console.error("Error al obtener info de entrenador:", error);
-            return null;
         }
     },
 
