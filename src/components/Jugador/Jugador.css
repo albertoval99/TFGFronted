@@ -8,6 +8,7 @@
   background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size:25px
 }
 
 .boton-opcion {

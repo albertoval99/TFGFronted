@@ -43,7 +43,7 @@ export default function Jugador() {
 
     const options = [
         { label: "Ver Estadísticas", route: "/jugador/estadisticas" },
-        { label: "Ver Calendario", route: "/jugador/calendario" },
+        { label: "Ver Entrenamientos", route: "/jugador/calendario" },
         { label: "Actualizar Perfil", route: "/jugador/perfil" },
     ];
 
@@ -51,7 +51,6 @@ export default function Jugador() {
         <div className="w-full h-screen flex items-center justify-center overflow-hidden">
             <div className="relative flex flex-col bg-black/90 rounded-2xl shadow-2xl mx-2 p-8 jugador-container">
                 <div className="flex items-center justify-between w-full mb-8">
-                    {/* Izquierda: Nombre y escudo */}
                     <div className="flex items-center space-x-6 flex-1 min-w-0">
                         {usuario?.equipo?.escudo && (
                             <img
@@ -93,7 +92,7 @@ export default function Jugador() {
 
                     {/* Derecha: Posición y número */}
                     <div className="text-right min-w-[140px] ml-6">
-                        <p className="text-gray-400 uppercase tracking-wider font-semibold mb-2">Jugador</p>
+                        <p className="text-gray-400 tracking-wider font-semibold mb-2">Jugador</p>
                         <div className="bg-neutral-900 rounded-lg p-4 shadow-inner">
                             <div className="flex justify-between items-center mb-2">
                                 <span className="text-gray-400 font-medium">Posición:</span>

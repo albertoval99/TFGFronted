@@ -29,7 +29,7 @@ export default function Entrenador() {
     const options = [
         { label: "Programar Entrenamientos", route: "/entrenador/jugadores" },
         { label: "Gestionar Plantilla", route: "/entrenador/alineacion" },
-        { label: "XXXXXXXXX", route: "/entrenador/calendario" },
+        { label: "Actualizar Perfil", route: "/entrenador/calendario" },
     ];
 
     return (
