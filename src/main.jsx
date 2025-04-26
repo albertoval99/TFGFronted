@@ -14,6 +14,9 @@ import RegistroEntrenador from './components/Admin/RegistroEntrenador.jsx';
 import RegistroJugador from './components/Entrenador/RegistroJugador.jsx';
 import RegistroLiga from './components/Admin/RegistroLiga.jsx';
 import RegistroEquipo from './components/Admin/RegistroEquipo.jsx';
+import CrearEntrenamiento from './components/Entrenador/CrearEntrenamiento.jsx';
+import VerEntrenamientos from './components/Entrenador/VerEntrenamientos.jsx';
+import VerAsistencias from './components/Entrenador/VerAsistencias.jsx';
 
 
 
@@ -65,6 +68,18 @@ const router = createBrowserRouter([
       {
         path:"/registroEquipo",
         element:<RegistroEquipo></RegistroEquipo>
+      },
+      {
+        path:"/crearEntrenamiento",
+        element:<CrearEntrenamiento></CrearEntrenamiento>
+      },
+      {
+        path:"/verEntrenamientos",
+        element:<VerEntrenamientos></VerEntrenamientos>
+      },
+      {
+        path:"/verAsistencias",
+        element:<VerAsistencias></VerAsistencias>
       }
     ],
   },

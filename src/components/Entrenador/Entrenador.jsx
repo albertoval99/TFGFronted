@@ -27,7 +27,8 @@ export default function Entrenador() {
     }, [idLiga]);
 
     const options = [
-        { label: "Programar Entrenamientos", route: "/entrenador/jugadores" },
+        { label: "Programar Entrenamientos", route: "/crearEntrenamiento" },
+        { label: "Ver Entrenamientos Programados", route: "/verEntrenamientos" },
         { label: "Gestionar Plantilla", route: "/entrenador/alineacion" },
         { label: "Actualizar Perfil", route: "/entrenador/calendario" },
     ];
