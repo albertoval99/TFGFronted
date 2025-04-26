@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
 import { entrenamientoService } from "../../services/entrenamiento.service";
 
-export default function VerAsistencias() {
-    const navigate = useNavigate();
-    const { id_entrenamiento } = useParams(); 
+export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
     const [asistencias, setAsistencias] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const formatearFecha = (fecha) => {
+        return new Date(fecha).toLocaleString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
 
     useEffect(() => {
         const fetchAsistencias = async () => {
@@ -21,8 +29,8 @@ export default function VerAsistencias() {
                     setAsistencias([]);
                 }
             } catch (error) {
+                console.log(error)
                 setError("Error al cargar las asistencias");
-                console.log("Error al cargar las asistencias", error);
             } finally {
                 setLoading(false);
             }
@@ -31,122 +39,81 @@ export default function VerAsistencias() {
         fetchAsistencias();
     }, [id_entrenamiento]);
 
-    if (loading) {
-        return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="text-white">Cargando asistencias...</div>
-            </div>
-        );
-    }
-
     return (
-        <div className="w-full min-h-screen p-8 pt-32">
-            <div className="max-w-4xl mx-auto">
-                {error && (
-                    <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
-                        <div className="cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg px-[10px] bg-[#232531]">
-                            <div className="flex items-center flex-1">
-                                <div className="bg-white/5 backdrop-blur-xl p-1 rounded-lg text-[#d65563]">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.5"
-                                        stroke="currentColor"
-                                        className="w-5 h-5"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
-                                        />
-                                    </svg>
-                                </div>
-                                <div className="text-center ml-3">
-                                    <p className="text-white">{error}</p>
-                                </div>
-                            </div>
-                            <button
-                                className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear cursor-pointer"
-                                onClick={() => setError(null)}
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    stroke="currentColor"
-                                    className="w-5 h-5"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
+            <div className="bg-[#232531] rounded-xl shadow-lg w-full max-w-xl mx-4">
+                {/* Header */}
+                <div className="flex justify-between items-center px-6 py-4 border-b border-neutral-700">
+                    <div>
+                        <h2 className="text-lg font-bold text-white">Asistencias</h2>
+                        <p className="text-sm text-neutral-400 mt-1">
+                            {formatearFecha(fecha)}
+                        </p>
                     </div>
-                )}
-
-                <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-2xl font-bold text-white">Lista de Asistencias</h1>
                     <button
-                        onClick={() => navigate(-1)}
-                        className="px-4 py-2 bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-white rounded-lg hover:opacity-90 transition-opacity cursor-pointer"
+                        onClick={onClose}
+                        className="text-neutral-400 hover:text-white transition-colors"
                     >
-                        Volver
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                     </button>
                 </div>
-
-                {asistencias.length === 0 ? (
-                    <div className="bg-neutral-900/50 border border-neutral-800 text-white p-6 rounded-lg text-center">
-                        No hay asistencias registradas
-                    </div>
-                ) : (
-                    <div className="space-y-4">
-                        {asistencias.map((asistencia) => (
-                            <div
-                                key={asistencia.id_asistencia}
-                                className="bg-black p-6 rounded-lg border border-neutral-800 hover:border-[#40c9ff] transition-colors"
-                            >
-                                <div className="flex justify-between items-start">
-                                    <div className="space-y-2">
-                                        <div className="text-lg font-semibold text-white">
+               
+                <div className="px-6 py-4 max-h-[54vh] overflow-y-auto">
+                    {loading ? (
+                        <div className="text-white text-center">Cargando asistencias...</div>
+                    ) : error ? (
+                        <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg">
+                            {error}
+                        </div>
+                    ) : asistencias.length === 0 ? (
+                        <div className="bg-neutral-900/50 border border-neutral-800 text-white p-6 rounded-lg text-center">
+                            No hay asistencias registradas
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {asistencias.map((asistencia) => (
+                                <div
+                                    key={asistencia.id_asistencia}
+                                    className="bg-black p-4 rounded-lg border border-neutral-800 flex justify-between items-center"
+                                >
+                                    <div>
+                                        <div className="text-base font-semibold text-white">
                                             {asistencia.nombre} {asistencia.apellidos}
                                         </div>
                                         <div className="text-neutral-400">
-                                            Estado: {' '}
+                                            Estado:{" "}
                                             <span className={`font-medium ${
-                                                asistencia.asistio === true ? 'text-green-500' : 
-                                                asistencia.asistio === false ? 'text-red-500' : 
+                                                asistencia.asistio === true ? 'text-green-500' :
+                                                asistencia.asistio === false ? 'text-red-500' :
                                                 'text-yellow-500'
                                             }`}>
-                                                {asistencia.asistio === true ? 'Asistirá' : 
-                                                 asistencia.asistio === false ? 'No asistirá' : 
-                                                 'Pendiente'}
+                                                {asistencia.asistio === true ? 'Asistirá' :
+                                                asistencia.asistio === false ? 'No asistirá' :
+                                                'Pendiente'}
                                             </span>
                                         </div>
                                         {asistencia.justificacion && (
-                                            <div className="text-neutral-400">
+                                            <div className="text-neutral-400 text-xs">
                                                 Justificación: {asistencia.justificacion}
                                             </div>
                                         )}
                                     </div>
                                     <div className={`px-3 py-1 rounded-full ${
-                                        asistencia.asistio === true ? 'bg-green-500/10 text-green-500' : 
-                                        asistencia.asistio === false ? 'bg-red-500/10 text-red-500' : 
+                                        asistencia.asistio === true ? 'bg-green-500/10 text-green-500' :
+                                        asistencia.asistio === false ? 'bg-red-500/10 text-red-500' :
                                         'bg-yellow-500/10 text-yellow-500'
                                     }`}>
-                                        {asistencia.asistio === true ? '✓' : 
-                                         asistencia.asistio === false ? '✕' : 
-                                         '?'}
+                                        {asistencia.asistio === true ? '✓' :
+                                        asistencia.asistio === false ? '✕' :
+                                        '?'}
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

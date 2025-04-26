@@ -3,6 +3,7 @@ import "./SideBar.css";
 import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
 import { userService } from "../../services/usuarios.service";
+import verEntreno from "/src/assets/verEntreno.svg"
 
 export default function SideBarJugador({ isOpen, toggleSidebar, setUsuario }) {
 
@@ -28,6 +29,12 @@ export default function SideBarJugador({ isOpen, toggleSidebar, setUsuario }) {
           </div>
           <span>Inicio</span>
         </Link>
+        <Link to="/verEntrenamientosJugador" className="sidebar-item" onClick={toggleSidebar}>
+                  <div className="sidebar-icon">
+                    <img src={verEntreno} alt="Ver Entrenamientos" className="w-6 h-6" />
+                  </div>
+                  <span>Ver Entrenamientos</span>
+                </Link>
         
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>

@@ -43,7 +43,7 @@ export default function Jugador() {
 
     const options = [
         { label: "Ver Estadísticas", route: "/jugador/estadisticas" },
-        { label: "Ver Entrenamientos", route: "/jugador/calendario" },
+        { label: "Ver Entrenamientos", route: "/verEntrenamientosJugador" },
         { label: "Actualizar Perfil", route: "/jugador/perfil" },
     ];
 

@@ -42,12 +42,14 @@ export const entrenamientoService = {
             const token = sessionStorage.getItem("token");
             const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
             const id_equipo = usuario.equipo?.id_equipo;
+            const id_usuario = usuario.id_usuario;
 
             if (!id_equipo) {
                 throw new Error("No se encontró el equipo del usuario");
             }
 
-            const response = await fetch(`${API_URL}/equipo/${id_equipo}`, {
+            // 1. Obtener entrenamientos
+            const responseEntrenamientos = await fetch(`${API_URL}/equipo/${id_equipo}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,16 +57,42 @@ export const entrenamientoService = {
                 },
             });
 
-            const data = await response.json();
+            const entrenamientosData = await responseEntrenamientos.json();
 
-            if (!response.ok) {
+            if (!responseEntrenamientos.ok) {
                 return {
-                    status: response.status,
-                    message: data.message || "Error al obtener los entrenamientos"
+                    status: responseEntrenamientos.status,
+                    message: entrenamientosData.message || "Error al obtener los entrenamientos"
                 };
             }
 
-            return { status: 200, entrenamientos: data };
+            // 2. Obtener asistencias del jugador
+            const responseAsistencias = await fetch(`${API_URL}/asistencias/${id_usuario}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+
+            const asistenciasData = await responseAsistencias.json();
+
+            // 3. Combinar entrenamientos con asistencias
+            const entrenamientosConAsistencias = entrenamientosData.map(entrenamiento => {
+                const asistencia = asistenciasData.asistencias?.find(
+                    a => a.id_entrenamiento === entrenamiento.id_entrenamiento
+                );
+                return {
+                    ...entrenamiento,
+                    asistio: asistencia ? asistencia.asistio : undefined,
+                    justificacion: asistencia ? asistencia.justificacion : undefined
+                };
+            });
+
+            return {
+                status: 200,
+                entrenamientos: entrenamientosConAsistencias
+            };
         } catch (error) {
             console.error("Error al obtener entrenamientos:", error);
             return { status: 500, message: "Error de conexión", error };

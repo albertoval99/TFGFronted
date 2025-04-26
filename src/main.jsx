@@ -17,6 +17,7 @@ import RegistroEquipo from './components/Admin/RegistroEquipo.jsx';
 import CrearEntrenamiento from './components/Entrenador/CrearEntrenamiento.jsx';
 import VerEntrenamientos from './components/Entrenador/VerEntrenamientos.jsx';
 import VerAsistencias from './components/Entrenador/VerAsistencias.jsx';
+import VerEntrenamientosJugador from './components/Jugador/VerEntrenamientosJugador.jsx';
 
 
 
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path:"/verAsistencias",
         element:<VerAsistencias></VerAsistencias>
+      },
+      {
+        path:"/verEntrenamientosJugador",
+        element:<VerEntrenamientosJugador></VerEntrenamientosJugador>
       }
     ],
   },
