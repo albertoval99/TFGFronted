@@ -54,19 +54,21 @@ export default function Calendario() {
         }
     };
 
-    // Formatea la fecha "2024-09-22" a "22 de septiembre de 2024"
     const fechaLarga = (fechaStr) => {
-        if (!fechaStr || typeof fechaStr !== "string" || !fechaStr.match(/^\d{4}-\d{2}-\d{2}$/)) {
-            return "Fecha por determinar";
+        if (!fechaStr || typeof fechaStr !== "string") return "Fecha por determinar";
+        // Si es DD/MM/YYYY
+        if (fechaStr.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+            const [day, month, year] = fechaStr.split("/");
+            const fecha = new Date(Number(year), Number(month) - 1, Number(day));
+            if (isNaN(fecha.getTime())) return "Fecha por determinar";
+            return fecha.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
         }
-        const [year, month, day] = fechaStr.split("-");
-        const fecha = new Date(`${year}-${month}-${day}T00:00:00`);
-        if (isNaN(fecha.getTime())) return "Fecha por determinar";
-        return fecha.toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+       
+        return "Fecha por determinar";
     };
 
     const prevSlide = () => setSlide(s => Math.max(0, s - 1));
@@ -102,7 +104,7 @@ export default function Calendario() {
                             <div className="jornada-card-mini">
                                 <div className="jornada-header-mini">
                                     <span>Jornada {jornada.numero}</span>
-                                    <span>{fechaLarga(jornada.fecha)}</span>
+                                    <span>{fechaLarga(jornada.fecha)}</span>  
                                 </div>
                                 <div className="jornada-partidos-mini">
                                     {jornada.partidos.map((p, i) => {
