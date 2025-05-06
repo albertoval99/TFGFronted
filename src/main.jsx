@@ -18,6 +18,7 @@ import CrearEntrenamiento from './components/Entrenador/CrearEntrenamiento.jsx';
 import VerEntrenamientos from './components/Entrenador/VerEntrenamientos.jsx';
 import VerAsistencias from './components/Entrenador/VerAsistencias.jsx';
 import VerEntrenamientosJugador from './components/Jugador/VerEntrenamientosJugador.jsx';
+import Calendario from './components/Calendario/Calendario.jsx';
 
 
 
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
       {
         path:"/verEntrenamientosJugador",
         element:<VerEntrenamientosJugador></VerEntrenamientosJugador>
+      },
+      {
+        path: "/calendario2Reg2-1",
+        element:<Calendario></Calendario>
       }
     ],
   },

@@ -24,6 +24,12 @@ export default function SideBar({ isOpen, toggleSidebar }) {
           </div>
           <span>Entrar</span>
         </Link>
+        <Link to="/calendario2Reg2-1" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={loginIcon} alt="calendario" className="w-6 h-6" />
+          </div>
+          <span>Calendario 2ºReg 2-1</span>
+        </Link>
 
       </div>
     </div>
