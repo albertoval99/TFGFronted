@@ -294,6 +294,7 @@ export const userService = {
 
     eliminarJugador: async (id_usuario) => {
         try {
+
             const response = await fetch(`${API_URL}/${id_usuario}`, {
                 method: 'DELETE',
                 headers: {
@@ -313,6 +314,33 @@ export const userService = {
             }
         } catch (error) {
             console.error("❌ Error al eliminar jugador:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
+
+    editarJugador: async (id_jugador, datos) => {
+        try {
+            const response = await fetch(`${API_URL}/jugador/${id_jugador}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return { status: 200, message: "Jugador actualizado con éxito" };
+            } else {
+                return {
+                    status: response.status,
+                    message: data.message || "Error al actualizar el jugador"
+                };
+            }
+        } catch (error) {
+            console.error("❌ Error al editar jugador:", error);
             return { status: 500, message: "Error de conexión", error };
         }
     },

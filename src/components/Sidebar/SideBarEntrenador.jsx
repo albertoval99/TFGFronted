@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router";
 import "./SideBar.css";
 import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
-import addUser from "/src/assets/addUser.svg";
+import teamIcon from "/src/assets/teamIcon.svg";
 import crearEntrenamiento from "/src/assets/crearEntrenamiento.svg"
 import verEntreno from "/src/assets/verEntreno.svg"
 import { userService } from "../../services/usuarios.service";
@@ -43,11 +43,11 @@ export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario })
           </div>
           <span>Ver Entrenamientos</span>
         </Link>
-        <Link to="/registroJugador" className="sidebar-item" onClick={toggleSidebar}>
+        <Link to="/gestionarPlantilla" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
-            <img src={addUser} alt="Login" className="w-6 h-6" />
+            <img src={teamIcon} alt="gestion plantilla" className="w-6 h-6" />
           </div>
-          <span>Registrar Jugador</span>
+          <span>Gestionar Plantilla</span>
         </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>

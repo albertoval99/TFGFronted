@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { userService } from "../../services/usuarios.service";
+import addUser from "/src/assets/addUser.svg";
+import EditarJugadorModal from './EditarJugadorModal';
+
+
 
 export default function GestionarPlantilla() {
     const navigate = useNavigate();
@@ -8,6 +12,20 @@ export default function GestionarPlantilla() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState("");
     const [loading, setLoading] = useState(true);
+    const [jugadorEditando, setJugadorEditando] = useState(null);
+    const POSICION_COLORS = {
+        PT: "bg-blue-600/20 text-blue-400",
+        DFC: "bg-green-600/20 text-green-400",
+        LI: "bg-yellow-600/20 text-yellow-500",
+        LD: "bg-yellow-600/20 text-yellow-500",
+        MC: "bg-purple-600/20 text-purple-400",
+        MCD: "bg-indigo-600/20 text-indigo-400",
+        MI: "bg-pink-600/20 text-pink-400",
+        MD: "bg-pink-600/20 text-pink-400",
+        EI: "bg-orange-600/20 text-orange-400",
+        ED: "bg-orange-600/20 text-orange-400",
+        DC: "bg-red-600/20 text-red-400",
+    };
 
     useEffect(() => {
         const fetchJugadores = async () => {
@@ -42,7 +60,6 @@ export default function GestionarPlantilla() {
     return (
         <div className="w-full min-h-screen p-8 pt-32">
             <div className="max-w-4xl mx-auto">
-                {/* Mensajes de error y éxito */}
                 {(error || success) && (
                     <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
                         <div className={`cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg px-[10px] bg-[#232531]`}>
@@ -81,8 +98,9 @@ export default function GestionarPlantilla() {
                     <h1 className="text-2xl font-bold text-white">Gestionar Plantilla</h1>
                     <button
                         onClick={() => navigate('/registroJugador')}
-                        className="px-4 py-2 bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-white rounded-lg hover:opacity-90 transition-opacity cursor-pointer"
+                        className="px-4 py-2 bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-white rounded-lg hover:opacity-90 transition-opacity cursor-pointer flex items-center gap-2"
                     >
+                        <img src={addUser} alt="Añadir usuario" className="w-5 h-5" />
                         Nuevo Jugador
                     </button>
                 </div>
@@ -102,20 +120,33 @@ export default function GestionarPlantilla() {
                                 key={jugador.id_jugador}
                                 className="bg-black p-6 rounded-lg border border-neutral-800 hover:border-[#40c9ff] transition-colors"
                             >
-                                <div className="flex justify-between items-start">
-                                    <div className="space-y-2">
-                                        <div className="text-lg font-semibold text-white">
-                                            {jugador.nombre} {jugador.apellidos}
-                                        </div>
-                                        <div className="text-neutral-400 space-x-4">
-                                            <span>Posición: {jugador.posicion}</span>
-                                            <span>Dorsal: {jugador.numero_camiseta}</span>
-                                            <span>Estado: {jugador.activo ? "Activo" : "Inactivo"}</span>
-                                        </div>
+                                <div className="flex items-center justify-between">
+                                    {/* Icono camiseta con dorsal */}
+                                    <div className="flex-shrink-0 w-12 h-12 mr-4 flex items-center justify-center">
+                                        <span className="relative w-12 h-12 flex items-center justify-center">
+                                            <svg className="w-12 h-12" viewBox="0 0 40 40" fill="none">
+                                                <path d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
+                                                <rect x="13" y="5" width="14" height="6" rx="2" fill="#40c9ff" />
+                                            </svg>
+                                            <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg select-none">
+                                                {jugador.numero_camiseta}
+                                            </span>
+                                        </span>
                                     </div>
-                                    <div className="flex space-x-2">
+                                    {/* Info en línea */}
+                                    <div className="flex-1 flex items-center space-x-4">
+                                        <span className={`px-3 py-1 rounded-full font-semibold text-xs flex items-center ${POSICION_COLORS[jugador.posicion] || "bg-neutral-700 text-white"}`}>
+                                            {jugador.posicion}
+                                        </span>
+                                        <span className="text-lg font-semibold text-white">{jugador.nombre} {jugador.apellidos}</span>
+                                        <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${jugador.activo ? "bg-green-600/20 text-green-400" : "bg-red-600/20 text-red-400"}`}>
+                                            {jugador.activo ? "Activo" : "Inactivo"}
+                                        </span>
+                                    </div>
+                                    {/* Botones */}
+                                    <div className="flex space-x-2 ml-4">
                                         <button
-                                            onClick={() => navigate(`/editarJugador/${jugador.id_jugador}`)}
+                                            onClick={() => setJugadorEditando(jugador)}
                                             className="p-2 text-neutral-400 hover:text-white transition-colors cursor-pointer"
                                             title="Editar jugador"
                                         >
@@ -127,7 +158,7 @@ export default function GestionarPlantilla() {
                                             onClick={async () => {
                                                 try {
                                                     const response = await userService.eliminarJugador(jugador.id_usuario);
-                                                    alert(jugador.id_usuario)
+
                                                     if (response.status === 200) {
                                                         setJugadores(jugadores.filter(j => j.id_usuario !== jugador.id_usuario));
                                                         setSuccess("Jugador eliminado con éxito");
@@ -138,7 +169,6 @@ export default function GestionarPlantilla() {
                                                 } catch (error) {
                                                     console.error("❌ Error al eliminar el jugador:", error);
                                                     setError("Error al eliminar el jugador");
-
                                                 }
                                             }}
                                             className="p-2 text-red-500 hover:text-red-400 transition-colors cursor-pointer"
@@ -155,6 +185,28 @@ export default function GestionarPlantilla() {
                     </div>
                 )}
             </div>
+            {jugadorEditando && (
+                <EditarJugadorModal
+                    jugador={jugadorEditando}
+                    onClose={() => setJugadorEditando(null)}
+                    onSave={async (datos) => {
+                        const response = await userService.editarJugador(jugadorEditando.id_jugador, datos);
+                        if (response.status === 200) {
+                            setJugadores(jugadores.map(j =>
+                                j.id_jugador === jugadorEditando.id_jugador
+                                    ? { ...j, ...datos }
+                                    : j
+                            ));
+                            setSuccess("Jugador actualizado con éxito");
+                            setTimeout(() => setSuccess(""), 3000);
+                            setJugadorEditando(null);
+                        }
+                        return response;
+                    }}
+                />
+            )}
         </div>
+
     );
+
 }

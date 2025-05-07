@@ -10,7 +10,7 @@ export default function RegistroJugador() {
         email: "",
         password: "",
         repetirPassword: "",
-        id_equipo: "", 
+        id_equipo: "",
         posicion: "",
         activo: true,
         numero_camiseta: ""
@@ -18,7 +18,7 @@ export default function RegistroJugador() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-   
+
     useEffect(() => {
         const entrenador = JSON.parse(sessionStorage.getItem("usuario"));
         if (entrenador?.id_equipo) {
@@ -98,6 +98,10 @@ export default function RegistroJugador() {
             console.log("Error de conexión. Intenta de nuevo más tarde.", error);
         }
     };
+
+    const POSICIONES = [
+        "PT", "DFC", "LI", "LD", "MC", "MCD", "MI", "MD", "EI", "ED", "DC"
+    ];
 
     return (
         <div className="flex items-center justify-center w-full h-full">
@@ -206,22 +210,27 @@ export default function RegistroJugador() {
                             />
                         </div>
 
-                        
+
                         <input
                             type="hidden"
                             name="id_equipo"
                             value={formData.id_equipo}
                         />
 
+
                         <div>
-                            <input
-                                type="text"
+                            <select
                                 name="posicion"
-                                placeholder="Posición"
                                 value={formData.posicion}
                                 onChange={handlerOnChange}
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
-                            />
+                                required
+                            >
+                                <option value="">Selecciona posición</option>
+                                {POSICIONES.map((pos) => (
+                                    <option key={pos} value={pos}>{pos}</option>
+                                ))}
+                            </select>
                         </div>
 
                         <div>
