@@ -20,6 +20,7 @@ import VerAsistencias from './components/Entrenador/VerAsistencias.jsx';
 import VerEntrenamientosJugador from './components/Jugador/VerEntrenamientosJugador.jsx';
 import Calendario from './components/Calendario/Calendario.jsx';
 import GestionarPlantilla from './components/Entrenador/GestionarPlantilla.jsx';
+import VerPartidosEquipo from './components/Entrenador/VerPartidosEquipo.jsx';
 
 
 
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
       {
         path:"/gestionarPlantilla",
         element:<GestionarPlantilla></GestionarPlantilla>
+      },
+      {
+        path:"/gestionarPartidos",
+        element:<VerPartidosEquipo></VerPartidosEquipo>
       }
     ],
   },

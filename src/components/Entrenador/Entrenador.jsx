@@ -30,7 +30,7 @@ export default function Entrenador() {
         { label: "Programar Entrenamientos", route: "/crearEntrenamiento" },
         { label: "Ver Entrenamientos Programados", route: "/verEntrenamientos" },
         { label: "Gestionar Plantilla", route: "/gestionarPlantilla" },
-        { label: "Gestionar Partidos", route: "/entrenador/calendario" },
+        { label: "Gestionar Partidos", route: "/gestionarPartidos" },
     ];
 
     return (
