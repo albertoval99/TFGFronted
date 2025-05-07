@@ -257,4 +257,63 @@ export const userService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+
+    getJugadoresByEquipo: async () => {
+        try {
+            const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+            const id_equipo = usuario.equipo?.id_equipo;
+            if (!usuario) {
+                return { status: 401, message: "No hay usuario en sesión" };
+            }
+
+
+            if (!id_equipo) {
+                return { status: 404, message: "No se encontró el equipo del entrenador" };
+            }
+
+            const response = await fetch(`${API_URL}/equipo/${id_equipo}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return { status: 200, jugadores: data };
+            } else {
+                return { status: response.status, message: data.message };
+            }
+        } catch (error) {
+            console.error("❌ Error al obtener jugadores:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
+
+
+    eliminarJugador: async (id_usuario) => {
+        try {
+            const response = await fetch(`${API_URL}/${id_usuario}`, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return { status: 200, message: "Jugador eliminado con éxito" };
+            } else {
+                return {
+                    status: response.status,
+                    message: data.message || "Error al eliminar el jugador"
+                };
+            }
+        } catch (error) {
+            console.error("❌ Error al eliminar jugador:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
 };

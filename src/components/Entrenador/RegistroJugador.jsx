@@ -18,7 +18,7 @@ export default function RegistroJugador() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    // Obtener id_equipo del usuario en sesión
+   
     useEffect(() => {
         const entrenador = JSON.parse(sessionStorage.getItem("usuario"));
         if (entrenador?.id_equipo) {
@@ -76,7 +76,7 @@ export default function RegistroJugador() {
                 setSuccess(result.message || "El jugador ha sido registrado con éxito. Redirigiendo al inicio...");
 
                 setTimeout(() => {
-                    navigate("/entrenador");
+                    navigate("/gestionarPlantilla");
                 }, 2000);
 
                 setFormData({
