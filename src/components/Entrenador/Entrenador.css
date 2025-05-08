@@ -131,33 +131,27 @@
   color: #e81cff;
 }
 
-
-.calendario-padding {
-  padding-bottom: 2.5rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.calendario-carrusel-centrado {
+.calendario-layout {
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* El alto del carrusel se controla aquí */
-  height: 520px;
-  box-sizing: border-box;
+}
+
+.calendario-carrusel-mini {
+  width: 100%;
+  max-width: 900px;
 }
 
 .carousel-slider-mini {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
   position: relative;
+  width: 100%;
+  height: 480px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .carousel-track-mini {
@@ -168,256 +162,217 @@
 }
 
 .carousel-slide-mini {
-  min-width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  padding: 0;
+  flex: 0 0 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: stretch;
 }
 
-.jornada-card-mini {
+/* ======================= */
+/*      CARD PRINCIPAL     */
+/* ======================= */
+.card-match-compact {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  border-radius: 2rem;
-  overflow: hidden;
+  max-width: 860px;
+  height: 440px;
   background: linear-gradient(135deg, #232531 80%, #40c9ff22 100%);
-  box-shadow: 0 4px 32px #40c9ff22, 0 0 0 1.5px #e81cff;
-  /* Para que el contenido se estire */
-  align-items: stretch;
-}
-
-.jornada-card-mini > div {
-  /* Para que los lados ocupen todo el alto */
-  height: 100%;
-}
-
-.jornada-header-mini {
-  background: linear-gradient(90deg, #0072ce 60%, #40c9ff 100%);
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.15em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 40px;
-  border-bottom: 2px solid #40c9ff;
-  border-radius: 1rem 1rem 0 0;
-}
-
-.carousel-botones {
-  display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-  margin-top: 1.2rem;
-}
-
-.carousel-boton-nav {
-  background: #23232b;
-  color: #40c9ff;
-  border: 1.5px solid #40c9ff;
-  border-radius: 0.7rem;
-  padding: 0.7rem 1.7rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.carousel-boton-nav:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.carousel-boton-nav:hover:enabled {
-  background: #40c9ff;
-  color: #18181b;
-  border-color: #e81cff;
-}
-
-/* --- LADO IZQUIERDO: Equipos y escudos --- */
-.card-equipos-lado {
-  flex: 1.2;
-  background: #18181b;
+  border-radius: 2.2rem;
+  box-shadow: 0 12px 48px #40c9ff22, 0 0 0 2px #e81cff;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-  height: 100%;
-  min-width: 0;
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  gap: 0.5rem;
+  justify-content: flex-start;
 }
 
-.card-equipo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.card-equipo img {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  background: #fff;
-  border-radius: 50%;
-  border: 2px solid #40c9ff;
-  box-shadow: 0 2px 8px #0002;
-}
-
-.card-equipo.visitante img {
-  border-color: #e81cff;
-}
-
-.card-equipo span {
-  font-weight: bold;
-  color: #fff;
-  font-size: 1.1rem;
+.card-jornada-fullwidth {
+  width: 100%;
   text-align: center;
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #40c9ff;
+  margin-bottom: 0.1rem;
+}
+
+.card-arbitro-above {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 0.1rem;
+}
+
+.arbitro-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.card-arbitro-nombre {
+  color: #e5e5e5;
+  font-size: 0.98rem;
+  font-weight: 500;
   white-space: nowrap;
 }
 
-.card-equipo .rol {
-  font-size: 0.8rem;
-  color: #a3a3a3;
-  font-weight: 400;
-}
-
-.card-vs {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #40c9ff;
-}
-
-/* --- LADO DERECHO: Info partido --- */
-.card-info-lado {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 48px 56px;
-  min-width: 0;
-}
-
-.card-jornada {
-  padding: 6px 18px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #e81cff, #40c9ff);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: 0 2px 8px #40c9ff22;
-  display: inline-block;
-}
-
-.card-info-row {
+/* ========== ESCUDOS Y VS ========== */
+.card-match-header-escudos {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin: 32px 0 18px 0;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid #232531;
+  padding-bottom: 0.2rem;
+  padding-top: 0.7rem;   /* más espacio arriba */
+}
+
+.escudo-contenedor.grande {
+  width: 110px;
+  height: 110px;
+  background: #fff;
+  border-radius: 22px;
+  border: 3.5px solid #40c9ff;
+  box-shadow: 0 2px 12px #0002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;      /* más espacio arriba */
+  margin-bottom: 2px;   /* menos espacio abajo */
+}
+.escudo-contenedor.grande.visitante {
+  border-color: #e81cff;
+}
+
+.card-match-escudo-grande {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+.card-match-vs-grande {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #40c9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110px;
+  min-width: 60px;
+}
+
+.card-match-team-solo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-match-rol {
+  font-size: 1.05rem;
+  color: #a3a3a3;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ========== BLOQUE CENTRAL ========== */
+.card-match-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 0.2rem;
+}
+
+.card-info-central {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem; /* más espacio antes del botón */
+}
+
+.card-info-v-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   color: #e5e5e5;
-  font-size: 1.08rem;
+  font-size: 1.02rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.card-info-row svg {
-  flex-shrink: 0;
-}
-
-.card-info-row .label {
+.card-info-v-row span.label {
   color: #a3a3a3;
   font-size: 0.95rem;
 }
 
-.card-botones {
+/* ========== BOTÓN ========== */
+.card-botones-bottom-center {
   display: flex;
-  gap: 18px;
-  margin-top: 24px;
+  justify-content: center;
+  margin-bottom: 0;
 }
 
-.card-botones button {
-  padding: 10px 24px;
+.card-boton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 32px;
   background: linear-gradient(90deg, #e81cff, #40c9ff);
   color: #fff;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 1rem;
   border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1.08rem;
   box-shadow: 0 2px 8px #40c9ff22;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: transform 0.2s, opacity 0.2s;
 }
-
-.card-botones button:last-child {
-  background: #232531;
-  color: #40c9ff;
-  border: 2px solid #40c9ff;
-}
-
-.card-botones button:hover {
-  opacity: 0.9;
+.card-boton:hover {
+  opacity: 0.93;
   transform: scale(1.04);
 }
-
-/* --- RESPONSIVE --- */
-@media (max-width: 900px) {
-  .calendario-carrusel-centrado {
-    height: 420px;
-  }
-  .card-info-lado {
-    padding: 32px 12px;
-  }
-  .card-equipos-lado {
-    gap: 24px;
-  }
-  .card-equipo img {
-    width: 70px;
-    height: 70px;
-  }
+.card-boton-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
 }
 
-@media (max-width: 600px) {
-  .calendario-carrusel-centrado {
-    height: 340px;
-    min-height: 340px;
-    padding-top: 12px;
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .carousel-slider-mini { height: auto; }
+  .card-match-compact {
+    height: auto;
+    padding: 0.5rem;
+    gap: 0.2rem;
   }
-  .carousel-slider-mini, .jornada-card-mini {
-    max-width: 98vw;
-    min-width: 0;
-    max-height: 340px;
+  .card-match-header-escudos {
+    gap: 12px;
+    margin-bottom: 0.1rem;
+    padding-bottom: 0.1rem;
+    padding-top: 0.3rem;
   }
-  .jornada-card-mini {
-    flex-direction: column;
-    max-height: 340px;
-    padding-bottom: 0;
+  .escudo-contenedor.grande {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    margin-top: 4px;
+    margin-bottom: 1px;
   }
-  .card-equipos-lado {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 0;
-    padding: 12px 0;
-    height: 120px;
+  .card-match-escudo-grande {
+    width: 38px;
+    height: 38px;
+    border-radius: 4px;
   }
-  .card-info-lado {
-    padding: 12px 8px;
-    height: calc(100% - 120px);
+  .card-match-vs-grande {
+    font-size: 1.2rem;
+    height: 48px;
+    min-width: 24px;
   }
-  .card-botones {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .card-botones button {
-    width: 100%;
-    font-size: 0.95rem;
-    padding: 8px 0;
-  }
+  .card-info-central { gap: 0.1rem; margin-bottom: 0.5rem; }
+  .card-boton { font-size: 0.7rem; padding: 4px 8px; }
+  .card-boton-icon { width: 10px; height: 10px; }
 }

@@ -3,6 +3,7 @@ import "./SideBar.css";
 import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
 import teamIcon from "/src/assets/teamIcon.svg";
+import partidosIcon from "/src/assets/ligaIcon.svg"
 import crearEntrenamiento from "/src/assets/crearEntrenamiento.svg"
 import verEntreno from "/src/assets/verEntreno.svg"
 import { userService } from "../../services/usuarios.service";
@@ -48,6 +49,12 @@ export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario })
             <img src={teamIcon} alt="gestion plantilla" className="w-6 h-6" />
           </div>
           <span>Gestionar Plantilla</span>
+        </Link>
+        <Link to="/gestionarPartidos" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={partidosIcon} alt="gestion partidos" className="w-6 h-6" />
+          </div>
+          <span>Gestionar Partidos</span>
         </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
