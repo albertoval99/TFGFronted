@@ -29,7 +29,6 @@ export default function VerPartidosEquipo() {
     try {
       const response = await partidosService.getPartidosByEquipo(idEquipo);
       if (response.status === 200 && Array.isArray(response.data)) {
-        // Ordena por fecha
         const partidosOrdenados = response.data.sort(
           (a, b) => new Date(a.fecha_partido) - new Date(b.fecha_partido)
         );
@@ -51,7 +50,7 @@ export default function VerPartidosEquipo() {
           }
           return fecha >= hoy;
         });
-        if (idx === -1) idx = partidosOrdenados.length - 1; // Si todos son pasados, muestra el último
+        if (idx === -1) idx = partidosOrdenados.length - 1;
         setSlide(idx >= 0 ? idx : 0);
       } else {
         setError(response.message || "No se han encontrado partidos");
@@ -89,51 +88,26 @@ export default function VerPartidosEquipo() {
     return "Fecha por determinar";
   };
 
-  // Devuelve true si el botón debe estar habilitado
-  function puedeHacerAlineacion(partido, siguientePartido) {
-    // Fecha y hora del partido actual
-    let fechaActual;
+  // Devuelve true si el usuario puede hacer la alineación (antes de la fecha/hora del partido)
+  function puedeHacerAlineacion(partido) {
+    let fechaPartido;
     if (partido.fecha_partido.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
       const [day, month, year] = partido.fecha_partido.split("/");
-      fechaActual = new Date(Number(year), Number(month) - 1, Number(day));
+      fechaPartido = new Date(Number(year), Number(month) - 1, Number(day));
     } else if (partido.fecha_partido.match(/^\d{4}-\d{2}-\d{2}$/)) {
       const [year, month, day] = partido.fecha_partido.split("-");
-      fechaActual = new Date(Number(year), Number(month) - 1, Number(day));
+      fechaPartido = new Date(Number(year), Number(month) - 1, Number(day));
     } else {
-      fechaActual = new Date(partido.fecha_partido);
+      fechaPartido = new Date(partido.fecha_partido);
     }
     if (partido.hora_partido) {
       const [h, m] = partido.hora_partido.split(":");
-      fechaActual.setHours(Number(h), Number(m), 0, 0);
+      fechaPartido.setHours(Number(h), Number(m), 0, 0);
     } else {
-      fechaActual.setHours(0, 0, 0, 0);
+      fechaPartido.setHours(0, 0, 0, 0);
     }
-
-    // Fecha y hora del siguiente partido (si existe)
-    let fechaSiguiente;
-    if (siguientePartido) {
-      if (siguientePartido.fecha_partido.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-        const [day, month, year] = siguientePartido.fecha_partido.split("/");
-        fechaSiguiente = new Date(Number(year), Number(month) - 1, Number(day));
-      } else if (siguientePartido.fecha_partido.match(/^\d{4}-\d{2}-\d{2}$/)) {
-        const [year, month, day] = siguientePartido.fecha_partido.split("-");
-        fechaSiguiente = new Date(Number(year), Number(month) - 1, Number(day));
-      } else {
-        fechaSiguiente = new Date(siguientePartido.fecha_partido);
-      }
-      if (siguientePartido.hora_partido) {
-        const [h, m] = siguientePartido.hora_partido.split(":");
-        fechaSiguiente.setHours(Number(h), Number(m), 0, 0);
-      } else {
-        fechaSiguiente.setHours(0, 0, 0, 0);
-      }
-    } else {
-      // Si no hay siguiente partido, deja un rango amplio (1 año)
-      fechaSiguiente = new Date(fechaActual.getTime() + 1000 * 60 * 60 * 24 * 365);
-    }
-
     const ahora = new Date();
-    return ahora >= fechaActual && ahora < fechaSiguiente;
+    return ahora < fechaPartido;
   }
 
   const prevSlide = () => setSlide((s) => Math.max(0, s - 1));
@@ -190,10 +164,7 @@ export default function VerPartidosEquipo() {
               className="vpe-carousel-track"
               style={{ transform: `translateX(-${slide * 100}%)` }}
             >
-              {partidos.map((p, idx) => {
-                const siguientePartido = partidos[idx + 1];
-                const habilitado = puedeHacerAlineacion(p, siguientePartido);
-
+              {partidos.map((p) => {
                 return (
                   <div
                     className="vpe-carousel-slide"
@@ -291,27 +262,22 @@ export default function VerPartidosEquipo() {
                             </span>
                           </div>
                         </div>
-
-                        {/* Espacio extra antes del botón */}
                         <div style={{ height: "1.2rem" }} />
-
-                        {/* Botón alineación */}
                         <div className="vpe-card-botones-bottom-center">
                           <button
                             onClick={() => {
-                              if (habilitado) {
+                              if (puedeHacerAlineacion(p)) {
                                 setError("");
                                 setSuccess("");
                                 navigate(`/alineacion/${p.id}`);
                               } else {
                                 setError(
-                                  "Solo puedes hacer la alineación entre la fecha de este partido y la del siguiente."
+                                  "Solo puedes hacer la alineación antes de la hora del partido.Este partido ya se ha jugado o esta en juego"
                                 );
                                 setSuccess("");
                               }
                             }}
-                            className={`vpe-card-boton ${!habilitado ? "opacity-50 cursor-not-allowed" : ""}`}
-                            disabled={!habilitado}
+                            className="vpe-card-boton"
                           >
                             <img
                               src={hacerAlineacion}
