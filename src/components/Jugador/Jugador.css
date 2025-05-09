@@ -2,6 +2,8 @@
   width: 100%;
   max-width: 700px;
   box-shadow: 0 0 40px 0 #a855f7, 0 0 0 1px #40c9ff;
+  position: relative;
+  overflow: hidden;
 }
 
 .nombre-gradiente {
@@ -30,4 +32,17 @@
 
 .boton-opcion:hover .boton-icono {
   color: #e81cff;
+}
+
+.jugador-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(232, 28, 255, 0.1), transparent 50%),
+              radial-gradient(circle at bottom left, rgba(64, 201, 255, 0.1), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
 }

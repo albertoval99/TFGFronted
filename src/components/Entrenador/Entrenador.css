@@ -131,7 +131,7 @@
   color: #e81cff;
 }
 
-.calendario-layout {
+.vpe-layout {
   width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -139,12 +139,12 @@
   justify-content: center;
 }
 
-.calendario-carrusel-mini {
+.vpe-carrusel-mini {
   width: 100%;
   max-width: 900px;
 }
 
-.carousel-slider-mini {
+.vpe-carousel-slider {
   position: relative;
   width: 100%;
   height: 480px;
@@ -154,14 +154,14 @@
   overflow: hidden;
 }
 
-.carousel-track-mini {
+.vpe-carousel-track {
   display: flex;
   transition: transform 0.5s cubic-bezier(.77,0,.18,1);
   width: 100%;
   height: 100%;
 }
 
-.carousel-slide-mini {
+.vpe-carousel-slide {
   flex: 0 0 100%;
   display: flex;
   align-items: center;
@@ -171,7 +171,7 @@
 /* ======================= */
 /*      CARD PRINCIPAL     */
 /* ======================= */
-.card-match-compact {
+.vpe-card-match {
   width: 100%;
   max-width: 860px;
   height: 440px;
@@ -185,7 +185,7 @@
   justify-content: flex-start;
 }
 
-.card-jornada-fullwidth {
+.vpe-card-jornada {
   width: 100%;
   text-align: center;
   font-size: 1.1rem;
@@ -194,7 +194,7 @@
   margin-bottom: 0.1rem;
 }
 
-.card-arbitro-above {
+.vpe-card-arbitro {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -202,12 +202,12 @@
   margin-bottom: 0.1rem;
 }
 
-.arbitro-icon {
+.vpe-arbitro-icon {
   width: 18px;
   height: 18px;
 }
 
-.card-arbitro-nombre {
+.vpe-card-arbitro-nombre {
   color: #e5e5e5;
   font-size: 0.98rem;
   font-weight: 500;
@@ -215,7 +215,7 @@
 }
 
 /* ========== ESCUDOS Y VS ========== */
-.card-match-header-escudos {
+.vpe-card-header-escudos {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -223,10 +223,10 @@
   margin-bottom: 0.3rem;
   border-bottom: 1px solid #232531;
   padding-bottom: 0.2rem;
-  padding-top: 0.7rem;   /* más espacio arriba */
+  padding-top: 0.7rem;
 }
 
-.escudo-contenedor.grande {
+.vpe-escudo-contenedor.grande {
   width: 110px;
   height: 110px;
   background: #fff;
@@ -236,21 +236,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;      /* más espacio arriba */
-  margin-bottom: 2px;   /* menos espacio abajo */
+  margin-top: 8px;
+  margin-bottom: 2px;
 }
-.escudo-contenedor.grande.visitante {
+.vpe-escudo-contenedor.grande.visitante {
   border-color: #e81cff;
 }
 
-.card-match-escudo-grande {
+.vpe-card-escudo-grande {
   width: 90px;
   height: 90px;
   object-fit: contain;
   border-radius: 14px;
 }
 
-.card-match-vs-grande {
+.vpe-card-vs-grande {
   font-size: 2.8rem;
   font-weight: 900;
   color: #40c9ff;
@@ -261,13 +261,13 @@
   min-width: 60px;
 }
 
-.card-match-team-solo {
+.vpe-card-team {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.card-match-rol {
+.vpe-card-rol {
   font-size: 1.05rem;
   color: #a3a3a3;
   font-weight: 600;
@@ -276,7 +276,7 @@
 }
 
 /* ========== BLOQUE CENTRAL ========== */
-.card-match-content {
+.vpe-card-content {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -284,15 +284,15 @@
   gap: 0.2rem;
 }
 
-.card-info-central {
+.vpe-card-info-central {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-  margin-bottom: 1.2rem; /* más espacio antes del botón */
+  margin-bottom: 1.2rem;
 }
 
-.card-info-v-row {
+.vpe-card-info-row {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -304,75 +304,160 @@
   text-overflow: ellipsis;
 }
 
-.card-info-v-row span.label {
-  color: #a3a3a3;
-  font-size: 0.95rem;
+.vpe-label {
+  color: #bdbdbd;
+  font-size: 0.95em;
 }
 
-/* ========== BOTÓN ========== */
-.card-botones-bottom-center {
+.vpe-card-botones-bottom-center {
   display: flex;
   justify-content: center;
-  margin-bottom: 0;
+  align-items: center;
 }
 
-.card-boton {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 32px;
-  background: linear-gradient(90deg, #e81cff, #40c9ff);
+.vpe-card-boton {
+  background: linear-gradient(90deg, #40c9ff 60%, #e81cff 100%);
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 1.2rem;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  font-size: 1.08rem;
-  box-shadow: 0 2px 8px #40c9ff22;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s;
+  box-shadow: 0 2px 8px #40c9ff33;
+  transition: all 0.2s;
 }
-.card-boton:hover {
-  opacity: 0.93;
-  transform: scale(1.04);
-}
-.card-boton-icon {
-  width: 20px;
-  height: 20px;
-  filter: brightness(0) invert(1);
+.vpe-card-boton:hover {
+  background: linear-gradient(90deg, #e81cff 60%, #40c9ff 100%);
+  color: #232531;
 }
 
-/* ========== RESPONSIVE ========== */
+.vpe-card-boton-icon {
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 2px 8px #23253144);
+}
+
+.vpe-carousel-botones {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.vpe-carousel-boton-nav {
+  background: #23232b;
+  color: #40c9ff;
+  border: 1.5px solid #40c9ff;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.7rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.vpe-carousel-boton-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.vpe-carousel-boton-nav:hover:enabled {
+  background: #40c9ff;
+  color: #18181b;
+  border-color: #e81cff;
+}
+
 @media (max-width: 900px) {
-  .carousel-slider-mini { height: auto; }
-  .card-match-compact {
+  .vpe-layout {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 18px;
+    min-height: 100vh;
+  }
+  .vpe-carrusel-mini {
+    max-width: 98vw;
+    min-width: 0;
+  }
+  .vpe-carousel-slider {
     height: auto;
-    padding: 0.5rem;
-    gap: 0.2rem;
+    min-height: 0;
+    max-width: 100vw;
   }
-  .card-match-header-escudos {
-    gap: 12px;
-    margin-bottom: 0.1rem;
-    padding-bottom: 0.1rem;
-    padding-top: 0.3rem;
+  .vpe-card-match {
+    height: auto;
+    min-height: 0;
+    max-width: 98vw;
+    padding: 0.5rem 0.3rem 0.7rem 0.3rem;
+    gap: 0.18rem;
+    border-radius: 1.2rem;
   }
-  .escudo-contenedor.grande {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    margin-top: 4px;
-    margin-bottom: 1px;
+  .vpe-card-header-escudos {
+    gap: 10px;
+    margin-bottom: 0.08rem;
+    padding-bottom: 0.08rem;
+    padding-top: 0.18rem;
   }
-  .card-match-escudo-grande {
+  .vpe-escudo-contenedor.grande {
     width: 38px;
     height: 38px;
-    border-radius: 4px;
+    border-radius: 6px;
+    margin-top: 2px;
+    margin-bottom: 1px;
   }
-  .card-match-vs-grande {
-    font-size: 1.2rem;
-    height: 48px;
-    min-width: 24px;
+  .vpe-card-escudo-grande {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
   }
-  .card-info-central { gap: 0.1rem; margin-bottom: 0.5rem; }
-  .card-boton { font-size: 0.7rem; padding: 4px 8px; }
-  .card-boton-icon { width: 10px; height: 10px; }
+  .vpe-card-vs-grande {
+    font-size: 1rem;
+    height: 38px;
+    min-width: 18px;
+  }
+  .vpe-card-jornada {
+    font-size: 0.95rem;
+    margin-bottom: 0.05rem;
+  }
+  .vpe-card-arbitro-nombre {
+    font-size: 0.85rem;
+  }
+  .vpe-card-rol {
+    font-size: 0.85rem;
+    margin-top: 1px;
+  }
+  .vpe-card-info-central {
+    gap: 0.08rem;
+    margin-bottom: 0.3rem;
+  }
+  .vpe-card-info-row {
+    font-size: 0.85rem;
+    gap: 5px;
+  }
+  .vpe-label {
+    font-size: 0.85em;
+  }
+  .vpe-card-boton {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 0.7rem;
+    gap: 0.4rem;
+  }
+  .vpe-card-boton-icon {
+    width: 14px;
+    height: 14px;
+  }
+  .vpe-carousel-botones {
+    gap: 0.7rem;
+    margin-top: 0.7rem;
+  }
+  .vpe-carousel-boton-nav {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.5rem;
+  }
 }
+
