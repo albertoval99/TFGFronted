@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { alineacionesService } from "../../services/alineaciones.service";
 import { userService } from "../../services/usuarios.service";
 import "./Alineacion.css";
@@ -9,129 +9,166 @@ export default function RegistrarAlineacion() {
     const navigate = useNavigate();
 
     const [jugadores, setJugadores] = useState([]);
-    const [estadoJugadores, setEstadoJugadores] = useState({}); // { id_jugador: "no" | "titular" | "suplente" }
+    const [estadoJugadores, setEstadoJugadores] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState("");
 
+    const POSICION_COLORS = {
+        PT: "bg-blue-600/20 text-blue-400",
+        DFC: "bg-green-600/20 text-green-400",
+        LI: "bg-yellow-600/20 text-yellow-500",
+        LD: "bg-yellow-600/20 text-yellow-500",
+        MC: "bg-purple-600/20 text-purple-400",
+        MCD: "bg-indigo-600/20 text-indigo-400",
+        MI: "bg-pink-600/20 text-pink-400",
+        MD: "bg-pink-600/20 text-pink-400",
+        EI: "bg-orange-600/20 text-orange-400",
+        ED: "bg-orange-600/20 text-orange-400",
+        DC: "bg-red-600/20 text-red-400",
+    };
+
     useEffect(() => {
-        const fetchJugadores = async () => {
+        async function cargarDatos() {
+            if (!id_partido) {
+                setError("No se encontró el partido");
+                setLoading(false);
+                return;
+            }
             try {
-                const response = await userService.getJugadoresByEquipo();
-                if (response.status === 200) {
-                    setJugadores(response.jugadores);
-                    const inicial = {};
-                    for (let i = 0; i < response.jugadores.length; i++) {
-                        inicial[response.jugadores[i].id_jugador] = "no";
-                    }
-                    setEstadoJugadores(inicial);
-                    setError(null);
-                } else {
-                    setError(response.message);
-                    setJugadores([]);
+                const resJugadores = await userService.getJugadoresByEquipo();
+                if (resJugadores.status !== 200) {
+                    setError("Error al cargar jugadores");
+                    setLoading(false);
+                    return;
                 }
-            } catch (err) {
-                setError("Error al cargar los jugadores");
-                console.error(err);
+                const jugadoresData = resJugadores.jugadores;
+                const estadoInicial = {};
+                jugadoresData.forEach((j) => {
+                    estadoInicial[j.id_jugador] = "no";
+                });
+
+                try {
+                    const resAlineacion = await alineacionesService.getAlineacionesByPartido(id_partido);
+                    if (Array.isArray(resAlineacion)) {
+                        resAlineacion.forEach((a) => {
+                            estadoInicial[a.id_jugador] = a.es_titular ? "titular" : "suplente";
+                        });
+                    }
+                } catch {
+                    // No hay alineación previa
+                }
+
+                setJugadores(jugadoresData);
+                setEstadoJugadores(estadoInicial);
+                setError(null);
+            } catch (e) {
+                setError("Error inesperado al cargar datos");
+                console.error(e);
             } finally {
                 setLoading(false);
             }
-        };
-        fetchJugadores();
-    }, []);
+        }
+        cargarDatos();
+    }, [id_partido]);
 
-    const cicloEstado = (actual) => {
-        if (actual === "no") return "titular";
-        if (actual === "titular") return "suplente";
-        return "no";
+    const toggleTitular = (id_jugador) => {
+        setEstadoJugadores((prev) => {
+            const current = prev[id_jugador];
+            const titularesCount = Object.values(prev).filter((e) => e === "titular").length;
+            if (current === "titular") {
+                setError(null);
+                return { ...prev, [id_jugador]: "no" };
+            }
+            if (titularesCount >= 11) {
+                setError("No puedes tener más de 11 titulares");
+                return prev;
+            }
+            setError(null);
+            return { ...prev, [id_jugador]: "titular" };
+        });
     };
 
-    const toggleJugador = (id_jugador) => {
+    const toggleSuplente = (id_jugador) => {
         setEstadoJugadores((prev) => {
-            const nuevoEstado = cicloEstado(prev[id_jugador]);
-
-            let titularesCount = 0;
-            let suplentesCount = 0;
-            for (const key in prev) {
-                if (key === String(id_jugador)) {
-                    if (nuevoEstado === "titular") titularesCount++;
-                    if (nuevoEstado === "suplente") suplentesCount++;
-                } else {
-                    if (prev[key] === "titular") titularesCount++;
-                    if (prev[key] === "suplente") suplentesCount++;
-                }
+            const current = prev[id_jugador];
+            const suplentesCount = Object.values(prev).filter((e) => e === "suplente").length;
+            if (current === "suplente") {
+                setError(null);
+                return { ...prev, [id_jugador]: "no" };
             }
-
-            if (titularesCount > 11) {
-                setError("No puedes tener más de 11 titulares");
-                setSuccess("");
-                return prev;
-            }
-            if (suplentesCount > 7) {
+            if (suplentesCount >= 7) {
                 setError("No puedes tener más de 7 suplentes");
-                setSuccess("");
                 return prev;
             }
-
             setError(null);
-            setSuccess("");
-            return { ...prev, [id_jugador]: nuevoEstado };
+            return { ...prev, [id_jugador]: "suplente" };
         });
     };
 
     const guardarAlineacion = async () => {
-        const titulares = [];
-        const suplentes = [];
-        for (const key in estadoJugadores) {
-            if (estadoJugadores[key] === "titular") titulares.push(Number(key));
-            else if (estadoJugadores[key] === "suplente") suplentes.push(Number(key));
-        }
-
-        if (titulares.length !== 11) {
-            setError("Debe seleccionar exactamente 11 titulares");
-            setSuccess("");
-            return;
-        }
-        if (suplentes.length > 7) {
-            setError("No puede haber más de 7 suplentes");
-            setSuccess("");
-            return;
-        }
-
         setError(null);
         setSuccess("");
-
         try {
-            for (let i = 0; i < titulares.length; i++) {
-                await alineacionesService.registrarAlineacion({
-                    id_partido: Number(id_partido),
-                    id_jugador: titulares[i],
-                    titular: true,
-                });
+            const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+            const id_equipo = usuario.equipo?.id_equipo;
+            if (!id_equipo) {
+                setError("No se encontró el equipo del usuario");
+                return;
             }
-            for (let i = 0; i < suplentes.length; i++) {
-                await alineacionesService.registrarAlineacion({
-                    id_partido: Number(id_partido),
-                    id_jugador: suplentes[i],
-                    titular: false,
-                });
+
+            const titulares = Object.entries(estadoJugadores)
+                .filter(([, estado]) => estado === "titular")
+                .map(([id_jugador]) => Number(id_jugador));
+
+            const suplentes = Object.entries(estadoJugadores)
+                .filter(([, estado]) => estado === "suplente")
+                .map(([id_jugador]) => Number(id_jugador));
+
+            if (titulares.length !== 11) {
+                setError("Solo puedes convocar a 11 titulares");
+                return;
             }
+            if (suplentes.length !== 7) {
+                setError("Solo puedes convocar a 7 suplentes");
+                return;
+            }
+
+            const alineaciones = [
+                ...titulares.map((id_jugador) => ({
+                    id_partido,
+                    id_jugador,
+                    id_equipo,
+                    es_titular: true,
+                })),
+                ...suplentes.map((id_jugador) => ({
+                    id_partido,
+                    id_jugador,
+                    id_equipo,
+                    es_titular: false,
+                })),
+            ];
+
+            await Promise.all(
+                alineaciones.map((alineacion) =>
+                    alineacionesService.registrarAlineacion(alineacion)
+                )
+            );
+
             setSuccess("Alineación guardada correctamente");
-            navigate(`/gestionarPartidos}`);
-        } catch (err) {
-            setError("Error al guardar la alineación");
-            console.error(err);
+            setTimeout(() => {
+                navigate("/gestionarPartidos");
+            }, 3000);
+        } catch (e) {
+            setError(e.message || "Error al guardar la alineación");
+            console.error(e);
         }
-    };
+      };
 
     if (loading) return <p className="ra-loading">Cargando jugadores...</p>;
 
-    let titularesCount = 0;
-    let suplentesCount = 0;
-    for (const key in estadoJugadores) {
-        if (estadoJugadores[key] === "titular") titularesCount++;
-        else if (estadoJugadores[key] === "suplente") suplentesCount++;
-    }
+    const titularesCount = Object.values(estadoJugadores).filter((e) => e === "titular").length;
+    const suplentesCount = Object.values(estadoJugadores).filter((e) => e === "suplente").length;
 
     return (
         <div className="ra-container">
@@ -180,27 +217,9 @@ export default function RegistrarAlineacion() {
                 {jugadores.map((jugador) => {
                     const estado = estadoJugadores[jugador.id_jugador];
                     return (
-                        <div
-                            key={jugador.id_jugador}
-                            className={`ra-player-card ${estado === "titular"
-                                    ? "ra-titular"
-                                    : estado === "suplente"
-                                        ? "ra-suplente"
-                                        : "ra-no"
-                                }`}
-                            onClick={() => toggleJugador(jugador.id_jugador)}
-                            title="Click para cambiar estado: No seleccionado → Titular → Suplente"
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter" || e.key === " ") {
-                                    e.preventDefault();
-                                    toggleJugador(jugador.id_jugador);
-                                }
-                            }}
-                        >
-                            <div className="ra-dorsal">
-                                <svg className="ra-dorsal-svg" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                        <div key={jugador.id_jugador} className="ra-player-card">
+                            <div className="ra-dorsal-container" aria-hidden="true">
+                                <svg className="ra-dorsal-svg" viewBox="0 0 40 40" fill="none">
                                     <path d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
                                     <rect x="13" y="5" width="14" height="6" rx="2" fill="#40c9ff" />
                                 </svg>
@@ -208,10 +227,27 @@ export default function RegistrarAlineacion() {
                             </div>
                             <div className="ra-player-info">
                                 <span className="ra-player-name">{jugador.nombre} {jugador.apellidos}</span>
-                                <span className="ra-player-position">{jugador.posicion}</span>
+                                <span className={`ra-player-position px-3 py-1 rounded-full font-semibold text-xs flex items-center ${POSICION_COLORS[jugador.posicion] || "bg-neutral-700 text-white"}`}>
+                                    {jugador.posicion}
+                                </span>
                             </div>
-                            <div className="ra-player-status">
-                                {estado === "titular" ? "Titular" : estado === "suplente" ? "Suplente" : ""}
+                            <div className="ra-checkboxes">
+                                <label className="ra-checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={estado === "titular"}
+                                        onChange={() => toggleTitular(jugador.id_jugador)}
+                                    />
+                                    Titular
+                                </label>
+                                <label className="ra-checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        checked={estado === "suplente"}
+                                        onChange={() => toggleSuplente(jugador.id_jugador)}
+                                    />
+                                    Suplente
+                                </label>
                             </div>
                         </div>
                     );

@@ -23,7 +23,6 @@ export const alineacionesService = {
             throw error;
         }
     },
-
     registrarAlineacion: async (alineacion) => {
         try {
             const token = sessionStorage.getItem("token");
@@ -43,16 +42,20 @@ export const alineacionesService = {
                 body: JSON.stringify(alineacion),
             });
 
-            const data = await response.json();
-
-            return {
-                status: response.status,
-                message: data.message,
-                alineacion: data.data,
-            };
+            const text = await response.text();
+            try {
+                const data = JSON.parse(text);
+                return {
+                    status: response.status,
+                    message: data.message,
+                    alineacion: data.data,
+                };
+            } catch {
+                throw new Error("Respuesta no es JSON válida: " + text);
+            }
         } catch (error) {
             console.error("Error al registrar alineación:", error);
             throw error;
         }
-    },
+      },
 };
