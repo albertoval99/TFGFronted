@@ -1,0 +1,143 @@
+.ra-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 40px 0 #a855f7, 0 0 0 1px #40c9ff;
+    border-radius: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  
+  .ra-title {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+  }
+  
+  .ra-counters {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    user-select: none;
+  }
+  
+  .ra-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: auto;
+    max-height: 420px;
+    padding-right: 0.5rem;
+  }
+  
+  .ra-player-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    outline-offset: 2px;
+  }
+  
+  .ra-player-card:focus {
+    outline: 2px solid #40c9ff;
+    outline-offset: 2px;
+  }
+  
+  .ra-player-card.ra-no:hover {
+    border-color: #40c9ff;
+    background-color: #232531;
+  }
+  
+  .ra-player-card.ra-titular {
+    border-color: #40c9ff;
+    background-color: #232531;
+  }
+  
+  .ra-player-card.ra-suplente {
+    border-color: #e81cff;
+    background-color: #2a1a2f;
+  }
+  
+  .ra-dorsal {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+  
+  .ra-dorsal-svg {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .ra-dorsal-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: white;
+    user-select: none;
+  }
+  
+  .ra-player-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .ra-player-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .ra-player-position {
+    font-size: 0.85rem;
+    color: #a0aec0;
+    user-select: none;
+  }
+  
+  .ra-player-status {
+    width: 80px;
+    text-align: center;
+    font-weight: 700;
+    user-select: none;
+  }
+  
+  .ra-save-btn {
+    align-self: center;
+    padding: 0.75rem 3rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
+    color: white;
+    box-shadow: 0 6px 12px rgba(232, 28, 255, 0.6);
+    transition: background 0.3s ease;
+  }
+  
+  .ra-save-btn:hover {
+    background: linear-gradient(90deg, #40c9ff 0%, #e81cff 100%);
+  }

@@ -269,7 +269,7 @@ export default function VerPartidosEquipo() {
                               if (puedeHacerAlineacion(p)) {
                                 setError("");
                                 setSuccess("");
-                                navigate(`/alineacion/${p.id}`);
+                                navigate(`/registrarAlineacion/${p.id_partido}`);
                               } else {
                                 setError(
                                   "Solo puedes hacer la alineación antes de la hora del partido.Este partido ya se ha jugado o esta en juego"
