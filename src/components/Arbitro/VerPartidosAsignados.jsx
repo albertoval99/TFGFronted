@@ -6,6 +6,7 @@ import aplazarPartidoIcon from "/src/assets/aplazarPartido.svg";
 import registrarPartidoIcon from "/src/assets/registrarPartido.svg";
 import AplazarPartidoModal from "./AplazarPartidoModal";
 import { equipoService } from "../../services/equipos.service";
+import RegistrarPartidoModal from "./RegistrarPartidoModal";
 
 export default function VerPartidosAsignados() {
     const [partidos, setPartidos] = useState([]);
@@ -16,6 +17,8 @@ export default function VerPartidosAsignados() {
     const navigate = useNavigate();
     const [partidoEditando, setPartidoEditando] = useState(null);
     const [estadios, setEstadios] = useState([]);
+    const [partidoRegistrando, setPartidoRegistrando] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const usuario = JSON.parse(sessionStorage.getItem("usuario"));
@@ -382,11 +385,10 @@ export default function VerPartidosAsignados() {
                                                         if (puedeRegistrar(p)) {
                                                             setError("");
                                                             setSuccess("");
-                                                            navigate(`/registrarPartido/${p.id_partido}`);
+                                                            setPartidoRegistrando(p);
+                                                            setShowModal(true);
                                                         } else {
-                                                            setError(
-                                                                "Solo puedes registrar el partido después de que haya empezado"
-                                                            );
+                                                            setError("Solo puedes registrar el partido después de que haya empezado");
                                                             setSuccess("");
                                                         }
                                                     }}
@@ -429,6 +431,20 @@ export default function VerPartidosAsignados() {
                         estadios={estadios}
                         onClose={() => setPartidoEditando(null)}
                         onSave={handleGuardarAplazamiento}
+                    />
+                )}
+
+                {partidoRegistrando && showModal && (
+                    <RegistrarPartidoModal
+                        partido={partidoRegistrando}
+                        onClose={() => {
+                            setShowModal(false);
+                            setPartidoRegistrando(null);
+                        }}
+                        onSave={async (data) => {
+                            const res = await partidosService.registrarEstadisticas(partidoRegistrando.id_partido, data);
+                            return res;
+                        }}
                     />
                 )}
             </div>

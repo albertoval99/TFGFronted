@@ -83,4 +83,31 @@ export const partidosService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
+
+    registrarEstadisticas: async (id_partido, { goles_local, goles_visitante, estadisticas_individuales }) => {
+        try {
+            const response = await fetch(`${API_URL}/${id_partido}/registrarEstadisticas`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({ goles_local, goles_visitante, estadisticas_individuales })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return { status: 200, message: data.message || "Estadísticas registradas correctamente" };
+            } else {
+                return {
+                    status: response.status,
+                    message: data.message || "Error al registrar las estadísticas"
+                };
+            }
+        } catch (error) {
+            console.error("❌ Error al registrar estadísticas:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    }
 };
