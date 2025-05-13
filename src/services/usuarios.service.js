@@ -285,7 +285,7 @@ export const userService = {
 
 
             if (!id_equipo) {
-                return { status: 404, message: "No se encontró el equipo del entrenador" };
+                return { status: 404, message: "No se encontró el equipo" };
             }
 
             const response = await fetch(`${API_URL}/equipo/${id_equipo}`, {

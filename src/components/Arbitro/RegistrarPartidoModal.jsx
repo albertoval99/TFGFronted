@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { userService } from "../../services/usuarios.service";
+import { equipoService } from "../../services/equipos.service";
+import { partidosService } from "../../services/partidos.service";
 
 export default function RegistrarPartidoModal({ partido, onClose, onSave }) {
     const [formData, setFormData] = useState({
@@ -18,22 +19,25 @@ export default function RegistrarPartidoModal({ partido, onClose, onSave }) {
         async function fetchJugadores() {
             setLoading(true);
             try {
+                // Verificar que tenemos los IDs necesarios
+                if (!partido?.equipo_local_id || !partido?.equipo_visitante_id) {
+                    throw new Error("Faltan los IDs de los equipos");
+                }
+
                 // Obtener jugadores del equipo local
-                const resLocal = await userService.getJugadoresByEquipo(partido.id_equipo_local);
-                if (resLocal.status === 200) {
-                    setJugadoresLocal(resLocal.jugadores);
-                } else {
-                    throw new Error(resLocal.message);
+                const resLocal = await equipoService.getJugadoresByEquipo(partido.equipo_local_id);
+                if (resLocal.status !== 200) {
+                    throw new Error(resLocal.message || "Error al obtener jugadores locales");
                 }
 
                 // Obtener jugadores del equipo visitante
-                const resVisitante = await userService.getJugadoresByEquipo(partido.id_equipo_visitante);
-                if (resVisitante.status === 200) {
-                    setJugadoresVisitante(resVisitante.jugadores);
-                } else {
-                    throw new Error(resVisitante.message);
+                const resVisitante = await equipoService.getJugadoresByEquipo(partido.equipo_visitante_id);
+                if (resVisitante.status !== 200) {
+                    throw new Error(resVisitante.message || "Error al obtener jugadores visitantes");
                 }
-                
+
+                setJugadoresLocal(resLocal.jugadores);
+                setJugadoresVisitante(resVisitante.jugadores);
 
                 // Inicializar estadísticas individuales
                 const iniciales = [
@@ -43,7 +47,7 @@ export default function RegistrarPartidoModal({ partido, onClose, onSave }) {
                         tarjetas_amarillas: 0,
                         tarjetas_rojas: 0,
                         mejor_jugador: false,
-                        titularidades: 90 // Asumimos que todos empiezan como titulares
+                        titularidades: 90
                     })),
                     ...resVisitante.jugadores.map(j => ({
                         id_jugador: j.id_jugador,
@@ -61,11 +65,13 @@ export default function RegistrarPartidoModal({ partido, onClose, onSave }) {
                 }));
 
             } catch (error) {
+                console.error("Error al cargar jugadores:", error);
                 setError(error.message || "Error al cargar los jugadores");
             } finally {
                 setLoading(false);
             }
         }
+
         fetchJugadores();
     }, [partido]);
 
@@ -96,18 +102,25 @@ export default function RegistrarPartidoModal({ partido, onClose, onSave }) {
             return;
         }
 
-        const response = await onSave(formData);
-        if (response.status === 200) {
-            setSuccess("Estadísticas registradas correctamente");
-            setTimeout(() => {
-                setSuccess("");
-                onClose();
-            }, 2000);
-        } else {
-            setError(response.message || "Error al registrar las estadísticas");
+        try {
+            const response = await partidosService.registrarEstadisticas(
+                partido.id_partido,
+                formData
+            );
+
+            if (response.status === 200) {
+                setSuccess("Estadísticas registradas correctamente");
+                setTimeout(() => {
+                    onClose();
+                }, 2000);
+            } else {
+                setError(response.message || "Error al registrar las estadísticas");
+            }
+        } catch (error) {
+            setError("Error al conectar con el servidor");
+            console.error("Error:", error);
         }
     };
-
     const renderJugadorRow = (jugador, esLocal) => {
         const estadistica = formData.estadisticas_individuales.find(e => e.id_jugador === jugador.id_jugador) || {};
 

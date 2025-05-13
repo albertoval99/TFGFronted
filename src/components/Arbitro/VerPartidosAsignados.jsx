@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { partidosService } from "../../services/partidos.service";
 import "./Arbitro.css";
 import aplazarPartidoIcon from "/src/assets/aplazarPartido.svg";
@@ -14,7 +13,6 @@ export default function VerPartidosAsignados() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState("");
     const [slide, setSlide] = useState(0);
-    const navigate = useNavigate();
     const [partidoEditando, setPartidoEditando] = useState(null);
     const [estadios, setEstadios] = useState([]);
     const [partidoRegistrando, setPartidoRegistrando] = useState(null);
@@ -373,19 +371,19 @@ export default function VerPartidosAsignados() {
                                                     Aplazar partido
                                                 </button>
 
+
                                                 <button
                                                     className="vpa-card-boton registrar"
                                                     disabled={!puedeRegistrar(p)}
-                                                    title={
-                                                        !puedeRegistrar(p)
-                                                            ? "Solo puedes registrar después de que haya empezado el partido"
-                                                            : ""
-                                                    }
                                                     onClick={() => {
                                                         if (puedeRegistrar(p)) {
                                                             setError("");
                                                             setSuccess("");
-                                                            setPartidoRegistrando(p);
+                                                            setPartidoRegistrando({
+                                                                ...p,
+                                                                equipo_local_id: p.equipo_local_id,
+                                                                equipo_visitante_id: p.equipo_visitante_id
+                                                            });
                                                             setShowModal(true);
                                                         } else {
                                                             setError("Solo puedes registrar el partido después de que haya empezado");

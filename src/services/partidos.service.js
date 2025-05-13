@@ -84,30 +84,36 @@ export const partidosService = {
         }
     },
 
-    registrarEstadisticas: async (id_partido, { goles_local, goles_visitante, estadisticas_individuales }) => {
+    registrarEstadisticas: async (idPartido, estadisticas) => {
         try {
-            const response = await fetch(`${API_URL}/${id_partido}/registrarEstadisticas`, {
-                method: 'PUT',
+            const token = sessionStorage.getItem("token");
+            const response = await fetch(`${API_URL}/${idPartido}/registrarEstadisticas`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                    "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify({ goles_local, goles_visitante, estadisticas_individuales })
+                body: JSON.stringify({
+                    goles_local: estadisticas.goles_local,
+                    goles_visitante: estadisticas.goles_visitante,
+                    estadisticas_individuales: estadisticas.estadisticas_individuales
+                }),
             });
 
             const data = await response.json();
 
-            if (response.ok) {
-                return { status: 200, message: data.message || "Estadísticas registradas correctamente" };
-            } else {
-                return {
-                    status: response.status,
-                    message: data.message || "Error al registrar las estadísticas"
-                };
-            }
+            return {
+                status: response.status,
+                message: data.message,
+                data: data
+            };
         } catch (error) {
-            console.error("❌ Error al registrar estadísticas:", error);
-            return { status: 500, message: "Error de conexión", error };
+            console.error("Error al registrar estadísticas:", error);
+            return {
+                status: 500,
+                message: "Error de conexión",
+                error: error
+            };
         }
-    }
+      },
 };
