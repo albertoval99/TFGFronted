@@ -6,7 +6,7 @@ export default function Arbitro() {
     const navigate = useNavigate();
 
     const options = [
-        { label: "Ver Partidos Asignados", route: "/arbitro/partidos" },
+        { label: "Ver Partidos Asignados", route: "/verPartidosAsignados" },
         { label: "Actualizar Perfil", route: "/arbitro/calendario" },
     ];
 

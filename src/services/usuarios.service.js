@@ -36,9 +36,11 @@ export const userService = {
                 datosRol = await userService.getEntrenadorInfo(id_usuario, token);
             } else if (rol === "jugador") {
                 datosRol = await userService.getJugadorInfo(id_usuario, token);
+            } else if (rol === "arbitro") {
+                datosRol = await userService.getArbitroInfo(id_usuario, token);
             }
 
-            // Construir objeto usuario combinando datos
+        
             let usuario = {
                 id_usuario,
                 email,
@@ -107,6 +109,21 @@ export const userService = {
     getJugadorInfo: async (id_usuario, token) => {
         try {
             const response = await fetch(`${API_URL}/jugador/${id_usuario}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) return null;
+            return await response.json();
+        } catch {
+            return null;
+        }
+    },
+
+    getArbitroInfo: async (id_usuario, token) => {
+        try {
+            const response = await fetch(`${API_URL}/arbitro/${id_usuario}`, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`,

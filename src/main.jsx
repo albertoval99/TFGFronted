@@ -22,6 +22,7 @@ import Calendario from './components/Calendario/Calendario.jsx';
 import GestionarPlantilla from './components/Entrenador/GestionarPlantilla.jsx';
 import VerPartidosEquipo from './components/Entrenador/VerPartidosEquipo.jsx';
 import RegistrarAlineacion from './components/Alineaciones/RegistrarAlineacion.jsx';
+import VerPartidosAsignados from './components/Arbitro/VerPartidosAsignados.jsx';
 
 
 
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path: "/registrarAlineacion/:id_partido",
         element: <RegistrarAlineacion></RegistrarAlineacion>
+      },
+      {
+        path:"/verPartidosAsignados",
+        element:<VerPartidosAsignados></VerPartidosAsignados>
       }
     ],
   },

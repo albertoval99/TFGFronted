@@ -126,11 +126,11 @@ export default function RegistrarAlineacion() {
                 .map(([id_jugador]) => Number(id_jugador));
 
             if (titulares.length !== 11) {
-                setError("Solo puedes convocar a 11 titulares");
+                setError("Tienes que tener 11 titulares exactamente");
                 return;
             }
             if (suplentes.length !== 7) {
-                setError("Solo puedes convocar a 7 suplentes");
+                setError("Tienes que tener 7 suplentes exactamente");
                 return;
             }
 

@@ -37,5 +37,50 @@ export const partidosService = {
         } catch (error) {
             return { status: 500, message: "Error de conexión", error };
         }
-    }
+    },
+    getPartidosByArbitro: async (id_arbitro) => {
+        try {
+            const response = await fetch(`${API_URL}/arbitro/${id_arbitro}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+            });
+            const data = await response.json();
+            if (response.ok) {
+                return { status: 200, data: data.data };
+            } else {
+                return { status: response.status, message: data.message || "Error al obtener los partidos del árbitro" };
+            }
+        } catch (error) {
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
+    aplazarPartido: async (id_partido, datos) => {
+        try {
+            const response = await fetch(`${API_URL}/partidos/${id_partido}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return { status: 200, message: "Partido actualizado con éxito" };
+            } else {
+                return {
+                    status: response.status,
+                    message: data.message || "Error al actualizar el partido"
+                };
+            }
+        } catch (error) {
+            console.error("❌ Error al aplazar partido:", error);
+            return { status: 500, message: "Error de conexión", error };
+        }
+    },
 };

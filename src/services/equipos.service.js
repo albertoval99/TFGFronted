@@ -72,6 +72,28 @@ export const equipoService = {
       throw error;
     }
   },
+  getEstadios: async () => {
+    try {
+      const response = await fetch(`${API_URL}/estadios`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return data; 
+      } else {
+        throw new Error(data.message || "Error al obtener estadios");
+      }
+    } catch (error) {
+      console.error("Error al obtener estadios:", error);
+      throw error;
+    }
+  },
 
 
 }
