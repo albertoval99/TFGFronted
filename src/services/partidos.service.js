@@ -59,7 +59,7 @@ export const partidosService = {
     },
     aplazarPartido: async (id_partido, datos) => {
         try {
-            const response = await fetch(`${API_URL}/partidos/${id_partido}`, {
+            const response = await fetch(`${API_URL}/${id_partido}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",

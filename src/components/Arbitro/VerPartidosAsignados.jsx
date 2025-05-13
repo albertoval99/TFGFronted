@@ -5,6 +5,7 @@ import "./Arbitro.css";
 import aplazarPartidoIcon from "/src/assets/aplazarPartido.svg";
 import registrarPartidoIcon from "/src/assets/registrarPartido.svg";
 import AplazarPartidoModal from "./AplazarPartidoModal";
+import { equipoService } from "../../services/equipos.service";
 
 export default function VerPartidosAsignados() {
     const [partidos, setPartidos] = useState([]);
@@ -14,6 +15,7 @@ export default function VerPartidosAsignados() {
     const [slide, setSlide] = useState(0);
     const navigate = useNavigate();
     const [partidoEditando, setPartidoEditando] = useState(null);
+    const [estadios, setEstadios] = useState([]);
 
     useEffect(() => {
         const usuario = JSON.parse(sessionStorage.getItem("usuario"));
@@ -22,7 +24,25 @@ export default function VerPartidosAsignados() {
             setLoading(false);
             return;
         }
-        cargarPartidos(usuario.id_arbitro);
+        async function cargarDatos() {
+            setLoading(true);
+            setError(null);
+            try {
+                await cargarPartidos(usuario.id_arbitro);
+                const dataEstadios = await equipoService.getEstadios();
+                if (Array.isArray(dataEstadios)) {
+                    setEstadios(dataEstadios);
+                } else {
+                    setError("Error al cargar los estadios");
+                }
+            } catch (err) {
+                setError("Error al cargar datos");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        cargarDatos();
     }, []);
 
     const cargarPartidos = async (idArbitro) => {
@@ -131,11 +151,18 @@ export default function VerPartidosAsignados() {
 
     const handleGuardarAplazamiento = async (datos) => {
         if (!partidoEditando) return;
+
+        // Buscar la ubicación del estadio seleccionado
+        const estadioSeleccionado = estadios.find(e => e.id_estadio === Number(datos.id_estadio));
+        const nuevaUbicacion = estadioSeleccionado ? estadioSeleccionado.ubicacion : partidoEditando.ubicacion_estadio;
+
         const response = await partidosService.aplazarPartido(partidoEditando.id_partido, datos);
         if (response.status === 200) {
             setPartidos((prev) =>
                 prev.map((p) =>
-                    p.id_partido === partidoEditando.id_partido ? { ...p, ...datos } : p
+                    p.id_partido === partidoEditando.id_partido
+                        ? { ...p, ...datos, ubicacion_estadio: nuevaUbicacion }
+                        : p
                 )
             );
             setSuccess("Partido aplazado correctamente");
@@ -399,6 +426,7 @@ export default function VerPartidosAsignados() {
                 {partidoEditando && (
                     <AplazarPartidoModal
                         partido={partidoEditando}
+                        estadios={estadios}
                         onClose={() => setPartidoEditando(null)}
                         onSave={handleGuardarAplazamiento}
                     />

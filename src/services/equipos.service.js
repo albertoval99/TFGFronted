@@ -74,11 +74,10 @@ export const equipoService = {
   },
   getEstadios: async () => {
     try {
-      const response = await fetch(`${API_URL}/estadios`, {
+      const response = await fetch(`${API_URL}/estadios/getEstadios`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
 
