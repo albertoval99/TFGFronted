@@ -6,11 +6,10 @@ export default function Admin() {
     const navigate = useNavigate();
 
     const options = [
-        { label: "Registrar Árbitro", route: "/registroArbitro" },
-        { label: "Registrar Entrenador", route: "/registroEntrenador" },
         { label: "Registrar Liga", route: "/registroLiga" },
         { label: "Registrar Equipo", route: "/registroEquipo" },
-        { label: "Gestionar Calendario y Partidos", route: "/admin/registrar-partidos" },
+        { label: "Registrar Árbitro", route: "/registroArbitro" },
+        { label: "Registrar Entrenador", route: "/registroEntrenador" },
     ];
 
     return (
