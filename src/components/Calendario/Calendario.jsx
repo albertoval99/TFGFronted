@@ -111,9 +111,9 @@ export default function Calendario() {
                                         const sinJugar = p.goles_local == null || p.goles_visitante == null;
                                         return (
                                             <button
-                                                key={p.id}
+                                                key={p.id_partido}
                                                 className={`partido-boton-mini ${i % 2 === 0 ? 'gris' : ''}`}
-                                                onClick={() => navigate(`/partido/${p.id}`)}
+                                                onClick={() => navigate(`/${p.id_partido}/estadisticas`)}
                                             >
                                                 <span className="equipo-mini">{p.equipo_local}</span>
                                                 <span className="resultado-mini">

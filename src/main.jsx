@@ -23,6 +23,7 @@ import GestionarPlantilla from './components/Entrenador/GestionarPlantilla.jsx';
 import VerPartidosEquipo from './components/Entrenador/VerPartidosEquipo.jsx';
 import RegistrarAlineacion from './components/Alineaciones/RegistrarAlineacion.jsx';
 import VerPartidosAsignados from './components/Arbitro/VerPartidosAsignados.jsx';
+import PartidoEstadisticasCard from './components/Partido/PartidoEstadisticasCard.jsx';
 
 
 
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
       {
         path:"/verPartidosAsignados",
         element:<VerPartidosAsignados></VerPartidosAsignados>
+      },
+      {
+        path: "/:id_partido/estadisticas",
+        element:<PartidoEstadisticasCard></PartidoEstadisticasCard>
       }
     ],
   },

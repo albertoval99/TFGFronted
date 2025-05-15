@@ -115,5 +115,36 @@ export const partidosService = {
                 error: error
             };
         }
-      },
+    },
+
+    getPartidoById: async (id_partido) => {
+        try {
+            const response = await fetch(`${API_URL}/${id_partido}/estadisticas`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                return {
+                    status: 200,
+                    data: data 
+                };
+            } else {
+                return {
+                    status: response.status,
+                    message: data.message || "Error al obtener el partido"
+                };
+            }
+        } catch (error) {
+            return {
+                status: 500,
+                message: "Error de conexión",
+                error: error.message
+            };
+        }
+    }
 };
