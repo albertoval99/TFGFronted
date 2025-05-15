@@ -1,7 +1,7 @@
-const URL  = "http://localhost:3000/api";
+//const URL  = "http://localhost:3000/api";
 
 //APACHE
-//const URL = "http://192.168.20.135:3002/api";
+const URL = "http://192.168.20.135:3002/api";
 /**
  * IP para ver front: http://192.168.206.157:8080/
  * Hacer el npm run build en esta terminal wsl

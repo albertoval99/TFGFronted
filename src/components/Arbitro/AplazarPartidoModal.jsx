@@ -122,7 +122,9 @@ export default function AplazarPartidoModal({ partido, onClose, onSave }) {
                         <div>
                             <label className="block text-sm font-medium text-neutral-400 mb-1">Estadio</label>
                             {loadingEstadios ? (
-                                <p>Cargando estadios...</p>
+                                <div className="flex justify-center items-center py-10">
+                                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
+                                </div>
                             ) : (
                                 <select
                                     value={formData.id_estadio}

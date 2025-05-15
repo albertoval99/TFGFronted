@@ -51,8 +51,8 @@ export default function GestionarPlantilla() {
 
     if (loading) {
         return (
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="text-white">Cargando plantilla...</div>
+            <div className="flex justify-center items-center py-10">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
             </div>
         );
     }

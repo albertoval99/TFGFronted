@@ -115,8 +115,8 @@ export default function VerPartidosEquipo() {
 
   if (loading) {
     return (
-      <div>
-        <span>Cargando partidos...</span>
+      <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
       </div>
     );
   }

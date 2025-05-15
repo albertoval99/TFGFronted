@@ -163,9 +163,11 @@ export default function RegistrarAlineacion() {
             setError(e.message || "Error al guardar la alineación");
             console.error(e);
         }
-      };
+    };
 
-    if (loading) return <p className="ra-loading">Cargando jugadores...</p>;
+    if (loading) return <div className="flex justify-center items-center py-10">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
+    </div>;
 
     const titularesCount = Object.values(estadoJugadores).filter((e) => e === "titular").length;
     const suplentesCount = Object.values(estadoJugadores).filter((e) => e === "suplente").length;
