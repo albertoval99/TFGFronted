@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { partidosService } from "../../services/partidos.service";
 import { useParams } from "react-router";
 import "./PartidoEstadisticasCard.css";
-import estadio from "/src/assets/estadio.svg"; 
+import estadio from "/src/assets/estadio.svg";
 import arbitro from "/src/assets/arbitro.svg";
+import ModalEstadisticasJugador from "./ModalEstadisticasJugador";
 export default function PartidoEstadisticasCard() {
     const { id_partido } = useParams();
     const [partidoData, setPartidoData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [modalJugador, setModalJugador] = useState(null);
 
     useEffect(() => {
         async function fetchPartidoData() {
@@ -252,7 +254,12 @@ export default function PartidoEstadisticasCard() {
                                 <div className="titulares">
                                     <h4>Titulares</h4>
                                     {titularesLocal.map(jugador => (
-                                        <div key={jugador.id_jugador} className="jugador">
+                                        <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
+                                            id: jugador.id_jugador,
+                                            nombre: jugador.nombre,
+                                            apellidos: jugador.apellidos,
+                                            escudo: partido.equipo_local_escudo
+                                        })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                             <span className="posicion">{jugador.posicion}</span>
@@ -263,7 +270,12 @@ export default function PartidoEstadisticasCard() {
                                 <div className="suplentes">
                                     <h4>Suplentes</h4>
                                     {suplentesLocal.map(jugador => (
-                                        <div key={jugador.id_jugador} className="jugador">
+                                        <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
+                                            id: jugador.id_jugador,
+                                            nombre: jugador.nombre,
+                                            apellidos: jugador.apellidos,
+                                            escudo: partido.equipo_local_escudo
+                                        })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                         </div>
@@ -300,7 +312,12 @@ export default function PartidoEstadisticasCard() {
                                 <div className="titulares">
                                     <h4>Titulares</h4>
                                     {titularesVisitante.map(jugador => (
-                                        <div key={jugador.id_jugador} className="jugador">
+                                        <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
+                                            id: jugador.id_jugador,
+                                            nombre: jugador.nombre,
+                                            apellidos: jugador.apellidos,
+                                            escudo: partido.equipo_local_escudo
+                                        })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                             <span className="posicion">{jugador.posicion}</span>
@@ -311,7 +328,12 @@ export default function PartidoEstadisticasCard() {
                                 <div className="suplentes">
                                     <h4>Suplentes</h4>
                                     {suplentesVisitante.map(jugador => (
-                                        <div key={jugador.id_jugador} className="jugador">
+                                        <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
+                                            id: jugador.id_jugador,
+                                            nombre: jugador.nombre,
+                                            apellidos: jugador.apellidos,
+                                            escudo: partido.equipo_local_escudo
+                                        })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                         </div>
@@ -336,6 +358,15 @@ export default function PartidoEstadisticasCard() {
                     </div>
                 </div>
             </div>
+            {modalJugador && (
+                <ModalEstadisticasJugador
+                    idJugador={modalJugador.id}
+                    nombre={modalJugador.nombre}
+                    apellidos={modalJugador.apellidos}
+                    escudo={modalJugador.escudo}
+                    onClose={() => setModalJugador(null)}
+                />
+            )}
         </div>
     );
 }
