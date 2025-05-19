@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { estadisticasService } from "../../services/estadisticas.service";
-import jugador from "/src/assets/jugador.svg"
+
 
 export default function ModalEstadisticasJugador({ idJugador, onClose }) {
     const [estadisticas, setEstadisticas] = useState(null);
@@ -41,15 +41,21 @@ export default function ModalEstadisticasJugador({ idJugador, onClose }) {
                     </div>
                 ) : estadisticas ? (
                     <div className="space-y-6">
-                        {/* Info del jugador */}
-                        <div className="flex items-center space-x-4 bg-black/30 p-4 rounded-lg">
-                            <div className="w-16 h-16 bg-white rounded-full p-2">
-                                <img src={jugador} alt="Escudo" className="w-full h-full object-contain" />
-                            </div>
-                            <div>
+                            {/* Info del jugador */}
+                            <div className="flex items-center space-x-4 bg-black/30 p-4 rounded-lg">
+                                <span className="relative w-12 h-12 flex items-center justify-center">
+                                    <svg className="w-12 h-12" viewBox="0 0 40 40" fill="none">
+                                        <path d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
+                                        <rect x="13" y="5" width="14" height="6" rx="2" fill="#40c9ff" />
+                                    </svg>
+                                    <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg select-none">
+                                        {estadisticas.dorsal}
+                                    </span>
+                                </span>
+                                <div>
                                     <h3 className="text-white font-semibold">{estadisticas.nombre} {estadisticas.apellidos}</h3>
+                                </div>
                             </div>
-                        </div>
 
                         {/* Grid de estadísticas */}
                         <div className="grid grid-cols-2 gap-4">
