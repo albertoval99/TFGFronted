@@ -1,0 +1,171 @@
+.error404-viewport {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+
+.error404-card {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 3px;
+  border-radius: 1.7rem;
+  background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+  box-shadow: 0 8px 40px 0 #a855f7cc, 0 0 0 2px #40c9ff44;
+  overflow: hidden;
+  position: relative;
+}
+
+.error404-card-inner {
+  background: #000;
+  border-radius: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  padding: 3.2rem 3.2rem;
+  min-height: 320px;
+  position: relative;
+  box-shadow: 0 2px 32px 0 #40c9ff22 inset;
+}
+
+.error404-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 260px;
+}
+
+.error404-glow {
+  font-size: 7rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px #e81cff88) drop-shadow(0 0 8px #40c9ff88);
+  letter-spacing: 2px;
+  z-index: 1;
+  animation: error404-glow 2.5s infinite alternate;
+}
+
+@keyframes error404-glow {
+  0% { filter: drop-shadow(0 0 18px #e81cff88) drop-shadow(0 0 8px #40c9ff88);}
+  100% { filter: drop-shadow(0 0 32px #e81cffcc) drop-shadow(0 0 16px #40c9ffcc);}
+}
+
+.error404-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.error404-title {
+  display: none;
+}
+
+.error404-subtitle {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+  letter-spacing: 1px;
+}
+
+.error404-desc {
+  color: #b3b3b3;
+  font-size: 1.25rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+}
+
+.error404-highlight {
+  color: #e81cff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.error404-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.2rem 2.7rem;
+  background: #171717;
+  border: 2px solid #40c9ff;
+  border-radius: 0.9rem;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  min-height: 58px;
+  box-shadow: 0 1px 6px 0 #40c9ff11;
+  transition: all 0.18s cubic-bezier(.4,2,.3,1);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.error404-btn:hover {
+  border-color: #e81cff;
+  background: linear-gradient(90deg, #232531 60%, #181824 100%);
+  color: #e81cff;
+  transform: scale(1.04) translateY(-2px);
+}
+
+.error404-btn-icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  color: #40c9ff;
+  transition: color 0.18s;
+}
+
+.error404-btn:hover .error404-btn-icon {
+  color: #e81cff;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .error404-card-inner {
+    gap: 2rem;
+    padding: 2rem 1rem;
+    min-height: 220px;
+  }
+  .error404-left {
+    min-width: 140px;
+  }
+  .error404-glow {
+    font-size: 4rem;
+  }
+  .error404-subtitle {
+    font-size: 1.3rem;
+  }
+  .error404-desc {
+    font-size: 1rem;
+  }
+  .error404-btn {
+    font-size: 1rem;
+    padding: 1rem 1.2rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .error404-card-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0.7rem;
+    min-height: unset;
+  }
+  .error404-right {
+    align-items: center;
+    text-align: center;
+  }
+  .error404-left {
+    min-width: 0;
+  }
+  .error404-glow {
+    font-size: 2.2rem;
+  }
+}

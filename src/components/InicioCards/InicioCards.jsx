@@ -54,8 +54,8 @@ export default function InicioCards() {
               <img src={logoFaf} alt="Logo de la Liga" className="liga-inicio-logo" />
             </div>
             <div>
-              <h1 className="liga-inicio-nombre">2ª Regional</h1>
-              <h2 className="liga-inicio-grupo">Grupo 2-1</h2>
+              <h1 className="liga-inicio-nombre">2ª REGIONAL HUESCA</h1>
+              <h2 className="liga-inicio-grupo">GRUPO 2-1</h2>
             </div>
           </div>
           {/* Derecha: Botones */}
@@ -72,7 +72,7 @@ export default function InicioCards() {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/verEntrenamientos')}
+              onClick={() => navigate('/verClasificacion')}
               className="liga-inicio-btn"
             >
               <span>Ver Clasificacion</span>
@@ -85,7 +85,7 @@ export default function InicioCards() {
               onClick={() => navigate('/actualizarPerfil')}
               className="liga-inicio-btn"
             >
-              <span>Ver Ranking de estadisticas</span>
+              <span>Ver Ranking de Estadisticas</span>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
               </svg>

@@ -24,6 +24,7 @@ import VerPartidosEquipo from './components/Entrenador/VerPartidosEquipo.jsx';
 import RegistrarAlineacion from './components/Alineaciones/RegistrarAlineacion.jsx';
 import VerPartidosAsignados from './components/Arbitro/VerPartidosAsignados.jsx';
 import PartidoEstadisticasCard from './components/Partido/PartidoEstadisticasCard.jsx';
+import Error404 from './components/Error/Error404.jsx';
 
 
 
@@ -120,7 +121,7 @@ const router = createBrowserRouter([
   },
   {
     path:"*",
-    element:<h1>Esta ruta no existe</h1>
+    element:<Error404></Error404>
   }
 ]);
 
