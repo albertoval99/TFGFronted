@@ -255,10 +255,7 @@ export default function PartidoEstadisticasCard() {
                                     <h4>Titulares</h4>
                                     {titularesLocal.map(jugador => (
                                         <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
-                                            id: jugador.id_jugador,
-                                            nombre: jugador.nombre,
-                                            apellidos: jugador.apellidos,
-                                            escudo: partido.equipo_local_escudo
+                                            id: jugador.id_jugador
                                         })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
@@ -271,10 +268,7 @@ export default function PartidoEstadisticasCard() {
                                     <h4>Suplentes</h4>
                                     {suplentesLocal.map(jugador => (
                                         <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
-                                            id: jugador.id_jugador,
-                                            nombre: jugador.nombre,
-                                            apellidos: jugador.apellidos,
-                                            escudo: partido.equipo_local_escudo
+                                            id: jugador.id_jugador
                                         })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
@@ -313,10 +307,7 @@ export default function PartidoEstadisticasCard() {
                                     <h4>Titulares</h4>
                                     {titularesVisitante.map(jugador => (
                                         <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
-                                            id: jugador.id_jugador,
-                                            nombre: jugador.nombre,
-                                            apellidos: jugador.apellidos,
-                                            escudo: partido.equipo_local_escudo
+                                            id: jugador.id_jugador
                                         })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
@@ -329,10 +320,7 @@ export default function PartidoEstadisticasCard() {
                                     <h4>Suplentes</h4>
                                     {suplentesVisitante.map(jugador => (
                                         <div key={jugador.id_jugador} className="jugador" onClick={() => setModalJugador({
-                                            id: jugador.id_jugador,
-                                            nombre: jugador.nombre,
-                                            apellidos: jugador.apellidos,
-                                            escudo: partido.equipo_local_escudo
+                                            id: jugador.id_jugador
                                         })}>
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
@@ -361,9 +349,6 @@ export default function PartidoEstadisticasCard() {
             {modalJugador && (
                 <ModalEstadisticasJugador
                     idJugador={modalJugador.id}
-                    nombre={modalJugador.nombre}
-                    apellidos={modalJugador.apellidos}
-                    escudo={modalJugador.escudo}
                     onClose={() => setModalJugador(null)}
                 />
             )}

@@ -129,8 +129,8 @@ export default function RegistrarAlineacion() {
                 setError("Tienes que tener 11 titulares exactamente");
                 return;
             }
-            if (suplentes.length !== 7) {
-                setError("Tienes que tener 7 suplentes exactamente");
+            if (suplentes.length > 7) {
+                setError("No puedes tener más de 7 suplentes");
                 return;
             }
 

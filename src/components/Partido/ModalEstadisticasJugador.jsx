@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { estadisticasService } from "../../services/estadisticas.service";
+import jugador from "/src/assets/jugador.svg"
 
-export default function ModalEstadisticasJugador({ idJugador, nombre, apellidos, escudo, onClose }) {
+export default function ModalEstadisticasJugador({ idJugador, onClose }) {
     const [estadisticas, setEstadisticas] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -43,10 +44,10 @@ export default function ModalEstadisticasJugador({ idJugador, nombre, apellidos,
                         {/* Info del jugador */}
                         <div className="flex items-center space-x-4 bg-black/30 p-4 rounded-lg">
                             <div className="w-16 h-16 bg-white rounded-full p-2">
-                                <img src={escudo} alt="Escudo" className="w-full h-full object-contain" />
+                                <img src={jugador} alt="Escudo" className="w-full h-full object-contain" />
                             </div>
                             <div>
-                                <h3 className="text-white font-semibold">{nombre} {apellidos}</h3>
+                                    <h3 className="text-white font-semibold">{estadisticas.nombre} {estadisticas.apellidos}</h3>
                             </div>
                         </div>
 
