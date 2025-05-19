@@ -75,3 +75,179 @@
   justify-content: center;
 }
 
+.liga-inicio-card {
+  width: 100%;
+  max-width: 1400px;
+  margin: 3px auto 65px auto;
+  padding: 3px; /* Para el borde degradado */
+  border-radius: 1.5rem;
+  background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
+  box-shadow: 0 8px 40px 0 #a855f733, 0 0 0 2px #40c9ff44;
+  overflow: hidden;
+  position: relative;
+}
+
+.liga-inicio-card-content {
+  background: #000;
+  border-radius: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: 1.5rem 2.5rem;
+  min-height: 140px;
+}
+
+.liga-inicio-card-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.liga-inicio-logo-box {
+  width: 110px;
+  height: 110px;
+  background: #fff;
+  border-radius: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2.5px solid #40c9ff;
+  box-shadow: 0 4px 24px 0 #40c9ff33;
+  transition: transform 0.18s;
+}
+
+.liga-inicio-logo-box:hover {
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 8px 32px 0 #e81cff33;
+}
+
+.liga-inicio-logo {
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+}
+
+.liga-inicio-nombre {
+  background: linear-gradient(90deg, #e81cff 0%, #40c9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 0.3rem;
+  letter-spacing: 1px;
+}
+
+.liga-inicio-grupo {
+  color: #b3b3b3;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.liga-inicio-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex: 1 1 0;
+  min-width: 350px;
+  max-width: 600px;
+}
+
+.liga-inicio-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.1rem 2rem;
+  background: #171717;
+  border: 2px solid #40c9ff;
+  border-radius: 0.8rem;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.15rem;
+  min-height: 54px;
+  box-shadow: 0 1px 6px 0 #40c9ff11;
+  transition: all 0.18s cubic-bezier(.4,2,.3,1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 0.2rem;
+}
+
+.liga-inicio-btn:last-child {
+  margin-bottom: 0;
+}
+
+.liga-inicio-btn:hover {
+  transform: scale(1.03) translateY(-1px);
+  border-color: #e81cff;
+  background: linear-gradient(90deg, #232531 60%, #181824 100%);
+  color: #e81cff;
+}
+
+.liga-inicio-btn-icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  color: #40c9ff;
+  transition: color 0.18s;
+}
+
+.liga-inicio-btn:hover .liga-inicio-btn-icon {
+  color: #e81cff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .liga-inicio-card-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding: 1.2rem 0.7rem;
+    min-height: unset;
+  }
+  .liga-inicio-card-right {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .liga-inicio-btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 1rem 1rem;
+  }
+  .liga-inicio-card-left {
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .liga-inicio-card-content {
+    padding: 0.7rem 0.2rem;
+    gap: 1rem;
+  }
+  .liga-inicio-logo-box {
+    width: 45px;
+    height: 45px;
+  }
+  .liga-inicio-nombre {
+    font-size: 1.1rem;
+  }
+  .liga-inicio-grupo {
+    font-size: 0.9rem;
+  }
+  .liga-inicio-logo-box {
+    width: 65px;
+    height: 65px;
+  }
+  .liga-inicio-nombre {
+    font-size: 1.3rem;
+  }
+  .liga-inicio-grupo {
+    font-size: 1rem;
+  }
+}

@@ -1,7 +1,11 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import './InicioCards.css';
+import logoFaf from "/src/assets/logoFaf.png"
 
 export default function InicioCards() {
+
+  const navigate = useNavigate();
+
   const services = [
     {
       title: "¿Eres Entrenador?",
@@ -31,7 +35,7 @@ export default function InicioCards() {
 
   return (
     <div className="w-full pt-20 pb-16">
-     {/* TITULO Y DESCRIPCION DE LA APLICACION
+      {/* TITULO Y DESCRIPCION DE LA APLICACION
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#CE32FD] to-[#00D8FF] text-transparent bg-clip-text">
           Revoluciona el Mundo del Fútbol
@@ -41,6 +45,54 @@ export default function InicioCards() {
         </p>
       </div>
       */}
+      {/* Card de la Liga */}
+      <div className="liga-inicio-card">
+        <div className="liga-inicio-card-content">
+          {/* Izquierda: Logo y datos */}
+          <div className="liga-inicio-card-left">
+            <div className="liga-inicio-logo-box">
+              <img src={logoFaf} alt="Logo de la Liga" className="liga-inicio-logo" />
+            </div>
+            <div>
+              <h1 className="liga-inicio-nombre">2ª Regional</h1>
+              <h2 className="liga-inicio-grupo">Grupo 2-1</h2>
+            </div>
+          </div>
+          {/* Derecha: Botones */}
+          <div className="liga-inicio-card-right">
+            <button
+              type="button"
+              onClick={() => navigate('/calendario2Reg2-1')}
+              className="liga-inicio-btn"
+            >
+              <span>Ver Calendario</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/verEntrenamientos')}
+              className="liga-inicio-btn"
+            >
+              <span>Ver Clasificacion</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/actualizarPerfil')}
+              className="liga-inicio-btn"
+            >
+              <span>Ver Ranking de estadisticas</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <div className="flex flex-wrap justify-center gap-16 px-4">
         {services.map((service, index) => (

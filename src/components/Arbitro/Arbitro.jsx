@@ -1,5 +1,6 @@
 import { useOutletContext, useNavigate } from "react-router";
 import "./Arbitro.css";
+import logoFaf from "/src/assets/logoFaf.png"
 
 export default function Arbitro() {
     const { usuario } = useOutletContext();
@@ -18,7 +19,7 @@ export default function Arbitro() {
                 <div className="arbitro-header">
                     <div className="arbitro-left">
                         <img
-                            src="https://tfg-images-footbalzone.s3.us-east-1.amazonaws.com/logo(ffaragon).png"
+                            src={logoFaf}
                             alt="Logo FFAR"
                             className="arbitro-logo"
                         />
