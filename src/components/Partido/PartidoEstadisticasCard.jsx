@@ -179,31 +179,22 @@ export default function PartidoEstadisticasCard() {
                                                 <span className="dorsal">{jugador.dorsal}</span>
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="relative w-10 h-10 flex items-center justify-center">
+                                                    {/* Balón SVG */}
                                                     <svg
                                                         xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 100 100"
+                                                        viewBox="0 -960 960 960"
                                                         className="w-10 h-10"
+                                                        fill="#fff"
+                                                        stroke="#232531"
+                                                        strokeWidth="20"
                                                     >
-                                                        {/* Círculo base */}
-                                                        <circle cx="50" cy="50" r="48" fill="#fff" stroke="#232531" strokeWidth="3" />
-                                                        {/* Paneles hexagonales y pentagonales */}
-                                                        <polygon points="50,28 62,36 58,50 42,50 38,36" fill="#bfc3c9" stroke="#232531" strokeWidth="1" />
-                                                        <polygon points="62,36 74,38 70,52 58,50" fill="#e5e7eb" stroke="#232531" strokeWidth="1" />
-                                                        <polygon points="38,36 26,38 30,52 42,50" fill="#e5e7eb" stroke="#232531" strokeWidth="1" />
-                                                        <polygon points="42,50 30,52 38,66 50,62" fill="#bfc3c9" stroke="#232531" strokeWidth="1" />
-                                                        <polygon points="58,50 70,52 62,66 50,62" fill="#bfc3c9" stroke="#232531" strokeWidth="1" />
-                                                        {/* Pentágono central blanco */}
-                                                        <polygon points="50,38 56,42 54,50 46,50 44,42" fill="#fff" stroke="#232531" strokeWidth="1" />
-                                                        {/* Líneas de costura */}
-                                                        <line x1="50" y1="28" x2="50" y2="38" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="62" y1="36" x2="56" y2="42" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="38" y1="36" x2="44" y2="42" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="42" y1="50" x2="46" y2="50" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="58" y1="50" x2="54" y2="50" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="38" y1="66" x2="50" y2="62" stroke="#232531" strokeWidth="1" />
-                                                        <line x1="62" y1="66" x2="50" y2="62" stroke="#232531" strokeWidth="1" />
+                                                        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z" />
                                                     </svg>
-                                                    <span className="absolute inset-0 flex items-center justify-center text-[#232531] font-extrabold text-lg select-none">
+                                                    {/* Badge de goles */}
+                                                    <span
+                                                        className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-[#40c9ff] text-white font-bold text-xs w-6 h-6 border-2 border-white shadow"
+                                                        style={{ zIndex: 2 }}
+                                                    >
                                                         {jugador.goles}
                                                     </span>
                                                 </span>
