@@ -26,6 +26,7 @@ import VerPartidosAsignados from './components/Arbitro/VerPartidosAsignados.jsx'
 import PartidoEstadisticasCard from './components/Partido/PartidoEstadisticasCard.jsx';
 import Error404 from './components/Error/Error404.jsx';
 import Estadisticas from './components/Estadisticas/Estadisticas.jsx';
+import PerfilUsuario from './components/Perfil/PerfilUsuario.jsx';
 
 
 
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
       {
         path:"/estadisticas",
         element:<Estadisticas></Estadisticas>
+      },
+      {
+        path:"/actualizarPerfil",
+        element:<PerfilUsuario></PerfilUsuario>
       }
     ],
   },

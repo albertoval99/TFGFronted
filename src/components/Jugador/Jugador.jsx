@@ -60,7 +60,7 @@ export default function Jugador() {
     const options = [
         { label: "Ver Estadísticas", action: () => setModalEstadisticas(true) },
         { label: "Ver Entrenamientos", action: () => navigate("/verEntrenamientosJugador") },
-        { label: "Actualizar Perfil", action: () => navigate("/jugador/perfil") },
+        { label: "Actualizar Perfil", action: () => navigate("/actualizarPerfil") },
     ];
 
     return (

@@ -8,7 +8,7 @@ export default function Arbitro() {
 
     const options = [
         { label: "Ver Partidos Asignados", route: "/verPartidosAsignados" },
-        { label: "Actualizar Perfil", route: "/arbitro/calendario" },
+        { label: "Actualizar Perfil", route: "/actualizarPerfil" },
     ];
 
     return (

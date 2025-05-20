@@ -31,6 +31,7 @@ export default function Entrenador() {
         { label: "Ver Entrenamientos Programados", route: "/verEntrenamientos" },
         { label: "Gestionar Plantilla", route: "/gestionarPlantilla" },
         { label: "Gestionar Partidos", route: "/gestionarPartidos" },
+        { label: "Actualizar Perfil", route: "/actualizarPerfil" },
     ];
 
     return (
