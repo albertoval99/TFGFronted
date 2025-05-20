@@ -25,6 +25,7 @@ import RegistrarAlineacion from './components/Alineaciones/RegistrarAlineacion.j
 import VerPartidosAsignados from './components/Arbitro/VerPartidosAsignados.jsx';
 import PartidoEstadisticasCard from './components/Partido/PartidoEstadisticasCard.jsx';
 import Error404 from './components/Error/Error404.jsx';
+import Estadisticas from './components/Estadisticas/Estadisticas.jsx';
 
 
 
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: "/:id_partido/estadisticas",
         element:<PartidoEstadisticasCard></PartidoEstadisticasCard>
+      },
+      {
+        path:"/estadisticas",
+        element:<Estadisticas></Estadisticas>
       }
     ],
   },

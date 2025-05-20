@@ -82,7 +82,7 @@ export default function InicioCards() {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/actualizarPerfil')}
+              onClick={() => navigate('/estadisticas')}
               className="liga-inicio-btn"
             >
               <span>Ver Ranking de Estadisticas</span>
