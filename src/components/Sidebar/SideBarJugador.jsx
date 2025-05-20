@@ -4,11 +4,11 @@ import homeIcon from "/src/assets/home.svg";
 import logOut from "/src/assets/logout.svg";
 import { userService } from "../../services/usuarios.service";
 import verEntreno from "/src/assets/verEntreno.svg"
+import update from "/src/assets/update.svg"
 
 export default function SideBarJugador({ isOpen, toggleSidebar, setUsuario }) {
 
   const navigate = useNavigate();
-
 
   const handleLogout = () => {
     userService.logout();
@@ -30,12 +30,17 @@ export default function SideBarJugador({ isOpen, toggleSidebar, setUsuario }) {
           <span>Inicio</span>
         </Link>
         <Link to="/verEntrenamientosJugador" className="sidebar-item" onClick={toggleSidebar}>
-                  <div className="sidebar-icon">
-                    <img src={verEntreno} alt="Ver Entrenamientos" className="w-6 h-6" />
-                  </div>
-                  <span>Ver Entrenamientos</span>
-                </Link>
-        
+          <div className="sidebar-icon">
+            <img src={verEntreno} alt="Ver Entrenamientos" className="w-6 h-6" />
+          </div>
+          <span>Ver Entrenamientos</span>
+        </Link>
+        <Link to="/actualizarPerfil" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={update} alt="Actualizar Perfil" className="w-6 h-6" />
+          </div>
+          <span>Actualizar Perfil</span>
+        </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">

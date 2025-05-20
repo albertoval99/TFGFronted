@@ -31,18 +31,6 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
           </div>
           <span>Inicio</span>
         </Link>
-        <Link to="/registroArbitro" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">
-            <img src={addUser} alt="Registrar Árbitro" className="w-6 h-6" />
-          </div>
-          <span>Registrar Árbitro</span>
-        </Link>
-        <Link to="/registroEntrenador" className="sidebar-item" onClick={toggleSidebar}>
-          <div className="sidebar-icon">
-            <img src={addUser} alt="Registrar Entrenador" className="w-6 h-6" />
-          </div>
-          <span>Registrar Entrenador</span>
-        </Link>
         <Link to="/registroLiga" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
             <img src={ligaIcon} alt="Registrar Liga" className="w-6 h-6" />
@@ -55,6 +43,19 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
           </div>
           <span>Registrar Equipo</span>
         </Link>
+        <Link to="/registroArbitro" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={addUser} alt="Registrar Árbitro" className="w-6 h-6" />
+          </div>
+          <span>Registrar Árbitro</span>
+        </Link>
+        <Link to="/registroEntrenador" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={addUser} alt="Registrar Entrenador" className="w-6 h-6" />
+          </div>
+          <span>Registrar Entrenador</span>
+        </Link>
+
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">

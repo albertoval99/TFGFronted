@@ -7,6 +7,7 @@ import partidosIcon from "/src/assets/ligaIcon.svg"
 import crearEntrenamiento from "/src/assets/crearEntrenamiento.svg"
 import verEntreno from "/src/assets/verEntreno.svg"
 import { userService } from "../../services/usuarios.service";
+import update from "/src/assets/update.svg"
 
 export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario }) {
 
@@ -56,6 +57,12 @@ export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario })
           </div>
           <span>Gestionar Partidos</span>
         </Link>
+        <Link to="/actualizarPerfil" className="sidebar-item" onClick={toggleSidebar}>
+          <div className="sidebar-icon">
+            <img src={update} alt="Actualizar Perfil" className="w-6 h-6" />
+          </div>
+          <span>Actualizar Perfil</span>
+        </Link>
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">
@@ -63,7 +70,6 @@ export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario })
             </div>
             <span>Cerrar Sesión</span>
           </Link></button>
-
       </div>
     </div>
   );
