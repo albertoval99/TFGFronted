@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useOutletContext, useNavigate } from "react-router";
 import { ligaService } from "../../services/liga.service";
 import "./Jugador.css";
+import ModalEstadisticasJugador from "../Partido/ModalEstadisticasJugador";
 
 export default function Jugador() {
     const { usuario } = useOutletContext();
@@ -9,6 +10,7 @@ export default function Jugador() {
     const idLiga = usuario?.equipo?.id_liga;
     const [ligaInfo, setLigaInfo] = useState(null);
     const [error, setError] = useState(null);
+    const [modalEstadisticas, setModalEstadisticas] = useState(false);
 
     const POSICION_COLORS = {
         PT: "bg-blue-600/20 text-blue-400 border-blue-400",
@@ -56,9 +58,9 @@ export default function Jugador() {
     const numero = usuario.numero_camiseta || "No asignado";
 
     const options = [
-        { label: "Ver Estadísticas", route: "/jugador/estadisticas" },
-        { label: "Ver Entrenamientos", route: "/verEntrenamientosJugador" },
-        { label: "Actualizar Perfil", route: "/jugador/perfil" },
+        { label: "Ver Estadísticas", action: () => setModalEstadisticas(true) },
+        { label: "Ver Entrenamientos", action: () => navigate("/verEntrenamientosJugador") },
+        { label: "Actualizar Perfil", action: () => navigate("/jugador/perfil") },
     ];
 
     return (
@@ -145,14 +147,14 @@ export default function Jugador() {
     
                 {/* Botones debajo */}
                 <div className="w-full flex flex-col gap-4 px-2 sm:px-8 pb-4 sm:pb-8">
-                    {options.map((op) => (
+                    {options.map((options) => (
                         <button
-                            key={op.route}
+                            key={options.label}
                             type="button"
-                            onClick={() => navigate(op.route)}
+                            onClick={options.action}
                             className="boton-opcion flex items-center justify-between w-full px-6 py-3 bg-neutral-900 border border-[#40c9ff] rounded-xl font-semibold text-white text-lg shadow-md"
                         >
-                            <span>{op.label}</span>
+                            <span>{options.label}</span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -166,6 +168,14 @@ export default function Jugador() {
                         </button>
                     ))}
                 </div>
+
+                
+                {modalEstadisticas && (
+                    <ModalEstadisticasJugador
+                        idJugador={usuario.id_jugador}
+                        onClose={() => setModalEstadisticas(false)}
+                    />
+                )}
             </div>
         </div>
     );
