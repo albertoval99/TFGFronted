@@ -27,6 +27,7 @@ import PartidoEstadisticasCard from './components/Partido/PartidoEstadisticasCar
 import Error404 from './components/Error/Error404.jsx';
 import Estadisticas from './components/Estadisticas/Estadisticas.jsx';
 import PerfilUsuario from './components/Perfil/PerfilUsuario.jsx';
+import Clasificacion from './components/Clasificacion/Clasificacion.jsx';
 
 
 
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
       {
         path:"/actualizarPerfil",
         element:<PerfilUsuario></PerfilUsuario>
+      },
+      {
+        path:"/verClasificacion/:id_liga",
+        element:<Clasificacion></Clasificacion>
       }
     ],
   },

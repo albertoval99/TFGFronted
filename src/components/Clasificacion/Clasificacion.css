@@ -1,0 +1,210 @@
+/* Contenedor general */
+.clasificacion-container {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 120px;
+}
+
+/* Título */
+.clasificacion-titulo {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #9333ea, #ec4899);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1.5rem;
+}
+
+/* Tarjeta principal con blobs animados */
+.clasificacion-card {
+  position: relative;
+  width: 100%;
+  max-width: 94rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Leyenda de colores (esquina superior derecha) */
+.clasificacion-legend {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 5;
+  font-size: 0.875rem;
+  color: #f3f4f6;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.legend-color {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  border-radius: 2px;
+}
+.legend-color.ascenso  { background: #22c55e; }  /* verde ascenso */
+.legend-color.playoff  { background: #f59e0b; }  /* naranja play-off */
+.legend-color.descenso { background: #ef4444; }  /* rojo descenso */
+
+/* Scroll wrapper (vertical y horizontal) */
+.table-wrapper {
+  max-height: 600px;   /* ajusta según filas */
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Tabla */
+.clasificacion-table {
+  width: 100%;
+  min-width: 64rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Encabezado fijo */
+.clasificacion-table thead th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient( #40c9ff 0%, #e81cff 100%);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  z-index: 2;
+}
+
+/* Celdas */
+.clasificacion-table tbody td {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  color: #f3f4f6;
+}
+
+/* Filas al hover */
+.row-hover:hover {
+  background: rgba(255,255,255,0.05);
+  transition: background 0.3s;
+}
+
+/* Celda de equipo */
+.equipo-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+.equipo-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid #e81cff;
+}
+
+/* Colores diferencia de goles (más específico) */
+.clasificacion-table tbody td.dg-positive {
+  color: #34d399;
+  font-weight: 700;
+}
+.clasificacion-table tbody td.dg-negative {
+  color: #f87171;
+  font-weight: 700;
+}
+.clasificacion-table tbody td.dg-neutral {
+  color: rgba(243,244,246,0.7);
+}
+
+/* 1º puesto: verde vibrante + degradado */
+.first-place {
+  background: linear-gradient(
+    90deg,
+    rgba(34,197,94,0.2) 0%,
+    rgba(34,197,94,0.3) 100%
+  );
+  border-left: 4px solid #22c55e;
+  transition: background 0.3s;
+}
+.first-place:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(34,197,94,0.3) 0%,
+    rgba(34,197,94,0.4) 100%
+  );
+}
+
+/* 2º y 3º puesto (podio): naranja vibrante + degradado */
+.podium {
+  background: linear-gradient(
+    90deg,
+    rgba(245,158,11,0.2) 0%,
+    rgba(245,158,11,0.3) 100%
+  );
+  border-left: 4px solid #f59e0b;
+  transition: background 0.3s;
+}
+.podium:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(245,158,11,0.3) 0%,
+    rgba(245,158,11,0.4) 100%
+  );
+}
+
+/* Últimos 3 (descenso): rojo vibrante + degradado */
+.relegation {
+  background: linear-gradient(
+    90deg,
+    rgba(239,68,68,0.2) 0%,
+    rgba(239,68,68,0.3) 100%
+  );
+  border-left: 4px solid #ef4444;
+  transition: background 0.3s;
+}
+.relegation:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(239,68,68,0.3) 0%,
+    rgba(239,68,68,0.4) 100%
+  );
+}
+
+/* Responsive móviles */
+@media (max-width: 640px) {
+  .clasificacion-container {
+    padding: 1rem;
+    padding-top: 100px;
+  }
+  .clasificacion-titulo {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .clasificacion-card {
+    padding: 0.5rem;
+  }
+  .table-wrapper {
+    max-height: 400px;
+  }
+  .clasificacion-table {
+    min-width: auto;
+  }
+  .clasificacion-table thead th,
+  .clasificacion-table tbody td {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  .equipo-logo {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

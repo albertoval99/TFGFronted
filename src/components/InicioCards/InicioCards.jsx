@@ -72,7 +72,7 @@ export default function InicioCards() {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/verClasificacion')}
+              onClick={() => navigate('/verClasificacion/3')}
               className="liga-inicio-btn"
             >
               <span>Ver Clasificacion</span>
