@@ -9,8 +9,6 @@ import event from "/src/assets/event.svg"
 export default function SideBarArbitro({ isOpen, toggleSidebar, setUsuario }) {
 
   const navigate = useNavigate();
-
-
   const handleLogout = () => {
     userService.logout();
     setUsuario(null);
@@ -22,7 +20,6 @@ export default function SideBarArbitro({ isOpen, toggleSidebar, setUsuario }) {
       <div className="sidebar-header">
         <button className="close-sidebar" onClick={toggleSidebar}>×</button>
       </div>
-
       <div className="sidebar-menu">
         <Link to="/arbitro" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { userService } from "../../services/usuarios.service";
 import addUser from "/src/assets/addUser.svg";
 import EditarJugadorModal from './EditarJugadorModal';
+import { Mensaje } from "../Error/Mensaje";
 
 
 
@@ -60,40 +61,11 @@ export default function GestionarPlantilla() {
     return (
         <div className="w-full min-h-screen p-8 pt-32">
             <div className="max-w-4xl mx-auto">
-                {(error || success) && (
-                    <div className="flex flex-col w-60 sm:w-72 text-[10px] sm:text-xs z-50 fixed bottom-4 right-4">
-                        <div className={`cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg px-[10px] bg-[#232531]`}>
-                            <div className="flex items-center flex-1">
-                                <div className={`bg-white/5 backdrop-blur-xl p-1 rounded-lg ${error ? "text-[#d65563]" : "text-green-500"}`}>
-                                    {error ? (
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-                                        </svg>
-                                    ) : (
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                        </svg>
-                                    )}
-                                </div>
-                                <div className="text-center ml-3">
-                                    <p className="text-white">{String(error || success)}</p>
-                                </div>
-                            </div>
-                            <button
-                                className="text-gray-600 hover:bg-white/10 p-1 rounded-md transition-colors ease-linear cursor-pointer"
-                                onClick={() => {
-                                    setError("");
-                                    setSuccess("");
-                                }}
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                )}
-
+                 <Mensaje
+                                error={error}
+                                success={success}
+                                onClose={() => { setError(""); setSuccess(""); }}
+                            />
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-bold text-white">Gestionar Plantilla</h1>
                     <button
@@ -105,11 +77,7 @@ export default function GestionarPlantilla() {
                     </button>
                 </div>
 
-                {error ? (
-                    <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg">
-                        {error}
-                    </div>
-                ) : jugadores.length === 0 ? (
+                {jugadores.length === 0 ? (
                     <div className="bg-neutral-900/50 border border-neutral-800 text-white p-6 rounded-lg text-center">
                         No hay jugadores en la plantilla
                     </div>

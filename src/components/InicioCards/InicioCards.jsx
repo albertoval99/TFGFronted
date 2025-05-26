@@ -35,20 +35,9 @@ export default function InicioCards() {
 
   return (
     <div className="w-full pt-20 pb-16">
-      {/* TITULO Y DESCRIPCION DE LA APLICACION
-      <div className="text-center mb-16">
-        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[#CE32FD] to-[#00D8FF] text-transparent bg-clip-text">
-          Revoluciona el Mundo del Fútbol
-        </h1>
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-          FootballZone es la plataforma digital diseñada para los que buscan llevar su experiencia futbolística al siguiente nivel. Gestiona equipos, organiza partidos, consulta estadísticas en tiempo real y mantén todo bajo control desde un solo lugar. Con herramientas innovadoras y fáciles de usar, transformamos la manera en que vives y gestionas el fútbol. ¡Únete a la comunidad que está cambiando el juego!
-        </p>
-      </div>
-      */}
-      {/* Card de la Liga */}
+    
       <div className="liga-inicio-card">
         <div className="liga-inicio-card-content">
-          {/* Izquierda: Logo y datos */}
           <div className="liga-inicio-card-left">
             <div className="liga-inicio-logo-box">
               <img src={logoFaf} alt="Logo de la Liga" className="liga-inicio-logo" />
@@ -58,7 +47,6 @@ export default function InicioCards() {
               <h2 className="liga-inicio-grupo">GRUPO 2-1</h2>
             </div>
           </div>
-          {/* Derecha: Botones */}
           <div className="liga-inicio-card-right">
             <button
               type="button"

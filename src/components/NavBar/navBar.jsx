@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useState } from "react";
-import SideBar from "../Sidebar/Sidebar";  
-import SideBarAdmin from "../Sidebar/SidebarAdmin"; 
+import SideBar from "../Sidebar/Sidebar";
+import SideBarAdmin from "../Sidebar/SidebarAdmin";
 import menuIcon from "/src/assets/menuIcon.svg";
 import SideBarEntrenador from "../Sidebar/SideBarEntrenador";
 import SideBarArbitro from "../Sidebar/SideBarArbitro";
@@ -15,8 +15,7 @@ export default function NavBar({ usuario, setUsuario }) {
     setSidebarOpen(!sidebarOpen);
   };
 
-   // Función para renderizar el sidebar según el rol
-   const renderSidebar = () => {
+  const renderSidebar = () => {
     if (!usuario) {
       return <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />;
     }
@@ -64,7 +63,7 @@ export default function NavBar({ usuario, setUsuario }) {
 
   return (
     <>
-       <nav className="bg-transparent p-4 w-full top-0 z-10">
+      <nav className="bg-transparent p-4 w-full top-0 z-10">
         <div className="flex justify-between items-center w-full px-4 md:px-8">
           <div className="text-white text-2xl font-bold">
             <Link to="/">

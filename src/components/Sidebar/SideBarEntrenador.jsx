@@ -12,8 +12,6 @@ import update from "/src/assets/update.svg"
 export default function SideBarEntrenador({ isOpen, toggleSidebar, setUsuario }) {
 
   const navigate = useNavigate();
-
-
   const handleLogout = () => {
     userService.logout();
     setUsuario(null);

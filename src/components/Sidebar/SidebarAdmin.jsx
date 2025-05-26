@@ -11,7 +11,6 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
 
   const navigate = useNavigate();
 
-
   const handleLogout = () => {
     userService.logout();
     setUsuario(null);
@@ -23,7 +22,6 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
       <div className="sidebar-header">
         <button className="close-sidebar" onClick={toggleSidebar}>×</button>
       </div>
-
       <div className="sidebar-menu">
         <Link to="/admin" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
@@ -55,7 +53,6 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
           </div>
           <span>Registrar Entrenador</span>
         </Link>
-
         <button onClick={handleLogout}>
           <Link className="sidebar-item" onClick={toggleSidebar}>
             <div className="sidebar-icon">
@@ -63,7 +60,6 @@ export default function SideBarAdmin({ isOpen, toggleSidebar, setUsuario }) {
             </div>
             <span>Cerrar Sesión</span>
           </Link></button>
-
       </div>
     </div>
   );

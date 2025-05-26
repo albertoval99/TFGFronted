@@ -29,8 +29,6 @@ import Estadisticas from './components/Estadisticas/Estadisticas.jsx';
 import PerfilUsuario from './components/Perfil/PerfilUsuario.jsx';
 import Clasificacion from './components/Clasificacion/Clasificacion.jsx';
 
-
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,98 +43,98 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path:"/admin",
-        element:<Admin></Admin>
+        path: "/admin",
+        element: <Admin></Admin>
       },
       {
-        path:"/jugador",
-        element:<Jugador></Jugador>
+        path: "/jugador",
+        element: <Jugador></Jugador>
       },
       {
-        path:"/arbitro",
-        element:<Arbitro></Arbitro>
+        path: "/arbitro",
+        element: <Arbitro></Arbitro>
       },
       {
-        path:"/entrenador",
-        element:<Entrenador></Entrenador>
+        path: "/entrenador",
+        element: <Entrenador></Entrenador>
       },
       {
-        path:"/registroArbitro",
-        element:<RegistroArbitro></RegistroArbitro>
+        path: "/registroArbitro",
+        element: <RegistroArbitro></RegistroArbitro>
       },
       {
-        path:"/registroEntrenador",
-        element:<RegistroEntrenador></RegistroEntrenador>
+        path: "/registroEntrenador",
+        element: <RegistroEntrenador></RegistroEntrenador>
       },
       {
-        path:"/registroJugador",
-        element:<RegistroJugador></RegistroJugador>
+        path: "/registroJugador",
+        element: <RegistroJugador></RegistroJugador>
       },
       {
-        path:"/registroLiga",
-        element:<RegistroLiga></RegistroLiga>
+        path: "/registroLiga",
+        element: <RegistroLiga></RegistroLiga>
       },
       {
-        path:"/registroEquipo",
-        element:<RegistroEquipo></RegistroEquipo>
+        path: "/registroEquipo",
+        element: <RegistroEquipo></RegistroEquipo>
       },
       {
-        path:"/crearEntrenamiento",
-        element:<CrearEntrenamiento></CrearEntrenamiento>
+        path: "/crearEntrenamiento",
+        element: <CrearEntrenamiento></CrearEntrenamiento>
       },
       {
-        path:"/verEntrenamientos",
-        element:<VerEntrenamientos></VerEntrenamientos>
+        path: "/verEntrenamientos",
+        element: <VerEntrenamientos></VerEntrenamientos>
       },
       {
-        path:"/verAsistencias",
-        element:<VerAsistencias></VerAsistencias>
+        path: "/verAsistencias",
+        element: <VerAsistencias></VerAsistencias>
       },
       {
-        path:"/verEntrenamientosJugador",
-        element:<VerEntrenamientosJugador></VerEntrenamientosJugador>
+        path: "/verEntrenamientosJugador",
+        element: <VerEntrenamientosJugador></VerEntrenamientosJugador>
       },
       {
         path: "/calendario2Reg2-1",
-        element:<Calendario></Calendario>
+        element: <Calendario></Calendario>
       },
       {
-        path:"/gestionarPlantilla",
-        element:<GestionarPlantilla></GestionarPlantilla>
+        path: "/gestionarPlantilla",
+        element: <GestionarPlantilla></GestionarPlantilla>
       },
       {
-        path:"/gestionarPartidos",
-        element:<VerPartidosEquipo></VerPartidosEquipo>
+        path: "/gestionarPartidos",
+        element: <VerPartidosEquipo></VerPartidosEquipo>
       },
       {
         path: "/registrarAlineacion/:id_partido",
         element: <RegistrarAlineacion></RegistrarAlineacion>
       },
       {
-        path:"/verPartidosAsignados",
-        element:<VerPartidosAsignados></VerPartidosAsignados>
+        path: "/verPartidosAsignados",
+        element: <VerPartidosAsignados></VerPartidosAsignados>
       },
       {
         path: "/:id_partido/estadisticas",
-        element:<PartidoEstadisticasCard></PartidoEstadisticasCard>
+        element: <PartidoEstadisticasCard></PartidoEstadisticasCard>
       },
       {
-        path:"/estadisticas",
-        element:<Estadisticas></Estadisticas>
+        path: "/estadisticas",
+        element: <Estadisticas></Estadisticas>
       },
       {
-        path:"/actualizarPerfil",
-        element:<PerfilUsuario></PerfilUsuario>
+        path: "/actualizarPerfil",
+        element: <PerfilUsuario></PerfilUsuario>
       },
       {
-        path:"/verClasificacion/:id_liga",
-        element:<Clasificacion></Clasificacion>
+        path: "/verClasificacion/:id_liga",
+        element: <Clasificacion></Clasificacion>
       }
     ],
   },
   {
-    path:"*",
-    element:<Error404></Error404>
+    path: "*",
+    element: <Error404></Error404>
   }
 ]);
 

@@ -1,4 +1,3 @@
-
 import { Link } from "react-router";
 import "./SideBar.css";
 import loginIcon from "/src/assets/loginIcon.svg";
@@ -10,7 +9,6 @@ export default function SideBar({ isOpen, toggleSidebar }) {
       <div className="sidebar-header">
         <button className="close-sidebar" onClick={toggleSidebar}>×</button>
       </div>
-
       <div className="sidebar-menu">
         <Link to="/" className="sidebar-item" onClick={toggleSidebar}>
           <div className="sidebar-icon">
@@ -24,7 +22,6 @@ export default function SideBar({ isOpen, toggleSidebar }) {
           </div>
           <span>Entrar</span>
         </Link>
-
       </div>
     </div>
   );

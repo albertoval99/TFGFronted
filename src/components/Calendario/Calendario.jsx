@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { partidosService } from "../../services/partidos.service";
 import "./Calendario.css";
+import { Mensaje } from "../Error/Mensaje";
 
 export default function Calendario() {
     const idLiga = 3;
@@ -67,7 +68,7 @@ export default function Calendario() {
                 day: 'numeric'
             });
         }
-       
+
         return "Fecha por determinar";
     };
 
@@ -82,16 +83,13 @@ export default function Calendario() {
         );
     }
 
-    if (error) {
-        return (
-            <div className="calendario-error calendario-padding">
-                <span>{error}</span>
-            </div>
-        );
-    }
 
     return (
         <div className="calendario-padding calendario-carrusel-centrado">
+            <Mensaje
+                error={error}
+                onClose={() => { setError(""); }}
+            />
             <div className="carousel-slider-mini">
                 <div
                     className="carousel-track-mini"
@@ -104,7 +102,7 @@ export default function Calendario() {
                             <div className="jornada-card-mini">
                                 <div className="jornada-header-mini">
                                     <span>Jornada {jornada.numero}</span>
-                                    <span>{fechaLarga(jornada.fecha)}</span>  
+                                    <span>{fechaLarga(jornada.fecha)}</span>
                                 </div>
                                 <div className="jornada-partidos-mini">
                                     {jornada.partidos.map((p, i) => {

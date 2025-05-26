@@ -1,6 +1,5 @@
 import jwt_decode from 'jwt-decode'
 import { URL } from "./constantes";
-import { equipoService } from './equipos.service';
 const API_URL = `${URL}/usuarios`;
 
 export const userService = {
@@ -12,54 +11,16 @@ export const userService = {
                 body: JSON.stringify(credenciales),
             });
 
-            const datos = await respuesta.json();
+            const data = await respuesta.json();
 
             if (!respuesta.ok) {
-                return { status: respuesta.status, message: datos.message };
+                return { status: respuesta.status, message: data.message };
             }
 
-            const token = datos.token;
+            const token = data.token;
+            const usuario = data.usuario;
+
             sessionStorage.setItem("token", token);
-
-            const decodificado = jwt_decode(token);
-            const { id_usuario, email, rol } = decodificado.user;
-
-            // Obtener datos básicos del usuario
-            const datosUsuario = await userService.getUserByEmail(email, token);
-            if (!datosUsuario) {
-                return { status: 404, message: "Usuario no encontrado" };
-            }
-
-            // Obtener datos específicos según rol
-            let datosRol = null;
-            if (rol === "entrenador") {
-                datosRol = await userService.getEntrenadorInfo(id_usuario, token);
-            } else if (rol === "jugador") {
-                datosRol = await userService.getJugadorInfo(id_usuario, token);
-            } else if (rol === "arbitro") {
-                datosRol = await userService.getArbitroInfo(id_usuario, token);
-            }
-
-        
-            let usuario = {
-                id_usuario,
-                email,
-                rol,
-                ...datosUsuario,
-                ...datosRol,
-            };
-
-            // Obtener equipo si existe
-            const id_equipo = datosRol?.id_equipo || datosUsuario?.id_equipo;
-            if (id_equipo) {
-                const resultadoEquipo = await equipoService.getEquipoById(id_equipo);
-                if (resultadoEquipo.status === 200) {
-                    usuario.equipo = resultadoEquipo.equipo;
-                } else {
-                    console.warn("⚠️ No se pudo obtener el equipo:", resultadoEquipo.message);
-                }
-            }
-
             sessionStorage.setItem("usuario", JSON.stringify(usuario));
 
             return {
@@ -72,7 +33,6 @@ export const userService = {
             return { status: 500, message: "Error de conexión", error };
         }
     },
-
     getUserByEmail: async (email, token) => {
         try {
             const response = await fetch(`${API_URL}/${email}`, {
@@ -83,9 +43,8 @@ export const userService = {
             });
 
             if (!response.ok) return null;
-
             const data = await response.json();
-            return data; // Devuelve directamente el usuario
+            return data;
         } catch {
             return null;
         }
@@ -136,15 +95,10 @@ export const userService = {
         }
     },
 
-
-
-
-
-    // Función para obtener los datos del usuario directamente del token
     getUser: () => {
         const token = sessionStorage.getItem("token");
         if (!token) {
-            console.warn("⚠️ No hay usuario o token en sessionStorage");
+            console.warn("No hay usuario o token en sessionStorage");
             return null;
         }
         try {
@@ -155,7 +109,6 @@ export const userService = {
             return null;
         }
     },
-
 
 
     getUsuarios: async () => {
@@ -282,7 +235,6 @@ export const userService = {
             if (!usuario) {
                 return { status: 401, message: "No hay usuario en sesión" };
             }
-
 
             if (!id_equipo) {
                 return { status: 404, message: "No se encontró el equipo" };
