@@ -31,17 +31,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Leyenda de colores (esquina superior derecha) */
-.clasificacion-legend {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 1rem;
-  z-index: 5;
-  font-size: 0.875rem;
-  color: #f3f4f6;
-}
+
 .legend-item {
   display: flex;
   align-items: center;
@@ -57,18 +47,32 @@
 .legend-color.playoff  { background: #f59e0b; }  /* naranja play-off */
 .legend-color.descenso { background: #ef4444; }  /* rojo descenso */
 
-/* Scroll wrapper (vertical y horizontal) */
-.table-wrapper {
-  max-height: 600px;   /* ajusta según filas */
-  overflow-y: auto;
-  overflow-x: auto;
+.clasificacion-legend {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 5;
+  font-size: 0.875rem;
+  color: #f3f4f6;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Ajuste al contenedor de la tabla para dejar espacio a la leyenda */
+.table-wrapper {
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: auto;
+  margin-top: 4.5rem;
+}
 /* Tabla */
 .clasificacion-table {
   width: 100%;
   min-width: 64rem;
-  border-collapse: separate;
   border-spacing: 0;
 }
 
@@ -192,8 +196,13 @@
   .clasificacion-card {
     padding: 0.5rem;
   }
+  .clasificacion-legend {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
   .table-wrapper {
-    max-height: 400px;
+    margin-top: 0; 
   }
   .clasificacion-table {
     min-width: auto;

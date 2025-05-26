@@ -60,8 +60,8 @@ export default function Clasificacion() {
               <tr>
                 <th></th>
                 <th></th>
-                <th>PJ</th>
                 <th>Pts</th>
+                <th>PJ</th>
                 <th>GF</th>
                 <th>GC</th>
                 <th>DG</th>
@@ -86,8 +86,8 @@ export default function Clasificacion() {
                       <img src={eq.escudo} alt={eq.nombre} className="equipo-logo" />
                       <span>{eq.nombre}</span>
                     </td>
-                    <td>{eq.partidos_jugados}</td>
                     <td>{eq.puntos}</td>
+                    <td>{eq.partidos_jugados}</td>
                     <td>{eq.goles_favor}</td>
                     <td>{eq.goles_contra}</td>
                     <td className={
