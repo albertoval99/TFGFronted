@@ -10,13 +10,13 @@ export default function RegistrarAlineacion() {
     const { id_partido } = useParams();
     const navigate = useNavigate();
 
-    const [jugadores, setJugadores] = useState([]);
+    const [listaJugadores, setListaJugadores] = useState([]);
     const [estadoJugadores, setEstadoJugadores] = useState({});
-    const [loading, setLoading] = useState(true);
+    const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState("");
 
-    const POSICION_COLORS = {
+    const COLORES_POSICION = {
         PT: "bg-blue-600/20 text-blue-400",
         DFC: "bg-green-600/20 text-green-400",
         LI: "bg-yellow-600/20 text-yellow-500",
@@ -31,148 +31,155 @@ export default function RegistrarAlineacion() {
     };
 
     useEffect(() => {
-        async function cargarDatos() {
+        async function cargarDatosIniciales() {
             if (!id_partido) {
                 setError("No se encontró el partido");
-                setLoading(false);
+                setCargando(false);
                 return;
             }
             try {
-                const resJugadores = await userService.getJugadoresByEquipo();
-                if (resJugadores.status !== 200) {
+                const respuestaJugadores = await userService.getJugadoresByEquipo();
+                if (respuestaJugadores.status !== 200) {
                     setError("Error al cargar jugadores");
-                    setLoading(false);
+                    setCargando(false);
                     return;
                 }
-                const jugadoresData = resJugadores.jugadores;
-                const estadoInicial = {};
-                jugadoresData.forEach((j) => {
-                    estadoInicial[j.id_jugador] = "no";
+                const datosJugadores = respuestaJugadores.jugadores;
+                const estadoInicialJugadores = {};
+
+                datosJugadores.forEach((jugador) => {
+                    estadoInicialJugadores[jugador.id_jugador] = "no";
                 });
 
                 try {
-                    const resAlineacion = await alineacionesService.getAlineacionesByPartido(id_partido);
-                    if (Array.isArray(resAlineacion)) {
-                        resAlineacion.forEach((a) => {
-                            estadoInicial[a.id_jugador] = a.es_titular ? "titular" : "suplente";
+                    const respuestaAlineacion = await alineacionesService.getAlineacionesByPartido(id_partido);
+                    if (Array.isArray(respuestaAlineacion)) {
+                        respuestaAlineacion.forEach((alineacion) => {
+                            estadoInicialJugadores[alineacion.id_jugador] = alineacion.es_titular ? "titular" : "suplente";
                         });
                     }
-                } catch {
-                    // No hay alineación previa
+                } catch (error) {
+                    console.error("No hay alineación previa", error)
                 }
 
-                setJugadores(jugadoresData);
-                setEstadoJugadores(estadoInicial);
+                setListaJugadores(datosJugadores);
+                setEstadoJugadores(estadoInicialJugadores);
                 setError(null);
-            } catch (e) {
+            } catch (error) {
                 setError("Error inesperado al cargar datos");
-                console.error(e);
+                console.error(error);
             } finally {
-                setLoading(false);
+                setCargando(false);
             }
         }
-        cargarDatos();
+        cargarDatosIniciales();
     }, [id_partido]);
 
-    const toggleTitular = (id_jugador) => {
-        setEstadoJugadores((prev) => {
-            const current = prev[id_jugador];
-            const titularesCount = Object.values(prev).filter((e) => e === "titular").length;
-            if (current === "titular") {
+    function cambiarEstadoTitular(idJugador) {
+        setEstadoJugadores((estadoAnterior) => {
+            const estadoActual = estadoAnterior[idJugador];
+            const cantidadTitulares = Object.values(estadoAnterior).filter((estado) => estado === "titular").length;
+
+            if (estadoActual === "titular") {
                 setError(null);
-                return { ...prev, [id_jugador]: "no" };
+                return { ...estadoAnterior, [idJugador]: "no" };
             }
-            if (titularesCount >= 11) {
+
+            if (cantidadTitulares >= 11) {
                 setError("No puedes tener más de 11 titulares");
-                return prev;
+                return estadoAnterior;
             }
-            setError(null);
-            return { ...prev, [id_jugador]: "titular" };
-        });
-    };
 
-    const toggleSuplente = (id_jugador) => {
-        setEstadoJugadores((prev) => {
-            const current = prev[id_jugador];
-            const suplentesCount = Object.values(prev).filter((e) => e === "suplente").length;
-            if (current === "suplente") {
+            setError(null);
+            return { ...estadoAnterior, [idJugador]: "titular" };
+        });
+    }
+
+    function cambiarEstadoSuplente(idJugador) {
+        setEstadoJugadores((estadoAnterior) => {
+            const estadoActual = estadoAnterior[idJugador];
+            const cantidadSuplentes = Object.values(estadoAnterior).filter((estado) => estado === "suplente").length;
+
+            if (estadoActual === "suplente") {
                 setError(null);
-                return { ...prev, [id_jugador]: "no" };
+                return { ...estadoAnterior, [idJugador]: "no" };
             }
-            if (suplentesCount >= 7) {
-                setError("No puedes tener más de 7 suplentes");
-                return prev;
-            }
-            setError(null);
-            return { ...prev, [id_jugador]: "suplente" };
-        });
-    };
 
-    const guardarAlineacion = async () => {
+            if (cantidadSuplentes >= 7) {
+                setError("No puedes tener más de 7 suplentes");
+                return estadoAnterior;
+            }
+
+            setError(null);
+            return { ...estadoAnterior, [idJugador]: "suplente" };
+        });
+    }
+
+    async function guardarAlineacionCompleta() {
         setError(null);
-        setSuccess("");
+        setError("");
         try {
-            const usuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
-            const id_equipo = usuario.equipo?.id_equipo;
-            if (!id_equipo) {
+            const datosUsuario = JSON.parse(sessionStorage.getItem("usuario") || "{}");
+            const idEquipo = datosUsuario.equipo?.id_equipo;
+
+            if (!idEquipo) {
                 setError("No se encontró el equipo del usuario");
                 return;
             }
 
-            const titulares = Object.entries(estadoJugadores)
+            const jugadoresTitulares = Object.entries(estadoJugadores)
                 .filter(([, estado]) => estado === "titular")
-                .map(([id_jugador]) => Number(id_jugador));
+                .map(([idJugador]) => Number(idJugador));
 
-            const suplentes = Object.entries(estadoJugadores)
+            const jugadoresSuplentes = Object.entries(estadoJugadores)
                 .filter(([, estado]) => estado === "suplente")
-                .map(([id_jugador]) => Number(id_jugador));
+                .map(([idJugador]) => Number(idJugador));
 
-            if (titulares.length !== 11) {
+            if (jugadoresTitulares.length !== 11) {
                 setError("Tienes que tener 11 titulares exactamente");
                 return;
             }
-            if (suplentes.length > 7) {
+            if (jugadoresSuplentes.length > 7) {
                 setError("No puedes tener más de 7 suplentes");
                 return;
             }
 
-            const alineaciones = [
-                ...titulares.map((id_jugador) => ({
+            const datosAlineaciones = [
+                ...jugadoresTitulares.map((idJugador) => ({
                     id_partido,
-                    id_jugador,
-                    id_equipo,
+                    id_jugador: idJugador,
+                    id_equipo: idEquipo,
                     es_titular: true,
                 })),
-                ...suplentes.map((id_jugador) => ({
+                ...jugadoresSuplentes.map((idJugador) => ({
                     id_partido,
-                    id_jugador,
-                    id_equipo,
+                    id_jugador: idJugador,
+                    id_equipo: idEquipo,
                     es_titular: false,
                 })),
             ];
 
             await Promise.all(
-                alineaciones.map((alineacion) =>
-                    alineacionesService.registrarAlineacion(alineacion)
+                datosAlineaciones.map((datosAlineacion) =>
+                    alineacionesService.registrarAlineacion(datosAlineacion)
                 )
             );
-
             setSuccess("Alineación guardada correctamente");
-            setTimeout(() => {
-                navigate("/gestionarPartidos");
-            }, 3000);
-        } catch (e) {
-            setError(e.message || "Error al guardar la alineación");
-            console.error(e);
+            setTimeout(() => { navigate("/gestionarPartidos") }, 3000);
+        } catch (error) {
+            setError(error.message || "Error al guardar la alineación");
+            console.error(error);
         }
-    };
+    }
 
-    if (loading) return <div className="flex justify-center items-center py-10">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
-    </div>;
+    if (cargando) return (
+        <div className="flex justify-center items-center py-10">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#40c9ff]"></div>
+        </div>
+    );
 
-    const titularesCount = Object.values(estadoJugadores).filter((e) => e === "titular").length;
-    const suplentesCount = Object.values(estadoJugadores).filter((e) => e === "suplente").length;
+    const cantidadTitulares = Object.values(estadoJugadores).filter((estado) => estado === "titular").length;
+    const cantidadSuplentes = Object.values(estadoJugadores).filter((estado) => estado === "suplente").length;
 
     return (
         <div className="ra-container">
@@ -185,13 +192,13 @@ export default function RegistrarAlineacion() {
             <h1 className="ra-title">Crear Alineación</h1>
 
             <div className="ra-counters">
-                <div>Titulares: {titularesCount} / 11</div>
-                <div>Suplentes: {suplentesCount} / 7</div>
+                <div>Titulares: {cantidadTitulares} / 11</div>
+                <div>Suplentes: {cantidadSuplentes} / 7</div>
             </div>
 
             <div className="ra-list">
-                {jugadores.map((jugador) => {
-                    const estado = estadoJugadores[jugador.id_jugador];
+                {listaJugadores.map((jugador) => {
+                    const estadoActual = estadoJugadores[jugador.id_jugador];
                     return (
                         <div key={jugador.id_jugador} className="ra-player-card">
                             <div className="ra-dorsal-container" aria-hidden="true">
@@ -206,7 +213,7 @@ export default function RegistrarAlineacion() {
                             </div>
                             <div className="ra-player-info">
                                 <span className="ra-player-name">{jugador.nombre} {jugador.apellidos}</span>
-                                <span className={`ra-player-position px-3 py-1 rounded-full font-semibold text-xs flex items-center ${POSICION_COLORS[jugador.posicion] || "bg-neutral-700 text-white"}`}>
+                                <span className={`ra-player-position px-3 py-1 rounded-full font-semibold text-xs flex items-center ${COLORES_POSICION[jugador.posicion] || "bg-neutral-700 text-white"}`}>
                                     {jugador.posicion}
                                 </span>
                             </div>
@@ -214,16 +221,16 @@ export default function RegistrarAlineacion() {
                                 <label className="ra-checkbox-label">
                                     <input
                                         type="checkbox"
-                                        checked={estado === "titular"}
-                                        onChange={() => toggleTitular(jugador.id_jugador)}
+                                        checked={estadoActual === "titular"}
+                                        onChange={() => cambiarEstadoTitular(jugador.id_jugador)}
                                     />
                                     Titular
                                 </label>
                                 <label className="ra-checkbox-label">
                                     <input
                                         type="checkbox"
-                                        checked={estado === "suplente"}
-                                        onChange={() => toggleSuplente(jugador.id_jugador)}
+                                        checked={estadoActual === "suplente"}
+                                        onChange={() => cambiarEstadoSuplente(jugador.id_jugador)}
                                     />
                                     Suplente
                                 </label>
@@ -233,7 +240,7 @@ export default function RegistrarAlineacion() {
                 })}
             </div>
 
-            <button className="ra-save-btn" onClick={guardarAlineacion}>
+            <button className="ra-save-btn" onClick={guardarAlineacionCompleta}>
                 Guardar Alineación
             </button>
         </div>

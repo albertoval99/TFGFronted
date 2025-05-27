@@ -213,16 +213,16 @@ export default function VerPartidosEquipo() {
                         <div className="vpe-card-botones-bottom-center">
                           <button
                             onClick={() => {
-                              if (puedeHacerAlineacion(p)) {
+                             // if (puedeHacerAlineacion(p)) {
                                 setError("");
                                 setSuccess("");
                                 navigate(`/registrarAlineacion/${p.id_partido}`);
-                              } else {
-                                setError(
-                                  "Solo puedes hacer la alineación antes de la hora del partido.Este partido ya se ha jugado o esta en juego"
-                                );
-                                setSuccess("");
-                              }
+                           //   } else {
+                           //     setError(
+                              //    "Solo puedes hacer la alineación antes de la hora del partido.Este partido ya se ha jugado o esta en juego"
+                            //    );
+                           //     setSuccess("");
+                           //   }
                             }}
                             className="vpe-card-boton"
                           >
