@@ -211,7 +211,7 @@ export default function VerPartidosAsignados() {
             <div className="vpa-card-botones-bottom-center" style={{ gap: "1rem" }}>
                 <button
                     className="vpa-card-boton aplazar"
-                    disabled={!puedeSuspender(partido)}
+                   // disabled={!puedeSuspender(partido)}
                     title={
                         !puedeSuspender(partido)
                             ? "Solo puedes aplazar antes de que empiece el partido"
@@ -229,7 +229,7 @@ export default function VerPartidosAsignados() {
 
                 <button
                     className="vpa-card-boton registrar"
-                    disabled={!puedeRegistrar(partido)}
+                   // disabled={!puedeRegistrar(partido)}
                     onClick={() => handleRegistrarClick(partido)}
                 >
                     <img
