@@ -1,5 +1,6 @@
 import { useOutletContext, useNavigate } from "react-router";
 import "./Admin.css";
+import flechaOpcion from "/src/assets/flecha-opcion.svg";
 
 export default function Admin() {
     const { usuario } = useOutletContext();
@@ -44,20 +45,12 @@ export default function Admin() {
                             className="admin-boton"
                         >
                             <span>{op.label}</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
+                            <img
+                                src={flechaOpcion}
+                                alt="Flecha"
+                                style={{ width: 28, height: 28 }}
                                 aria-hidden="true"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3"
-                                />
-                            </svg>
+                            />
                         </button>
                     ))}
                 </div>

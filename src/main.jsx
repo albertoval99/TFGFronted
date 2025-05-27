@@ -95,7 +95,7 @@ const router = createBrowserRouter([
         element: <VerEntrenamientosJugador></VerEntrenamientosJugador>
       },
       {
-        path: "/calendario2Reg2-1",
+        path: "/calendario2Reg2-1/:idLiga",
         element: <Calendario></Calendario>
       },
       {

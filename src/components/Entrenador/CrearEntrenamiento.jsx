@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { entrenamientoService } from "../../services/entrenamiento.service";
 import { Mensaje } from "../Error/Mensaje";
+import flechaCrearEntrenamiento from "/src/assets/flecha-crear-entrenamiento.svg";
 
 export default function CrearEntrenamiento() {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        fecha_hora_entrenamiento: "",
-        duracion: ""
-    });
+    const [formData, setFormData] = useState({ fecha_hora_entrenamiento: "", duracion: "" });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -49,8 +47,6 @@ export default function CrearEntrenamiento() {
                 success={success}
                 onClose={() => { setError(""); setSuccess(""); }}
             />
-
-            {/* Formulario */}
             <div className="card relative bg-black p-8" style={{ width: "500px", height: "350px" }}>
                 <div className="card-content flex flex-col gap-6">
                     <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text text-center text-2xl font-bold">
@@ -91,14 +87,11 @@ export default function CrearEntrenamiento() {
                                                 <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#CE32FD]">
                                                     Crear Entrenamiento
                                                 </span>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    fill="currentColor"
+                                                <img
+                                                    src={flechaCrearEntrenamiento}
+                                                    alt="Flecha crear"
                                                     className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#00D8FF]"
-                                                >
-                                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
-                                                </svg>
+                                                />
                                             </div>
                                         </span>
                                     </div>

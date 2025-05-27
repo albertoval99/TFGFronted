@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { ligaService } from "../../services/liga.service";
 import { equipoService } from "../../services/equipos.service";
 import { Mensaje } from "../Error/Mensaje";
-
+import flechaRegistrar from "/src/assets/flecha-registrar.svg";
 
 export default function RegistroEquipo() {
     const navigate = useNavigate();
@@ -78,7 +78,6 @@ export default function RegistroEquipo() {
                 onClose={() => { setError(""); setSuccess(""); }}
             />
 
-            {/* Tarjeta de registro para equipos */}
             <div className="card relative bg-black p-8" style={{ width: "500px", minHeight: "500px" }}>
                 <div className="card-content flex flex-col gap-6">
                     <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text text-center text-2xl font-bold leading-[1.2] pb-2 overflow-visible">
@@ -86,7 +85,6 @@ export default function RegistroEquipo() {
                     </h2>
 
                     <form onSubmit={handleSubmit} className="space-y-5">
-                        {/* Nombre del equipo */}
                         <div className="flex flex-col gap-1 pt-5">
                             <label htmlFor="nombre_equipo" className="text-sm text-white font-semibold pl-1 mb-1">
                                 Nombre del equipo
@@ -101,7 +99,6 @@ export default function RegistroEquipo() {
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
-                        {/* Liga */}
                         <div className="flex flex-col gap-1 pt-2">
                             <label htmlFor="id_liga" className="text-sm text-white font-semibold pl-1 mb-1">
                                 Liga
@@ -121,7 +118,6 @@ export default function RegistroEquipo() {
                                 ))}
                             </select>
                         </div>
-                        {/* Escudo */}
                         <div className="flex flex-col gap-1 pt-2">
                             <label htmlFor="escudo" className="text-sm text-white font-semibold pl-1 mb-1">
                                 URL del escudo (S3)</label>
@@ -136,7 +132,6 @@ export default function RegistroEquipo() {
                                 className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white"
                             />
                         </div>
-                        {/* Botón */}
                         <div className="button-container pt-8">
                             <button type="submit" className="relative group w-50">
                                 <div className="relative group">
@@ -147,14 +142,11 @@ export default function RegistroEquipo() {
                                                 <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#CE32FD]">
                                                     Registrar
                                                 </span>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    fill="currentColor"
-                                                    className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#00D8FF]"
-                                                >
-                                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
-                                                </svg>
+                                                <img
+                                                    src={flechaRegistrar}
+                                                    alt="Flecha registrar"
+                                                    className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:filter group-hover:brightness-150"
+                                                />
                                             </div>
                                         </span>
                                     </div>

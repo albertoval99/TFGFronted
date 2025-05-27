@@ -5,7 +5,7 @@ import masAmarillas from "/src/assets/masAmarillas.png";
 import masRojas from "/src/assets/masRojas.png";
 import masTitularidades from "/src/assets/masTitularidades.png";
 import { estadisticasService } from "../../services/estadisticas.service";
-import "./Estadisticas.css"; 
+import "./Estadistica.css";
 import ModalEstadisticasJugador from "../Partido/ModalEstadisticasJugador";
 
 const medallas = ["🥇", "🥈", "🥉"];
@@ -80,7 +80,6 @@ export default function Estadisticas() {
     useEffect(() => {
         setLoading(true);
         setError("");
-
         const cargarPrimeros = async () => {
             try {
                 const primerosData = {};
@@ -208,7 +207,6 @@ export default function Estadisticas() {
                 </div>
             </div>
 
-            {/* Modal */}
             {modalAbierto && (
                 <div className="modal-overlay">
                     <div className="modal-container">
@@ -250,31 +248,31 @@ export default function Estadisticas() {
                             </div>
                         ) : ranking.length > 0 ? (
                             <div className="modal-ranking">
-                                    {ranking.map((jugador, idx) => {
-                                        const categoria = CATEGORIAS.find((c) => c.key === modalAbierto);
-                                        return (
-                                            <div
-                                                key={jugador.id_jugador}
-                                                className={`ranking-item ${idx < 3 ? "font-bold" : ""} cursor-pointer`}
-                                                onClick={() => setModalJugador(jugador.id_jugador)}
+                                {ranking.map((jugador, idx) => {
+                                    const categoria = CATEGORIAS.find((c) => c.key === modalAbierto);
+                                    return (
+                                        <div
+                                            key={jugador.id_jugador}
+                                            className={`ranking-item ${idx < 3 ? "font-bold" : ""} cursor-pointer`}
+                                            onClick={() => setModalJugador(jugador.id_jugador)}
+                                        >
+                                            <span className="ranking-position">
+                                                {medallas[idx] || idx + 1}
+                                            </span>
+                                            <span className="ranking-player-info">
+                                                {jugador.nombre} {jugador.apellidos}
+                                                <span className="ranking-team">
+                                                    ({jugador.nombre_equipo})
+                                                </span>
+                                            </span>
+                                            <span
+                                                className={`ranking-stat ${categoria.colorClass}`}
                                             >
-                                                <span className="ranking-position">
-                                                    {medallas[idx] || idx + 1}
-                                                </span>
-                                                <span className="ranking-player-info">
-                                                    {jugador.nombre} {jugador.apellidos}
-                                                    <span className="ranking-team">
-                                                        ({jugador.nombre_equipo})
-                                                    </span>
-                                                </span>
-                                                <span
-                                                    className={`ranking-stat ${categoria.colorClass}`}
-                                                >
-                                                    {jugador[categoria.statKey]}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
+                                                {jugador[categoria.statKey]}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         ) : (
                             <div className="no-data">

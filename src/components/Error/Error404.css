@@ -125,7 +125,6 @@
   color: #e81cff;
 }
 
-/* Responsive */
 @media (max-width: 1100px) {
   .error404-card-inner {
     gap: 2rem;

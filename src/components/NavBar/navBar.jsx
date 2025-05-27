@@ -1,12 +1,8 @@
 import { Link } from "react-router";
 import { useState } from "react";
-import SideBar from "../Sidebar/Sidebar";
-import SideBarAdmin from "../Sidebar/SidebarAdmin";
 import menuIcon from "/src/assets/menuIcon.svg";
-import SideBarEntrenador from "../Sidebar/SideBarEntrenador";
-import SideBarArbitro from "../Sidebar/SideBarArbitro";
-import SideBarJugador from "../Sidebar/SideBarJugador";
-import logo from "/src/assets/logo.png"
+import logo from "/src/assets/logo.png";
+import SideBar from "../Sidebar/Sidebar";
 
 export default function NavBar({ usuario, setUsuario }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,51 +11,23 @@ export default function NavBar({ usuario, setUsuario }) {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const renderSidebar = () => {
-    if (!usuario) {
-      return <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />;
-    }
+  const getTipoUsuario = () => {
+    if (!usuario) return "invitado";
     switch (usuario.rol) {
       case "administrador":
-        return (
-          <SideBarAdmin
-            isOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-            usuario={usuario}
-            setUsuario={setUsuario}
-          />
-        );
+        return "admin";
       case "entrenador":
-        return (
-          <SideBarEntrenador
-            isOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-            usuario={usuario}
-            setUsuario={setUsuario}
-          />
-        );
+        return "entrenador";
       case "arbitro":
-        return (
-          <SideBarArbitro
-            isOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-            usuario={usuario}
-            setUsuario={setUsuario}
-          />
-        );
+        return "arbitro";
       case "jugador":
-        return (
-          <SideBarJugador
-            isOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-            usuario={usuario}
-            setUsuario={setUsuario}
-          />
-        );
+        return "jugador";
       default:
-        return <SideBar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />;
+        return "invitado";
     }
   };
+
+  const tipoUsuario = getTipoUsuario();
 
   return (
     <>
@@ -77,7 +45,14 @@ export default function NavBar({ usuario, setUsuario }) {
         </div>
       </nav>
 
-      {sidebarOpen && renderSidebar()}
+      {sidebarOpen && (
+        <SideBar
+          isOpen={sidebarOpen}
+          toggleSidebar={toggleSidebar}
+          setUsuario={setUsuario}
+          tipo={tipoUsuario}
+        />
+      )}
 
       {sidebarOpen && <div className="sidebar-overlay active" onClick={toggleSidebar}></div>}
     </>

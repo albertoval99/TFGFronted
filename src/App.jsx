@@ -3,8 +3,7 @@ import './App.css';
 import { Outlet } from 'react-router';
 import Aurora from './components/Aurora/Aurora';
 import { userService } from './services/usuarios.service';
-import NavBar from './components/NavBar/navBar';
-
+import NavBar from "./components/NavBar/navBar";
 function App() {
   const [usuario, setUsuario] = useState(null);
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { entrenamientoService } from "../../services/entrenamiento.service";
+import cerrarModalIcon from "/src/assets/cerrar-modal.svg";
 
 export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
     const [asistencias, setAsistencias] = useState([]);
@@ -42,7 +43,6 @@ export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm ">
             <div className="bg-[#232531] rounded-xl shadow-lg w-full max-w-xl mx-4">
-                {/* Header */}
                 <div className="flex justify-between items-center px-6 py-4 border-b border-neutral-700">
                     <div>
                         <h2 className="text-lg font-bold text-white">Asistencias</h2>
@@ -54,12 +54,14 @@ export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
                         onClick={onClose}
                         className="text-neutral-400 hover:text-white transition-colors"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <img
+                            src={cerrarModalIcon}
+                            alt="Cerrar"
+                            className="w-6 h-6"
+                        />
                     </button>
                 </div>
-               
+
                 <div className="px-6 py-4 max-h-[54vh] overflow-y-auto">
                     {loading ? (
                         <div className="flex justify-center items-center py-10">
@@ -86,14 +88,13 @@ export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
                                         </div>
                                         <div className="text-neutral-400">
                                             Estado:{" "}
-                                            <span className={`font-medium ${
-                                                asistencia.asistio === true ? 'text-green-500' :
+                                            <span className={`font-medium ${asistencia.asistio === true ? 'text-green-500' :
                                                 asistencia.asistio === false ? 'text-red-500' :
-                                                'text-yellow-500'
-                                            }`}>
+                                                    'text-yellow-500'
+                                                }`}>
                                                 {asistencia.asistio === true ? 'Asistirá' :
-                                                asistencia.asistio === false ? 'No asistirá' :
-                                                'Pendiente'}
+                                                    asistencia.asistio === false ? 'No asistirá' :
+                                                        'Pendiente'}
                                             </span>
                                         </div>
                                         {asistencia.justificacion && (
@@ -102,14 +103,13 @@ export default function VerAsistencias({ id_entrenamiento, fecha, onClose }) {
                                             </div>
                                         )}
                                     </div>
-                                    <div className={`px-3 py-1 rounded-full ${
-                                        asistencia.asistio === true ? 'bg-green-500/10 text-green-500' :
+                                    <div className={`px-3 py-1 rounded-full ${asistencia.asistio === true ? 'bg-green-500/10 text-green-500' :
                                         asistencia.asistio === false ? 'bg-red-500/10 text-red-500' :
-                                        'bg-yellow-500/10 text-yellow-500'
-                                    }`}>
+                                            'bg-yellow-500/10 text-yellow-500'
+                                        }`}>
                                         {asistencia.asistio === true ? '✓' :
-                                        asistencia.asistio === false ? '✕' :
-                                        '?'}
+                                            asistencia.asistio === false ? '✕' :
+                                                '?'}
                                     </div>
                                 </div>
                             ))}

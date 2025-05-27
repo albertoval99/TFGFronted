@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
 import './Error404.css';
+import flechaVolver from "/src/assets/flecha-volver.svg";
 
 export default function Error404() {
     const navigate = useNavigate();
@@ -22,9 +23,11 @@ export default function Error404() {
                             onClick={() => navigate("/")}
                         >
                             Volver al inicio
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="error404-btn-icon">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                            </svg>
+                            <img
+                                src={flechaVolver}
+                                alt="Flecha volver"
+                                className="error404-btn-icon"
+                            />
                         </button>
                     </div>
                 </div>

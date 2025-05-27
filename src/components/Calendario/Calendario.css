@@ -1,5 +1,4 @@
 .calendario-padding {
-    
     padding-bottom: 2.5rem;
     min-height: 100vh;
     display: flex;
@@ -14,7 +13,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
 }
 
 .carousel-slider-mini {
@@ -26,27 +24,7 @@
     box-shadow: 0 0 20px 0 #a855f7, 0 0 0 1px #40c9ff;
     margin: 0 auto;
     min-height: 160px;
-    background: none;
-    margin-top:60px;
-}
-
-.carousel-track-mini {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(.77,0,.18,1);
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-slider-mini {
-    width: 100%;
-    max-width: 1000px;
-    min-width: 320px;
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 0 20px 0 #a855f7, 0 0 0 1px #40c9ff;
-    margin: 0 auto;
-    min-height: 160px;
-    height: 480px; /* Fija el alto del carrusel */
+    height: 480px;
     background: none;
     margin-top: 60px;
     display: flex;
@@ -73,7 +51,7 @@
 .jornada-card-mini {
     width: 100%;
     max-width: 1000px;
-    height: 100%; /* Ocupa todo el alto del carrusel */
+    height: 100%;
     display: flex;
     flex-direction: column;
     background: none;
@@ -96,7 +74,7 @@
 
 .jornada-partidos-mini {
     flex: 1;
-    padding: 16px 34px 16px 34px; /* Menos padding arriba y abajo */
+    padding: 16px 34px 16px 34px;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
@@ -188,7 +166,7 @@
 
 @media (max-width: 600px) {
     .calendario-carrusel-centrado {
-        justify-content: flex-start !important;
+        justify-content: flex-start;
         padding-top: 18px;
         min-height: 100vh;
     }

@@ -3,6 +3,9 @@ import { useOutletContext, useNavigate } from "react-router";
 import { ligaService } from "../../services/liga.service";
 import "./Jugador.css";
 import ModalEstadisticasJugador from "../Partido/ModalEstadisticasJugador";
+import camisetaJugador from "/src/assets/camiseta-jugador.svg";
+import calendario from "/src/assets/calendario.svg";
+import flechaOpcion from "/src/assets/flecha-opcion.svg";
 
 export default function Jugador() {
     const { usuario } = useOutletContext();
@@ -50,10 +53,15 @@ export default function Jugador() {
         );
     }
 
-    const nombreCompleto = usuario.nombre || usuario.apellidos
-        ? `${usuario.nombre ?? ""} ${usuario.apellidos ?? ""}`.trim()
-        : "Nombre no disponible";
+    function obtenerNombreCompleto(usuario) {
+        if (usuario.nombre || usuario.apellidos) {
+            return `${usuario.nombre ?? ""} ${usuario.apellidos ?? ""}`.trim();
+        } else {
+            return "Nombre no disponible";
+        }
+    }
 
+    const nombreCompleto = obtenerNombreCompleto(usuario);
     const posicion = usuario.posicion || "No asignada";
     const numero = usuario.numero_camiseta || "No asignado";
 
@@ -65,12 +73,9 @@ export default function Jugador() {
 
     return (
         <div className="w-full min-h-screen flex items-center justify-center">
-            <div className="jugador-container flex flex-col bg-black/90 rounded-2xl shadow-2xl mx-2 p-8 max-w-2xl w-full relative">
-                {/* Header: contenedor escudo+dorsal y datos */}
-                <div className="flex flex-row items-center w-full gap-6 mb-8" style={{ minHeight: 80 }}>
-                    {/* Contenedor escudo + dorsal con margen a la izquierda */}
-                    <div className="flex flex-row items-center bg-black/90 rounded-xl shadow-lg border border-[#40c9ff] overflow-hidden ml-8" style={{ minWidth: 180, height: 80 }}>
-                        {/* Escudo */}
+            <div className="jugador-container flex flex-col bg-black/90 rounded-2xl shadow-2xl mx-2 p-8 max-w-2xl w-full relative">               
+                <div className="flex flex-row items-center w-full gap-6 mb-8" style={{ minHeight: 80 }}>                   
+                    <div className="flex flex-row items-center bg-black/90 rounded-xl shadow-lg border border-[#40c9ff] overflow-hidden ml-8" style={{ minWidth: 180, height: 80 }}>                      
                         <div className="w-20 h-20 flex items-center justify-center bg-white">
                             <img
                                 src={usuario.equipo.escudo}
@@ -78,26 +83,13 @@ export default function Jugador() {
                                 className="w-full h-full object-contain"
                             />
                         </div>
-                        {/* Separador vertical */}
                         <div className="h-16 border-l-2 border-[#40c9ff] mx-1" />
-                        {/* Dorsal con camiseta */}
                         <div className="w-20 h-20 flex items-center justify-center relative">
-                            <svg className="w-full h-full" viewBox="0 0 40 40" fill="none">
-                                <defs>
-                                    <linearGradient id="camisetaGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                                        <stop stopColor="#e81cff" />
-                                        <stop offset="1" stopColor="#40c9ff" />
-                                    </linearGradient>
-                                </defs>
-                                <path
-                                    d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z"
-                                    fill="url(#camisetaGrad)"
-                                    opacity="0.85"
-                                    stroke="#fff"
-                                    strokeWidth="2"
-                                />
-                                <rect x="13" y="5" width="14" height="6" rx="2" fill="#fff" opacity="0.25" />
-                            </svg>
+                            <img
+                                src={camisetaJugador}
+                                alt="Camiseta"
+                                className="w-full h-full"
+                            />
                             <span className="absolute inset-0 flex items-center justify-center text-2xl font-extrabold text-white drop-shadow-lg select-none"
                                 style={{
                                     textShadow: "0 2px 8px #232531, 0 0px 2px #40c9ff"
@@ -106,7 +98,6 @@ export default function Jugador() {
                             </span>
                         </div>
                     </div>
-                    {/* Datos */}
                     <div className="flex flex-col justify-center flex-1 min-w-0">
                         <div className="flex items-center w-full">
                             <h1 className="nombre-gradiente font-extrabold text-xl sm:text-2xl truncate">
@@ -122,16 +113,12 @@ export default function Jugador() {
                             {usuario?.equipo?.nombre_equipo || "Equipo no asignado"}
                         </h2>
                         <div className="flex items-center text-gray-400 text-sm truncate">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
+                            <img
+                                src={calendario}
+                                alt="Calendario"
                                 className="h-4 w-4 text-[#40c9ff] mr-1"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2v-5H3v5a2 2 0 002 2z" />
-                            </svg>
+                                style={{ display: "inline-block" }}
+                            />
                             {error ? (
                                 <span className="text-red-500">{error}</span>
                             ) : ligaInfo ? (
@@ -144,8 +131,6 @@ export default function Jugador() {
                         </div>
                     </div>
                 </div>
-    
-                {/* Botones debajo */}
                 <div className="w-full flex flex-col gap-4 px-2 sm:px-8 pb-4 sm:pb-8">
                     {options.map((options) => (
                         <button
@@ -155,20 +140,15 @@ export default function Jugador() {
                             className="boton-opcion flex items-center justify-between w-full px-6 py-3 bg-neutral-900 border border-[#40c9ff] rounded-xl font-semibold text-white text-lg shadow-md"
                         >
                             <span>{options.label}</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
+                            <img
+                                src={flechaOpcion}
+                                alt="Flecha"
                                 className="boton-icono"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
-                            </svg>
+                                style={{ width: 28, height: 28 }}
+                            />
                         </button>
                     ))}
                 </div>
-
                 
                 {modalEstadisticas && (
                     <ModalEstadisticasJugador

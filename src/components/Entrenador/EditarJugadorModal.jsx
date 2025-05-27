@@ -1,4 +1,5 @@
 import { useState } from "react";
+import cerrarModalIcon from "/src/assets/cerrar-modal.svg";
 
 export default function EditarJugadorModal({ jugador, onClose, onSave }) {
     const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ export default function EditarJugadorModal({ jugador, onClose, onSave }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); 
+        setError("");
         const response = await onSave(formData);
         if (response && response.status !== 200) {
             setError(response.message || "Error al actualizar el jugador");
@@ -30,9 +31,11 @@ export default function EditarJugadorModal({ jugador, onClose, onSave }) {
                         onClick={onClose}
                         className="text-neutral-400 hover:text-white"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <img
+                            src={cerrarModalIcon}
+                            alt="Cerrar"
+                            className="w-6 h-6"
+                        />
                     </button>
                 </div>
 
@@ -43,7 +46,7 @@ export default function EditarJugadorModal({ jugador, onClose, onSave }) {
                         </label>
                         <select
                             value={formData.posicion}
-                            onChange={(e) => setFormData({...formData, posicion: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, posicion: e.target.value })}
                             className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                         >
                             <option value="">Selecciona posición</option>
@@ -60,7 +63,7 @@ export default function EditarJugadorModal({ jugador, onClose, onSave }) {
                         <input
                             type="number"
                             value={formData.numero_camiseta}
-                            onChange={(e) => setFormData({...formData, numero_camiseta: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, numero_camiseta: e.target.value })}
                             className="w-full px-4 py-2.5 bg-neutral-900/50 border border-neutral-800 rounded-lg focus:outline-none focus:border-[#40c9ff] transition-colors text-white text-sm"
                             min="1"
                             max="99"
@@ -71,7 +74,7 @@ export default function EditarJugadorModal({ jugador, onClose, onSave }) {
                         <input
                             type="checkbox"
                             checked={formData.activo}
-                            onChange={(e) => setFormData({...formData, activo: e.target.checked})}
+                            onChange={(e) => setFormData({ ...formData, activo: e.target.checked })}
                             className="w-4 h-4 text-[#40c9ff] bg-neutral-900/50 border-neutral-800 rounded focus:ring-[#40c9ff]"
                         />
                         <label className="text-sm font-medium text-neutral-400">

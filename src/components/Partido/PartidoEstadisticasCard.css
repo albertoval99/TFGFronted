@@ -1,7 +1,6 @@
-/* Container principal */
 .partido-container {
     margin-top: 100px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     max-width: 90rem;
     margin-left: auto;
     margin-right: auto;
@@ -15,9 +14,6 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
-
-
-/* Error y Empty States */
 .partido-error,
 .partido-empty {
     max-width: 90rem;
@@ -42,22 +38,20 @@
     border-color: rgba(82, 82, 82, 0.2);
 }
 
-/* Grid principal */
 .partido-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    grid-template-columns: 1fr 1fr;
     gap: 2rem;
     padding: 2rem;
 }
 
-/* Columna Izquierda */
-.columna-izquierda {
+.columna-izquierda,
+.columna-derecha {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-/* Header */
 .partido-header {
     display: flex;
     justify-content: space-between;
@@ -79,14 +73,16 @@
 }
 
 .estadio {
-    display:flex;
+    display: flex;
     font-size: 1.1rem;
     font-weight: 400;
     color: #fff;
 }
-.estadio-icon{
-    margin-right:3px;
+
+.estadio-icon {
+    margin-right: 3px;
 }
+
 .header-fecha {
     text-align: right;
 }
@@ -104,7 +100,6 @@
     margin-top: 0.25rem;
 }
 
-/* Resultado */
 .partido-resultado {
     display: flex;
     align-items: center;
@@ -152,7 +147,6 @@
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* Secciones comunes */
 .seccion-titulo {
     font-size: 1.25rem;
     font-weight: 600;
@@ -160,95 +154,56 @@
     margin-bottom: 1rem;
 }
 
-/* Goles */
-.seccion-goles {
+.seccion-goles,
+.seccion-tarjetas,
+.seccion-mejores,
+.seccion-arbitro,
+.seccion-equipo {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 0.75rem;
     padding: 1.5rem;
 }
 
-.goles-container {
-    display: flex;
-    gap: 1rem;
-}
-
-.equipo-goles {
-    flex: 1;
-}
-
-.equipo-goles h4 {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.equipo-goles h4 img {
-    width: 1.25rem;
-    height: 1.25rem;
-    object-fit: contain;
-}
-
-.gol-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-}
-
-.gol-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.gol-item .dorsal {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: #fff;
-    font-size: 0.75rem;
-}
-
-.gol-item .nombre {
-    color: #fff;
-    flex: 1;
-}
-
-.gol-item .cantidad {
-    font-weight: 600;
-    color: #40c9ff;
-}
-
-/* Tarjetas */
-.seccion-tarjetas {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-}
-
+.goles-container,
 .tarjetas-container {
     display: flex;
     gap: 1rem;
 }
 
+.equipo-goles,
 .tarjetas-tipo {
     flex: 1;
 }
 
-.tarjetas-tipo h4 {
+.equipo-goles h4,
+.tarjetas-tipo h4,
+.entrenadores h4,
+.alineacion h4,
+.seccion-equipo .equipo-header h3 {
     color: #fff;
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
-.tarjeta-item {
+.equipo-goles h4,
+.seccion-equipo .equipo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.equipo-goles h4 img,
+.seccion-equipo .equipo-header img {
+    width: 1.25rem;
+    height: 1.25rem;
+    object-fit: contain;
+}
+
+.gol-item,
+.tarjeta-item,
+.mejor-jugador,
+.alineacion .jugador,
+.entrenador {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -257,11 +212,18 @@
     transition: background-color 0.2s;
 }
 
-.tarjeta-item:hover {
+.gol-item:hover,
+.tarjeta-item:hover,
+.mejor-jugador:hover,
+.entrenador:hover,
+.alineacion .jugador:hover {
     background: rgba(255, 255, 255, 0.05);
 }
 
-.tarjeta-item .dorsal {
+.gol-item .dorsal,
+.tarjeta-item .dorsal,
+.mejor-jugador .dorsal,
+.alineacion .jugador .dorsal {
     width: 1.5rem;
     height: 1.5rem;
     display: flex;
@@ -273,13 +235,18 @@
     font-size: 0.75rem;
 }
 
-.tarjeta-item .nombre {
+.gol-item .nombre,
+.tarjeta-item .nombre,
+.mejor-jugador .nombre,
+.alineacion .jugador .nombre {
     color: #fff;
     flex: 1;
 }
 
+.gol-item .cantidad,
 .tarjeta-item .cantidad {
     font-weight: 600;
+    color: #40c9ff;
 }
 
 .tarjeta-item.amarilla .cantidad {
@@ -290,63 +257,24 @@
     color: #ff3b30;
 }
 
-/* Mejores Jugadores */
-.seccion-mejores {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
+.mejor-jugador .info {
+    flex: 1;
+}
+
+.mejor-jugador .nombre {
+    font-weight: 500;
+}
+
+.mejor-jugador .posicion,
+.alineacion .jugador .posicion {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .mejores-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.mejor-jugador {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-}
-
-.mejor-jugador:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.mejor-jugador .dorsal {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: #fff;
-    font-size: 0.75rem;
-}
-
-.mejor-jugador .info {
-    flex: 1;
-}
-
-.mejor-jugador .nombre {
-    color: #fff;
-    font-weight: 500;
-}
-
-.mejor-jugador .posicion {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-/* Árbitro */
-.seccion-arbitro {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
 }
 
 .arbitro-info {
@@ -365,71 +293,15 @@
     justify-content: center;
 }
 
-.arbitro-icon svg {
-    width: 1rem;
-    height: 1rem;
-    stroke: #fff;
-}
-
 .arbitro-nombre {
     color: #fff;
     font-weight: 500;
-}
-
-/* Columna Derecha */
-.columna-derecha {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.seccion-equipo {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-}
-
-.seccion-equipo .equipo-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    padding: 0;
-    border: none;
-    background: none;
-}
-
-.seccion-equipo .equipo-header img {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
-}
-
-.seccion-equipo .equipo-header h3 {
-    color: #fff;
-    font-weight: 500;
-}
-
-.entrenadores h4 {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
 }
 
 .entrenadores-lista {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-}
-
-.entrenador {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-}
-
-.entrenador:hover {
-    background: rgba(255, 255, 255, 0.05);
 }
 
 .entrenador .nombre {
@@ -440,59 +312,15 @@
     margin-top: 1rem;
 }
 
-.alineacion h4 {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.alineacion .jugador {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s;
-    cursor: pointer;
-}
-
-.alineacion .jugador:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.alineacion .jugador .dorsal {
-    width: 1.5rem;
-    height: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: #fff;
-    font-size: 0.75rem;
-}
-
-.alineacion .jugador .nombre {
-    color: #fff;
-    flex: 1;
-}
-
-.alineacion .jugador .posicion {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
-}
-
-/* No data states */
 .no-data {
     color: rgba(255, 255, 255, 0.4);
     text-align: center;
     padding: 1rem;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
     .partido-grid {
-        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+        grid-template-columns: 1fr;
     }
 }
 

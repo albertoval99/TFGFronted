@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router';
 import './InicioCards.css';
-import logoFaf from "/src/assets/logoFaf.png"
+import logoFaf from "/src/assets/logoFaf.png";
+import flechaDerecha from "/src/assets/flecha-derecha.svg";
+import flechaLogin from "/src/assets/flecha-login.svg";
 
 export default function InicioCards() {
 
@@ -35,7 +37,6 @@ export default function InicioCards() {
 
   return (
     <div className="w-full pt-20 pb-16">
-    
       <div className="liga-inicio-card">
         <div className="liga-inicio-card-content">
           <div className="liga-inicio-card-left">
@@ -50,13 +51,15 @@ export default function InicioCards() {
           <div className="liga-inicio-card-right">
             <button
               type="button"
-              onClick={() => navigate('/calendario2Reg2-1')}
+              onClick={() => navigate('/calendario2Reg2-1/3')}
               className="liga-inicio-btn"
             >
               <span>Ver Calendario</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
-              </svg>
+              <img
+                src={flechaDerecha}
+                alt="Flecha derecha"
+                className="liga-inicio-btn-icon"
+              />
             </button>
             <button
               type="button"
@@ -64,9 +67,11 @@ export default function InicioCards() {
               className="liga-inicio-btn"
             >
               <span>Ver Clasificacion</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
-              </svg>
+              <img
+                src={flechaDerecha}
+                alt="Flecha derecha"
+                className="liga-inicio-btn-icon"
+              />
             </button>
             <button
               type="button"
@@ -74,9 +79,11 @@ export default function InicioCards() {
               className="liga-inicio-btn"
             >
               <span>Ver Ranking de Estadisticas</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="liga-inicio-btn-icon">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3" />
-              </svg>
+              <img
+                src={flechaDerecha}
+                alt="Flecha derecha"
+                className="liga-inicio-btn-icon"
+              />
             </button>
           </div>
         </div>
@@ -101,14 +108,11 @@ export default function InicioCards() {
                         <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#CE32FD]">
                           {service.buttonText}
                         </span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
+                        <img
+                          src={flechaLogin}
+                          alt="Flecha login"
                           className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#00D8FF]"
-                        >
-                          <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
-                        </svg>
+                        />
                       </div>
                     </span>
                   </button>

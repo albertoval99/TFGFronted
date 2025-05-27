@@ -1,5 +1,3 @@
-
-/* Animaciones de fondo */
 @keyframes blob {
     0% {
       transform: translate(0px, 0px) scale(1);
@@ -27,7 +25,6 @@
     animation-delay: 4s;
   }
   
-  /* Contenedor principal */
   .stats-container {
     width: 100%;
     min-height: 100vh;
@@ -40,10 +37,10 @@
   
   .stats-content {
     width: 100%;
-    max-width: 64rem; /* 5xl */
+    max-width: 64rem; 
   }
   
-  /* Header con título */
+  
   .stats-header {
     position: relative;
     margin-bottom: 2.5rem;
@@ -80,7 +77,6 @@
     font-size: 1.125rem;
   }
   
-  /* Tarjeta principal con efecto de cristal */
   .stats-card {
     position: relative;
     backdrop-filter: blur(8px);
@@ -149,7 +145,6 @@
     gap: 1rem;
   }
   
-  /* Tarjetas de categorías */
   .category-card {
     position: relative;
     overflow: hidden;
@@ -193,7 +188,6 @@
     gap: 1rem;
   }
   
-  /* Icono de categoría */
   .category-icon-container {
     position: relative;
   }
@@ -223,8 +217,7 @@
   .category-card:hover .category-icon {
     transform: scale(1.1);
   }
-  
-  /* Información de jugador */
+
   .category-info {
     flex: 1;
   }
@@ -248,7 +241,6 @@
     font-size: 0.875rem;
   }
   
-  /* Número de estadística */
   .stat-number-container {
     display: flex;
     flex-direction: column;
@@ -282,7 +274,6 @@
     margin-top: 0.25rem;
   }
   
-  /* Modal */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -423,7 +414,6 @@
     padding: 1rem 0;
   }
   
-  /* Estilos para los colores específicos de cada categoría */
   .color-goleadores {
     background-image: linear-gradient(to bottom right, #40c9ff, #e81cff);
   }
@@ -484,7 +474,6 @@
     box-shadow: 0 10px 15px -3px rgba(96, 165, 250, 0.2);
   }
   
-  /* Responsive */
   @media (min-width: 768px) {
     .stats-title {
       font-size: 3rem;

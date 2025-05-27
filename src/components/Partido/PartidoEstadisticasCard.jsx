@@ -5,6 +5,11 @@ import "./PartidoEstadisticasCard.css";
 import estadio from "/src/assets/estadio.svg";
 import arbitro from "/src/assets/arbitro.svg";
 import ModalEstadisticasJugador from "./ModalEstadisticasJugador";
+import balon from "/src/assets/balon.svg";
+import tarjetaAmarilla from "/src/assets/tarjeta-amarilla.svg";
+import tarjetaRoja from "/src/assets/tarjeta-roja.svg";
+import estrella from "/src/assets/estrella.svg";
+
 export default function PartidoEstadisticasCard() {
     const { id_partido } = useParams();
     const [partidoData, setPartidoData] = useState(null);
@@ -41,7 +46,6 @@ export default function PartidoEstadisticasCard() {
         );
     }
 
-
     if (error) {
         return (
             <div className="partido-error">
@@ -58,15 +62,7 @@ export default function PartidoEstadisticasCard() {
         );
     }
 
-    const {
-        partido = {},
-        entrenadoresLocal = [],
-        entrenadoresVisitante = [],
-        alineacionesLocal = [],
-        alineacionesVisitante = [],
-        estadisticas = [],
-    } = partidoData;
-
+    const { partido = {}, entrenadoresLocal = [], entrenadoresVisitante = [], alineacionesLocal = [], alineacionesVisitante = [], estadisticas = [] } = partidoData;
     const titularesLocal = alineacionesLocal.filter((j) => j?.es_titular) || [];
     const suplentesLocal = alineacionesLocal.filter((j) => !j?.es_titular) || [];
     const titularesVisitante = alineacionesVisitante.filter((j) => j?.es_titular) || [];
@@ -81,9 +77,7 @@ export default function PartidoEstadisticasCard() {
         <div className="partido-container">
             <div className="partido-card">
                 <div className="partido-grid">
-                    {/* Columna Izquierda */}
                     <div className="columna-izquierda">
-                        {/* Header con fecha */}
                         <header className="partido-header">
                             <div className="header-info">
                                 <span className="jornada">Jornada {partido.jornada}</span>
@@ -105,7 +99,6 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </header>
 
-                        {/* Resultado */}
                         <section className="partido-resultado">
                             <div className="equipo-info">
                                 <div className="escudo-container">
@@ -127,7 +120,6 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </section>
 
-                        {/* Goles */}
                         <section className="seccion-goles">
                             <h3 className="seccion-titulo">Goles</h3>
                             <div className="goles-container">
@@ -142,18 +134,8 @@ export default function PartidoEstadisticasCard() {
                                                 <span className="dorsal">{jugador.dorsal}</span>
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="relative w-10 h-10 flex items-center justify-center">
-                                                    {/* Balón SVG */}
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 -960 960 960"
-                                                        className="w-10 h-10"
-                                                        fill="#fff"
-                                                        stroke="#232531"
-                                                        strokeWidth="20"
-                                                    >
-                                                        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z" />
-                                                    </svg>
-                                                    {/* Badge de goles */}
+
+                                                    <img src={balon} alt="Balón" className="w-10 h-10" />
                                                     <span
                                                         className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-[#40c9ff] text-white font-bold text-xs w-6 h-6 border-2 border-white shadow"
                                                         style={{ zIndex: 2 }}
@@ -179,18 +161,7 @@ export default function PartidoEstadisticasCard() {
                                                 <span className="dorsal">{jugador.dorsal}</span>
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="relative w-10 h-10 flex items-center justify-center">
-                                                    {/* Balón SVG */}
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 -960 960 960"
-                                                        className="w-10 h-10"
-                                                        fill="#fff"
-                                                        stroke="#232531"
-                                                        strokeWidth="20"
-                                                    >
-                                                        <path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm200-500 54-18 16-54q-32-48-77-82.5T574-786l-54 38v56l160 112Zm-400 0 160-112v-56l-54-38q-54 17-99 51.5T210-652l16 54 54 18Zm-42 308 46-4 30-54-58-174-56-20-40 30q0 65 18 118.5T238-272Zm242 112q26 0 51-4t49-12l28-60-26-44H378l-26 44 28 60q24 8 49 12t51 4Zm-90-200h180l56-160-146-102-144 102 54 160Zm332 88q42-50 60-103.5T800-494l-40-28-56 18-58 174 30 54 46 4Z" />
-                                                    </svg>
-                                                    {/* Badge de goles */}
+                                                    <img src={balon} alt="Balón" className="w-10 h-10" />
                                                     <span
                                                         className="absolute -top-2 -right-2 flex items-center justify-center rounded-full bg-[#40c9ff] text-white font-bold text-xs w-6 h-6 border-2 border-white shadow"
                                                         style={{ zIndex: 2 }}
@@ -207,7 +178,6 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </section>
 
-                        {/* Tarjetas */}
                         <section className="seccion-tarjetas">
                             <h3 className="seccion-titulo">Tarjetas</h3>
                             <div className="tarjetas-container">
@@ -220,9 +190,7 @@ export default function PartidoEstadisticasCard() {
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="cantidad flex items-center justify-center">
                                                     <span className="relative w-7 h-9 flex items-center justify-center">
-                                                        <svg className="w-7 h-9" viewBox="0 0 28 36" fill="none">
-                                                            <rect x="2" y="2" width="24" height="32" rx="3" fill="#ffe066" stroke="#e6c200" strokeWidth="2" />
-                                                        </svg>
+                                                        <img src={tarjetaAmarilla} alt="Tarjeta amarilla" className="w-7 h-9" />
                                                         <span className="absolute inset-0 flex items-center justify-center text-black font-bold text-base select-none">
                                                             {jugador.tarjetas_amarillas}
                                                         </span>
@@ -244,9 +212,7 @@ export default function PartidoEstadisticasCard() {
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="cantidad flex items-center justify-center">
                                                     <span className="relative w-7 h-9 flex items-center justify-center">
-                                                        <svg className="w-7 h-9" viewBox="0 0 28 36" fill="none">
-                                                            <rect x="2" y="2" width="24" height="32" rx="3" fill="#ff4d4f" stroke="#b30000" strokeWidth="2" />
-                                                        </svg>
+                                                        <img src={tarjetaRoja} alt="Tarjeta roja" className="w-7 h-9" />
                                                         <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-base select-none">
                                                             {jugador.tarjetas_rojas}
                                                         </span>
@@ -261,7 +227,6 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </section>
 
-                        {/* Mejores Jugadores */}
                         <section className="seccion-mejores">
                             <h3 className="seccion-titulo">Mejores Jugadores</h3>
                             <div className="mejores-container">
@@ -270,16 +235,12 @@ export default function PartidoEstadisticasCard() {
                                         <div key={jugador.id_jugador} className="mejor-jugador flex items-center space-x-2">
                                             <span className="dorsal">{jugador.dorsal}</span>
                                             <div className="info flex items-center space-x-2">
-                                                {/* Icono MVP */}
                                                 <span className="nombre">{jugador.nombre} {jugador.apellidos}</span>
                                                 <span className="relative w-7 h-7 flex items-center justify-center">
-                                                    <svg className="w-7 h-7" viewBox="0 0 32 32" fill="none">
-                                                        <circle cx="16" cy="16" r="15" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
-                                                        <polygon points="16,6 19,14 28,14 21,19 24,27 16,22 8,27 11,19 4,14 13,14" fill="#ffe066" stroke="#e6c200" strokeWidth="1" />
-                                                    </svg>
+                                                    <img src={estrella} alt="Estrella" className="w-7 h-7" />
                                                 </span>
                                             </div>
-                                      </div>
+                                        </div>
                                     ))
                                 ) : (
                                     <p className="no-data">No se seleccionaron mejores jugadores</p>
@@ -287,7 +248,6 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </section>
 
-                        {/* Árbitro */}
                         <section className="seccion-arbitro">
                             <h3 className="seccion-titulo">Árbitro</h3>
                             <div className="arbitro-info">
@@ -301,18 +261,12 @@ export default function PartidoEstadisticasCard() {
                         </section>
                     </div>
 
-                    {/* Columna Derecha */}
                     <div className="columna-derecha">
-                        {/* Contenido Equipo Local */}
                         <section className="seccion-equipo">
                             <div className="equipo-header">
                                 <img src={partido.equipo_local_escudo} alt={partido.equipo_local_nombre} />
                                 <h3>{partido.equipo_local_nombre}</h3>
                             </div>
-
-
-
-                            {/* Alineación Local */}
                             <div className="alineacion">
                                 <div className="titulares">
                                     <h4>Titulares</h4>
@@ -338,8 +292,6 @@ export default function PartidoEstadisticasCard() {
                                         </div>
                                     ))}
                                 </div>
-
-                                {/* Entrenadores Local */}
                                 <div className="entrenadores">
                                     <h4>Cuerpo Técnico</h4>
                                     <div className="entrenadores-lista">
@@ -355,16 +307,12 @@ export default function PartidoEstadisticasCard() {
                             </div>
                         </section>
 
-                        {/* Contenido Equipo Visitante */}
                         <section className="seccion-equipo">
                             <div className="equipo-header">
                                 <img src={partido.equipo_visitante_escudo} alt={partido.equipo_visitante_nombre} />
                                 <h3>{partido.equipo_visitante_nombre}</h3>
                             </div>
 
-
-
-                            {/* Alineación Visitante */}
                             <div className="alineacion">
                                 <div className="titulares">
                                     <h4>Titulares</h4>
@@ -391,7 +339,6 @@ export default function PartidoEstadisticasCard() {
                                     ))}
                                 </div>
 
-                                {/* Entrenadores Visitante */}
                                 <div className="entrenadores">
                                     <h4>Cuerpo Técnico</h4>
                                     <div className="entrenadores-lista">

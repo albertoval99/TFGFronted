@@ -132,7 +132,4 @@ export const equipoService = {
       };
     }
   },
-
-
-
 }

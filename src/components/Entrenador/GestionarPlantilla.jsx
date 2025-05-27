@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { userService } from "../../services/usuarios.service";
 import addUser from "/src/assets/addUser.svg";
+import camisetaJugador from "/src/assets/camiseta-jugador.svg";
+import iconoEditar from "/src/assets/icono-editar.svg";
+import iconoEliminar from "/src/assets/icono-eliminar.svg";
 import EditarJugadorModal from './EditarJugadorModal';
 import { Mensaje } from "../Error/Mensaje";
-
-
 
 export default function GestionarPlantilla() {
     const navigate = useNavigate();
@@ -28,8 +29,49 @@ export default function GestionarPlantilla() {
         DC: "bg-red-600/20 text-red-400",
     };
 
+    async function handleEliminarJugador(id_usuario) {
+        try {
+            const response = await userService.eliminarJugador(id_usuario);
+
+            if (response.status === 200) {
+                setJugadores(jugadores.filter(j => j.id_usuario !== id_usuario));
+                setSuccess("Jugador eliminado con éxito");
+                setTimeout(() => setSuccess(""), 3000);
+            } else {
+                setError(response.message || "Error al eliminar el jugador");
+            }
+        } catch (error) {
+            console.error("❌ Error al eliminar el jugador:", error);
+            setError("Error al eliminar el jugador");
+        }
+    }
+    async function handleGuardarJugador(id_jugador, datos) {
+        const response = await userService.editarJugador(id_jugador, datos);
+        if (response.status === 200) {
+            const jugadoresActualizados = [];
+            for (let i = 0; i < jugadores.length; i++) {
+                const jugadorActual = jugadores[i];
+                if (jugadorActual.id_jugador === id_jugador) {
+                    const jugadorActualizado = {
+                        ...jugadorActual,
+                        ...datos
+                    };
+                    jugadoresActualizados.push(jugadorActualizado);
+                } else {
+                    jugadoresActualizados.push(jugadorActual);
+                }
+            }
+            setJugadores(jugadoresActualizados);
+            setSuccess("Jugador actualizado con éxito");
+            setTimeout(() => { setSuccess("") }, 3000);
+            setJugadorEditando(null);
+        }
+
+        return response;
+    }
+
     useEffect(() => {
-        const fetchJugadores = async () => {
+        async function fetchJugadores() {
             try {
                 const response = await userService.getJugadoresByEquipo();
                 if (response.status === 200) {
@@ -45,7 +87,7 @@ export default function GestionarPlantilla() {
             } finally {
                 setLoading(false);
             }
-        };
+        }
 
         fetchJugadores();
     }, []);
@@ -61,11 +103,11 @@ export default function GestionarPlantilla() {
     return (
         <div className="w-full min-h-screen p-8 pt-32">
             <div className="max-w-4xl mx-auto">
-                 <Mensaje
-                                error={error}
-                                success={success}
-                                onClose={() => { setError(""); setSuccess(""); }}
-                            />
+                <Mensaje
+                    error={error}
+                    success={success}
+                    onClose={() => { setError(""); setSuccess(""); }}
+                />
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-bold text-white">Gestionar Plantilla</h1>
                     <button
@@ -89,19 +131,18 @@ export default function GestionarPlantilla() {
                                 className="bg-black p-6 rounded-lg border border-neutral-800 hover:border-[#40c9ff] transition-colors"
                             >
                                 <div className="flex items-center justify-between">
-                                    {/* Icono camiseta con dorsal */}
                                     <div className="flex-shrink-0 w-12 h-12 mr-4 flex items-center justify-center">
                                         <span className="relative w-12 h-12 flex items-center justify-center">
-                                            <svg className="w-12 h-12" viewBox="0 0 40 40" fill="none">
-                                                <path d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
-                                                <rect x="13" y="5" width="14" height="6" rx="2" fill="#40c9ff" />
-                                            </svg>
+                                            <img
+                                                src={camisetaJugador}
+                                                alt="Camiseta"
+                                                className="w-12 h-12"
+                                            />
                                             <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg select-none">
                                                 {jugador.numero_camiseta}
                                             </span>
                                         </span>
                                     </div>
-                                    {/* Info en línea */}
                                     <div className="flex-1 flex items-center space-x-4">
                                         <span className={`px-3 py-1 rounded-full font-semibold text-xs flex items-center ${POSICION_COLORS[jugador.posicion] || "bg-neutral-700 text-white"}`}>
                                             {jugador.posicion}
@@ -111,40 +152,28 @@ export default function GestionarPlantilla() {
                                             {jugador.activo ? "Activo" : "Inactivo"}
                                         </span>
                                     </div>
-                                    {/* Botones */}
                                     <div className="flex space-x-2 ml-4">
                                         <button
                                             onClick={() => setJugadorEditando(jugador)}
                                             className="p-2 text-neutral-400 hover:text-white transition-colors cursor-pointer"
                                             title="Editar jugador"
                                         >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                            </svg>
+                                            <img
+                                                src={iconoEditar}
+                                                alt="Editar"
+                                                className="w-6 h-6"
+                                            />
                                         </button>
                                         <button
-                                            onClick={async () => {
-                                                try {
-                                                    const response = await userService.eliminarJugador(jugador.id_usuario);
-
-                                                    if (response.status === 200) {
-                                                        setJugadores(jugadores.filter(j => j.id_usuario !== jugador.id_usuario));
-                                                        setSuccess("Jugador eliminado con éxito");
-                                                        setTimeout(() => setSuccess(""), 3000);
-                                                    } else {
-                                                        setError(response.message || "Error al eliminar el jugador");
-                                                    }
-                                                } catch (error) {
-                                                    console.error("❌ Error al eliminar el jugador:", error);
-                                                    setError("Error al eliminar el jugador");
-                                                }
-                                            }}
+                                            onClick={() => handleEliminarJugador(jugador.id_usuario)}
                                             className="p-2 text-red-500 hover:text-red-400 transition-colors cursor-pointer"
                                             title="Eliminar jugador"
                                         >
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                            </svg>
+                                            <img
+                                                src={iconoEliminar}
+                                                alt="Eliminar"
+                                                className="w-6 h-6"
+                                            />
                                         </button>
                                     </div>
                                 </div>
@@ -158,23 +187,12 @@ export default function GestionarPlantilla() {
                     jugador={jugadorEditando}
                     onClose={() => setJugadorEditando(null)}
                     onSave={async (datos) => {
-                        const response = await userService.editarJugador(jugadorEditando.id_jugador, datos);
-                        if (response.status === 200) {
-                            setJugadores(jugadores.map(j =>
-                                j.id_jugador === jugadorEditando.id_jugador
-                                    ? { ...j, ...datos }
-                                    : j
-                            ));
-                            setSuccess("Jugador actualizado con éxito");
-                            setTimeout(() => setSuccess(""), 3000);
-                            setJugadorEditando(null);
-                        }
-                        return response;
+                        const idJugadorAEditar = jugadorEditando.id_jugador;
+                        const resultado = await handleGuardarJugador(idJugadorAEditar, datos);
+                        return resultado;
                     }}
                 />
             )}
         </div>
-
     );
-
 }

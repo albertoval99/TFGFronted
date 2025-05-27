@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ligaService } from "../../services/liga.service";
 import { Mensaje } from "../Error/Mensaje";
+import flechaRegistrar from "/src/assets/flecha-registrar.svg";
 
 export default function RegistroLiga() {
     const navigate = useNavigate();
@@ -66,7 +67,6 @@ export default function RegistroLiga() {
                 onClose={() => { setError(""); setSuccess(""); }}
             />
 
-            {/* Tarjeta de registro para ligas */}
             <div className="card relative bg-black p-8" style={{ width: "500px", minHeight: "450px" }}>
                 <div className="card-content flex flex-col gap-6">
                     <h2 className="heading bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-transparent bg-clip-text text-center text-2xl font-bold leading-[1.2] pb-2 overflow-visible">
@@ -134,14 +134,11 @@ export default function RegistroLiga() {
                                                 <span className="transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#CE32FD]">
                                                     Registrar
                                                 </span>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 24 24"
-                                                    fill="currentColor"
-                                                    className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:text-[#00D8FF]"
-                                                >
-                                                    <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"></path>
-                                                </svg>
+                                                <img
+                                                    src={flechaRegistrar}
+                                                    alt="Flecha registrar"
+                                                    className="w-7 h-7 transition-all duration-500 group-hover:translate-x-1.5 group-hover:filter group-hover:brightness-150"
+                                                />
                                             </div>
                                         </span>
                                     </div>

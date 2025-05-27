@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { partidosService } from "../../services/partidos.service";
 import "./Entrenador.css";
 import hacerAlineacion from "/src/assets/alineacion.svg";
 import arbitro from "/src/assets/arbitro.svg";
+import reloj from "/src/assets/reloj.svg";
+import estadio from "/src/assets/estadio-partidos.svg";
 import { Mensaje } from "../Error/Mensaje";
 
 export default function VerPartidosEquipo() {
@@ -35,7 +37,6 @@ export default function VerPartidosEquipo() {
         );
         setPartidos(partidosOrdenados);
 
-        // Selecciona el partido más próximo a hoy (sin ser pasado)
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
         let idx = partidosOrdenados.findIndex((p) => {
@@ -89,7 +90,6 @@ export default function VerPartidosEquipo() {
     return "Fecha por determinar";
   };
 
-  // Devuelve true si el usuario puede hacer la alineación (antes de la fecha/hora del partido)
   function puedeHacerAlineacion(partido) {
     let fechaPartido;
     if (partido.fecha_partido.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
@@ -143,12 +143,9 @@ export default function VerPartidosEquipo() {
                     key={`${p.jornada}-${p.equipo_local}-${p.equipo_visitante}`}
                   >
                     <div className="vpe-card-match">
-                      {/* Jornada full-width */}
                       <div className="vpe-card-jornada">
                         Jornada {p.jornada}
                       </div>
-
-                      {/* Árbitro justo debajo de la jornada */}
                       {p.arbitro_nombre && (
                         <div className="vpe-card-arbitro">
                           <img
@@ -161,8 +158,6 @@ export default function VerPartidosEquipo() {
                           </span>
                         </div>
                       )}
-
-                      {/* HEADER: Escudos grandes y VS perfectamente alineado */}
                       <div className="vpe-card-header-escudos">
                         <div className="vpe-card-team">
                           <div className="vpe-escudo-contenedor grande local">
@@ -186,45 +181,25 @@ export default function VerPartidosEquipo() {
                           <span className="vpe-card-rol">Visitante</span>
                         </div>
                       </div>
-
-                      {/* Contenido: fecha, hora y estadio */}
                       <div className="vpe-card-content">
                         <div className="vpe-card-info-central">
                           <div className="vpe-card-info-row">
-                            {/* icono reloj */}
-                            <svg
-                              width="18"
-                              height="18"
-                              fill="none"
-                              stroke="#40c9ff"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle cx="12" cy="12" r="10" />
-                              <path strokeLinecap="round" d="M12 6v6l4 2" />
-                            </svg>
+                            <img
+                              src={reloj}
+                              alt="Reloj"
+                              className="w-[18px] h-[18px]"
+                            />
                             <span>
                               {fechaLarga(p.fecha_partido)}
                               {p.hora_partido && ` | ${p.hora_partido.slice(0, 5)}`}
                             </span>
                           </div>
                           <div className="vpe-card-info-row">
-                            {/* icono estadio */}
-                            <svg
-                              width="18"
-                              height="18"
-                              fill="none"
-                              stroke="#e81cff"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M3 17V7a2 2 0 012-2h14a2 2 0 012 2v10"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                              <circle cx="12" cy="15" r="3" />
-                            </svg>
+                            <img
+                              src={estadio}
+                              alt="Estadio"
+                              className="w-[18px] h-[18px]"
+                            />
                             <span>
                               {p.estadio}
                               <span className="vpe-label">
@@ -266,8 +241,6 @@ export default function VerPartidosEquipo() {
               })}
             </div>
           </div>
-
-          {/* Navegación */}
           <div className="vpe-carousel-botones">
             <button
               className="vpe-carousel-boton-nav"

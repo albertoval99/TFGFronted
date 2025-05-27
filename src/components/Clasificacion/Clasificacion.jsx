@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { clasificacionService } from '../../services/clasificacion.service';
 import { useParams } from 'react-router';
 import "./Clasificacion.css";
+import { Mensaje } from '../Error/Mensaje';
 
 export default function Clasificacion() {
   const [clasificacion, setClasificacion] = useState([]);
@@ -25,6 +26,24 @@ export default function Clasificacion() {
     fetchData();
   }, [id_liga]);
 
+  function obtenerClaseFilaClasificacion(indice, totalEquipos) {
+    const clases = ['row-hover'];
+    if (indice === 0) clases.push('first-place');
+    if (indice === 1 || indice === 2) clases.push('podium');
+    if (indice >= totalEquipos - 3) clases.push('relegation');
+    return clases.join(' ');
+  }
+
+  function obtenerClaseDiferenciaGoles(diferencia) {
+    if (diferencia > 0) {
+      return 'dg-positive';
+    } else if (diferencia < 0) {
+      return 'dg-negative';
+    } else {
+      return 'dg-neutral';
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">
@@ -35,13 +54,11 @@ export default function Clasificacion() {
 
   return (
     <div className="clasificacion-container">
-      {error && (
-        <div className="fixed bottom-6 right-6 w-80 bg-red-600 text-white rounded-lg shadow-lg p-4 flex items-center space-x-3">
-          {/* …icono y cierre… */}
-        </div>
-      )}
+      <Mensaje
+        error={error}
+        onClose={() => { setError("") }}
+      />
       <div className="clasificacion-card">
-        {/* Leyenda en esquina superior derecha */}
         <div className="clasificacion-legend">
           <div className="legend-item">
             <span className="legend-color ascenso"></span> Ascenso
@@ -53,7 +70,6 @@ export default function Clasificacion() {
             <span className="legend-color descenso"></span> Descenso
           </div>
         </div>
-
         <div className="table-wrapper">
           <table className="clasificacion-table">
             <thead>
@@ -68,38 +84,22 @@ export default function Clasificacion() {
               </tr>
             </thead>
             <tbody>
-              {clasificacion.map((eq, i) => {
-                const isFirst = i === 0;
-                const isPodium = i === 1 || i === 2;
-                const isReleg = i >= clasificacion.length - 3;
-                const rowClass = [
-                  'row-hover',
-                  isFirst ? 'first-place' : '',
-                  isPodium ? 'podium' : '',
-                  isReleg ? 'relegation' : ''
-                ].filter(Boolean).join(' ');
-
-                return (
-                  <tr key={eq.id_equipo} className={rowClass} title={eq.nombre}>
-                    <td>{i + 1}</td>
-                    <td className="equipo-cell">
-                      <img src={eq.escudo} alt={eq.nombre} className="equipo-logo" />
-                      <span>{eq.nombre}</span>
-                    </td>
-                    <td>{eq.puntos}</td>
-                    <td>{eq.partidos_jugados}</td>
-                    <td>{eq.goles_favor}</td>
-                    <td>{eq.goles_contra}</td>
-                    <td className={
-                      eq.diferencia_goles > 0 ? 'dg-positive' :
-                      eq.diferencia_goles < 0 ? 'dg-negative' :
-                      'dg-neutral'
-                    }>
-                      {eq.diferencia_goles}
-                    </td>
-                  </tr>
-                );
-              })}
+              {clasificacion.map((eq, i) => (
+                <tr key={eq.id_equipo} className={obtenerClaseFilaClasificacion(i, clasificacion.length)} title={eq.nombre}>
+                  <td>{i + 1}</td>
+                  <td className="equipo-cell">
+                    <img src={eq.escudo} alt={eq.nombre} className="equipo-logo" />
+                    <span>{eq.nombre}</span>
+                  </td>
+                  <td>{eq.puntos}</td>
+                  <td>{eq.partidos_jugados}</td>
+                  <td>{eq.goles_favor}</td>
+                  <td>{eq.goles_contra}</td>
+                  <td className={obtenerClaseDiferenciaGoles(eq.diferencia_goles)}>
+                    {eq.diferencia_goles}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -1,6 +1,7 @@
 import { useOutletContext, useNavigate } from "react-router";
 import "./Arbitro.css";
-import logoFaf from "/src/assets/logoFaf.png"
+import logoFaf from "/src/assets/logoFaf.png";
+import flechaOpcion from "/src/assets/flecha-opcion.svg";
 
 export default function Arbitro() {
     const { usuario } = useOutletContext();
@@ -15,7 +16,6 @@ export default function Arbitro() {
         <div className="w-full h-screen flex items-center justify-center overflow-hidden">
             <div className="arbitro-container">
                 <div className="arbitro-rol">Árbitro</div>
-
                 <div className="arbitro-header">
                     <div className="arbitro-left">
                         <img
@@ -43,20 +43,12 @@ export default function Arbitro() {
                             className="arbitro-boton"
                         >
                             <span>{op.label}</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={2}
-                                stroke="currentColor"
+                            <img
+                                src={flechaOpcion}
+                                alt="Flecha"
+                                style={{ width: 28, height: 28 }}
                                 aria-hidden="true"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M17.25 12H6.75m7.5 0l-3-3m3 3l-3 3"
-                                />
-                            </svg>
+                            />
                         </button>
                     ))}
                 </div>

@@ -98,7 +98,6 @@ export default function VerEntrenamientosJugador() {
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-2xl font-bold text-white">Entrenamientos Programados</h1>
                 </div>
-
                 {error ? (
                     <div className="bg-red-500/10 border border-red-500 text-red-500 p-4 rounded-lg">
                         {error}
@@ -155,7 +154,6 @@ export default function VerEntrenamientosJugador() {
                                             </div>
                                         )}
                                     </div>
-
                                     {entrenamientoEditando === entrenamiento.id_entrenamiento ? (
                                         <div className="space-y-4">
                                             <textarea

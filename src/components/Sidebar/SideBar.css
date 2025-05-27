@@ -68,7 +68,6 @@
   border-radius: 8px;
 }
 
-/* Overlay para cuando el sidebar está abierto */
 .sidebar-overlay {
   position: fixed;
   top: 0;

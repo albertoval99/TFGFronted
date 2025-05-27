@@ -79,7 +79,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 13px auto 70px auto;
-  padding: 3px; /* Para el borde degradado */
+  padding: 3px; 
   border-radius: 1.5rem;
   background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
   box-shadow: 0 8px 40px 0 #a855f733, 0 0 0 2px #40c9ff44;
@@ -198,7 +198,6 @@
   color: #e81cff;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .liga-inicio-card-content {
     flex-direction: column;

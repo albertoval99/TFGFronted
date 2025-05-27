@@ -4,6 +4,7 @@ import { alineacionesService } from "../../services/alineaciones.service";
 import { userService } from "../../services/usuarios.service";
 import "./Alineacion.css";
 import { Mensaje } from "../Error/Mensaje";
+import camisetaJugadorIcon from "/src/assets/camiseta-jugador.svg";
 
 export default function RegistrarAlineacion() {
     const { id_partido } = useParams();
@@ -176,10 +177,10 @@ export default function RegistrarAlineacion() {
     return (
         <div className="ra-container">
             <Mensaje
-                            error={error}
-                            success={success}
-                            onClose={() => { setError(""); setSuccess(""); }}
-                        />
+                error={error}
+                success={success}
+                onClose={() => { setError(""); setSuccess(""); }}
+            />
 
             <h1 className="ra-title">Crear Alineación</h1>
 
@@ -194,10 +195,13 @@ export default function RegistrarAlineacion() {
                     return (
                         <div key={jugador.id_jugador} className="ra-player-card">
                             <div className="ra-dorsal-container" aria-hidden="true">
-                                <svg className="ra-dorsal-svg" viewBox="0 0 40 40" fill="none">
-                                    <path d="M10 5 L30 5 L35 15 L32 35 L8 35 L5 15 Z" fill="#232531" stroke="#40c9ff" strokeWidth="2" />
-                                    <rect x="13" y="5" width="14" height="6" rx="2" fill="#40c9ff" />
-                                </svg>
+                                <img
+                                    src={camisetaJugadorIcon}
+                                    alt="Camiseta"
+                                    className="ra-dorsal-svg"
+                                    width={40}
+                                    height={40}
+                                />
                                 <span className="ra-dorsal-text">{jugador.numero_camiseta}</span>
                             </div>
                             <div className="ra-player-info">
