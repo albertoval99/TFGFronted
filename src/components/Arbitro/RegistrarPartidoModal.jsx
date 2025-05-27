@@ -17,6 +17,7 @@ export default function RegistrarPartidoModal({ partido, onClose }) {
     const [error, setError] = useState("");
     const [exito, setExito] = useState("");
     const [cargando, setCargando] = useState(true);
+    const [guardando, setGuardando] = useState(false); // Nuevo estado para el loading al guardar
     const [infoEquipoLocal, setInfoEquipoLocal] = useState(null);
     const [infoEquipoVisitante, setInfoEquipoVisitante] = useState(null);
     const [formularioValido, setFormularioValido] = useState(false);
@@ -100,9 +101,11 @@ export default function RegistrarPartidoModal({ partido, onClose }) {
         e.preventDefault();
         setError("");
         setExito("");
+        setGuardando(true); // Activar el loading
 
         if (!formularioValido) {
             setError("Debes marcar un resultado y seleccionar al menos un MVP");
+            setGuardando(false); // Desactivar el loading si hay un error de validación
             return;
         }
 
@@ -111,11 +114,13 @@ export default function RegistrarPartidoModal({ partido, onClose }) {
 
         if (golesLocalJugadores !== formulario.goles_local) {
             setError(`Los goles asignados a jugadores locales (${golesLocalJugadores}) deben ser igual a los goles del equipo (${formulario.goles_local})`);
+            setGuardando(false); // Desactivar el loading si hay un error de validación
             return;
         }
 
         if (golesVisitanteJugadores !== formulario.goles_visitante) {
             setError(`Los goles asignados a jugadores visitantes (${golesVisitanteJugadores}) deben ser igual a los goles del equipo (${formulario.goles_visitante})`);
+            setGuardando(false); // Desactivar el loading si hay un error de validación
             return;
         }
 
@@ -132,6 +137,8 @@ export default function RegistrarPartidoModal({ partido, onClose }) {
         } catch (error) {
             setError("Error al conectar con el servidor");
             console.error("Error:", error);
+        } finally {
+            setGuardando(false); // Desactivar el loading al finalizar, independientemente del resultado
         }
     }
 
@@ -345,10 +352,10 @@ export default function RegistrarPartidoModal({ partido, onClose }) {
                         <button
                             type="submit"
                             onClick={guardarEstadisticas}
-                            disabled={!formularioValido || cargando}
-                            className={`px-5 py-2.5 bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-white rounded-lg transition-all cursor-pointer ${!formularioValido || cargando ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
+                            disabled={!formularioValido || cargando || guardando}
+                            className={`px-5 py-2.5 bg-gradient-to-r from-[#e81cff] to-[#40c9ff] text-white rounded-lg transition-all cursor-pointer ${!formularioValido || cargando || guardando ? 'opacity-50 cursor-not-allowed' : 'hover:opacity-90'}`}
                         >
-                            {cargando ? (
+                            {guardando ? (
                                 <span className="flex items-center justify-center">
                                     <img
                                         src={spinnerIcon}
