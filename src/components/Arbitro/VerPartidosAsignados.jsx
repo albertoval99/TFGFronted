@@ -146,19 +146,19 @@ export default function VerPartidosAsignados() {
         return response;
     }
 
-    function handleAplazarClick(partido) {
-        if (puedeSuspender(partido)) {
+   function handleAplazarClick(partido) {
+     //   if (puedeSuspender(partido)) {
             setError("");
             setSuccess("");
             setPartidoEditando(partido);
-        } else {
-            setError("Solo puedes aplazar el partido antes de que empiece");
-            setSuccess("");
-        }
+    //    } else {
+      //      setError("Solo puedes aplazar el partido antes de que empiece");
+       //     setSuccess("");
+      //  }
     }
 
     function handleRegistrarClick(partido) {
-        if (puedeRegistrar(partido)) {
+     //   if (puedeRegistrar(partido)) {
             setError("");
             setSuccess("");
             setPartidoRegistrando({
@@ -167,10 +167,10 @@ export default function VerPartidosAsignados() {
                 equipo_visitante_id: partido.equipo_visitante_id
             });
             setShowModal(true);
-        } else {
-            setError("Solo puedes registrar el partido después de que haya empezado");
-            setSuccess("");
-        }
+      //  } else {
+      //      setError("Solo puedes registrar el partido después de que haya empezado");
+       //     setSuccess("");
+      //  }
     }
 
     function renderFechaHora(partido) {
