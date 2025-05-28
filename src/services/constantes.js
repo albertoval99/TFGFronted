@@ -3,7 +3,7 @@
 //APACHE
 //const URL = "http://192.168.20.135:3002/api";
 
-//DESPLIEGUE
+//DESPLIEGUE.
 const URL = "https://qdg6e8tm36.execute-api.us-east-1.amazonaws.com/alberto/api";
 
 /**
