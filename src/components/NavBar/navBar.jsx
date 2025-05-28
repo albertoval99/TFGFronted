@@ -11,6 +11,7 @@ export default function NavBar({ usuario, setUsuario }) {
     setSidebarOpen(!sidebarOpen);
   };
 
+
   const getTipoUsuario = () => {
     if (!usuario) return "invitado";
     switch (usuario.rol) {
@@ -50,7 +51,7 @@ export default function NavBar({ usuario, setUsuario }) {
           isOpen={sidebarOpen}
           toggleSidebar={toggleSidebar}
           setUsuario={setUsuario}
-          tipo={tipoUsuario}
+          tipo={tipoUsuario} // Pasa el tipo de usuario al SideBar
         />
       )}
 

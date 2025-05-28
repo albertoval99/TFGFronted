@@ -15,6 +15,7 @@ import partidosIcon from "/src/assets/ligaIcon.svg";
 
 export default function SideBar({ isOpen, toggleSidebar, setUsuario, tipo }) {
   const navigate = useNavigate();
+
   const sidebarMenus = {
     invitado: [
       { to: "/", icon: homeIcon, label: "Inicio" },
