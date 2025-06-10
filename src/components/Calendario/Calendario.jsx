@@ -28,26 +28,16 @@ export default function Calendario() {
     }
 
     function obtenerIndiceJornadaActual(jornadas) {
-    const hoy = new Date();
-    let idx = jornadas.findIndex(j => {
-        let fecha;
-        if (/^\d{2}\/\d{2}\/\d{4}$/.test(j.fecha)) {
-            // Formato dd/mm/yyyy
-            const [day, month, year] = j.fecha.split("/");
-            fecha = new Date(Number(year), Number(month) - 1, Number(day));
-        } else if (/^\d{4}-\d{2}-\d{2}$/.test(j.fecha)) {
-            // Formato yyyy-mm-dd
+        const hoy = new Date();
+        let idx = jornadas.findIndex(j => {
             const [year, month, day] = j.fecha.split("-");
-            fecha = new Date(Number(year), Number(month) - 1, Number(day));
-        } else {
-            return false;
-        }
-        // Comparamos solo la fecha, sin horas
-        return fecha >= new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
-    });
-    if (idx === -1) idx = jornadas.length - 1;
-    return idx >= 0 ? idx : 0;
-}
+            const fecha = new Date(Number(year), Number(month) - 1, Number(day));
+            return fecha >= hoy;
+        });
+        if (idx === -1) idx = jornadas.length - 1;
+        return idx >= 0 ? idx : 0;
+    }
+
     function partidoSinJugar(partido) {
         return partido.goles_local == null || partido.goles_visitante == null;
     }
