@@ -147,18 +147,18 @@ export default function VerPartidosAsignados() {
     }
 
    function handleAplazarClick(partido) {
-     //   if (puedeSuspender(partido)) {
+        if (puedeSuspender(partido)) {
             setError("");
             setSuccess("");
             setPartidoEditando(partido);
-    //    } else {
-      //      setError("Solo puedes aplazar el partido antes de que empiece");
-       //     setSuccess("");
-      //  }
+        } else {
+            setError("Solo puedes aplazar el partido antes de que empiece");
+            setSuccess("");
+        }
     }
 
     function handleRegistrarClick(partido) {
-     //   if (puedeRegistrar(partido)) {
+        if (puedeRegistrar(partido)) {
             setError("");
             setSuccess("");
             setPartidoRegistrando({
@@ -167,10 +167,10 @@ export default function VerPartidosAsignados() {
                 equipo_visitante_id: partido.equipo_visitante_id
             });
             setShowModal(true);
-      //  } else {
-      //      setError("Solo puedes registrar el partido después de que haya empezado");
-       //     setSuccess("");
-      //  }
+        } else {
+            setError("Solo puedes registrar el partido después de que haya empezado");
+            setSuccess("");
+        }
     }
 
     function renderFechaHora(partido) {
@@ -211,7 +211,7 @@ export default function VerPartidosAsignados() {
             <div className="vpa-card-botones-bottom-center" style={{ gap: "1rem" }}>
                 <button
                     className="vpa-card-boton aplazar"
-                   // disabled={!puedeSuspender(partido)}
+                    disabled={!puedeSuspender(partido)}
                     title={
                         !puedeSuspender(partido)
                             ? "Solo puedes aplazar antes de que empiece el partido"
@@ -229,7 +229,7 @@ export default function VerPartidosAsignados() {
 
                 <button
                     className="vpa-card-boton registrar"
-                   // disabled={!puedeRegistrar(partido)}
+                    disabled={!puedeRegistrar(partido)}
                     onClick={() => handleRegistrarClick(partido)}
                 >
                     <img
