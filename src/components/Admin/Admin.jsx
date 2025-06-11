@@ -21,7 +21,7 @@ export default function Admin() {
                 <div className="admin-header">
                     <div className="admin-left">
                         <img
-                            src="https://tfg-images-footbalzone.s3.us-east-1.amazonaws.com/logoAdmin.png"
+                            src="https://images-tfg.s3.us-east-1.amazonaws.com/logoAdmin.png"
                             alt="Logo Admin"
                             className="admin-logo"
                         />
