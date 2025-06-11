@@ -21,7 +21,6 @@ export default function VerPartidosAsignados() {
     const [partidoRegistrando, setPartidoRegistrando] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
-    
     function fechaLarga(fechaStr) {
         if (!fechaStr || typeof fechaStr !== "string") return "Fecha por determinar";
 
@@ -45,7 +44,6 @@ export default function VerPartidosAsignados() {
         });
     }
 
-    
     function parsearFecha(fechaStr, horaStr = null) {
         let fecha;
 
@@ -69,6 +67,8 @@ export default function VerPartidosAsignados() {
         return fecha;
     }
 
+    // Estas funciones ya no se utilizan porque se permiten registrar/aplazar siempre
+    /*
     function puedeSuspender(partido) {
         const fechaPartido = parsearFecha(partido.fecha_partido, partido.hora_partido);
         const ahora = new Date();
@@ -80,8 +80,8 @@ export default function VerPartidosAsignados() {
         const ahora = new Date();
         return ahora >= fechaPartido;
     }
+    */
 
-    
     function irPartidoAnterior() {
         setSlide(s => Math.max(0, s - 1));
     }
@@ -90,7 +90,6 @@ export default function VerPartidosAsignados() {
         setSlide(s => Math.min(partidos.length - 1, s + 1));
     }
 
-    
     async function cargarPartidos(idArbitro) {
         setLoading(true);
         setError(null);
@@ -121,7 +120,6 @@ export default function VerPartidosAsignados() {
         }
     }
 
-    
     async function handleGuardarAplazamiento(datos) {
         if (!partidoEditando) return;
 
@@ -146,31 +144,21 @@ export default function VerPartidosAsignados() {
         return response;
     }
 
-   function handleAplazarClick(partido) {
-        if (puedeSuspender(partido)) {
-            setError("");
-            setSuccess("");
-            setPartidoEditando(partido);
-        } else {
-            setError("Solo puedes aplazar el partido antes de que empiece");
-            setSuccess("");
-        }
+    function handleAplazarClick(partido) {
+        setError("");
+        setSuccess("");
+        setPartidoEditando(partido);
     }
 
     function handleRegistrarClick(partido) {
-        if (puedeRegistrar(partido)) {
-            setError("");
-            setSuccess("");
-            setPartidoRegistrando({
-                ...partido,
-                equipo_local_id: partido.equipo_local_id,
-                equipo_visitante_id: partido.equipo_visitante_id
-            });
-            setShowModal(true);
-        } else {
-            setError("Solo puedes registrar el partido después de que haya empezado");
-            setSuccess("");
-        }
+        setError("");
+        setSuccess("");
+        setPartidoRegistrando({
+            ...partido,
+            equipo_local_id: partido.equipo_local_id,
+            equipo_visitante_id: partido.equipo_visitante_id
+        });
+        setShowModal(true);
     }
 
     function renderFechaHora(partido) {
@@ -211,12 +199,8 @@ export default function VerPartidosAsignados() {
             <div className="vpa-card-botones-bottom-center" style={{ gap: "1rem" }}>
                 <button
                     className="vpa-card-boton aplazar"
-                    disabled={!puedeSuspender(partido)}
-                    title={
-                        !puedeSuspender(partido)
-                            ? "Solo puedes aplazar antes de que empiece el partido"
-                            : ""
-                    }
+                    // disabled={!puedeSuspender(partido)}
+                    // title={!puedeSuspender(partido) ? "Solo puedes aplazar antes de que empiece el partido" : ""}
                     onClick={() => handleAplazarClick(partido)}
                 >
                     <img
@@ -229,7 +213,7 @@ export default function VerPartidosAsignados() {
 
                 <button
                     className="vpa-card-boton registrar"
-                    disabled={!puedeRegistrar(partido)}
+                    // disabled={!puedeRegistrar(partido)}
                     onClick={() => handleRegistrarClick(partido)}
                 >
                     <img
@@ -288,7 +272,6 @@ export default function VerPartidosAsignados() {
         );
     }
 
-
     useEffect(() => {
         async function cargarDatos() {
             const usuario = JSON.parse(sessionStorage.getItem("usuario"));
@@ -317,9 +300,8 @@ export default function VerPartidosAsignados() {
         }
 
         cargarDatos();
-        // eslint-disable-next-line 
+        // eslint-disable-next-line
     }, []);
-
 
     if (loading) {
         return (
